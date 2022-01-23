@@ -20,15 +20,12 @@ $instagram      = $accion != 'agregar' ? $data['registros']['instagram'] : '';
 $facebook       = $accion != 'agregar' ? $data['registros']['facebook'] : '';
 $observaciones  = $accion != 'agregar' ? $data['registros']['observaciones'] : '';
 
-
 // si la accion es VER entonces disabled esta vacio
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
-
 
 // la variable $accion viene con agregar, editar, ver
 //echo $accion;
 ?>
-
 <div class="row d-flex justify-content-center">
 
     <form method="post" action="index.php?m=clientes&a=<?= isset($data["registros"]["id"]) ? "editar&id=" . $data['registros']['id'] : "agregar" ?>"
@@ -144,8 +141,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
             <!-- <textarea class="form-control" < ?= $disabled?> id="observaciones" rows="5"></textarea> -->
         </div>
         <div class="form-group row">
-            <div class="col text-center">
-                
+            <div class="col text-center">                
                 <?php 
                     // si la accion es distinto de VER es porque estoy haciendo un alta o modificacion
                     // entonces tiene que tener el boton de GUARDAR
