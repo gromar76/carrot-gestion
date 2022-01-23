@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start(); //Inicio de sesion
 
     // por default pongo la variable modulo con login
     $modulo = "login"; //default
