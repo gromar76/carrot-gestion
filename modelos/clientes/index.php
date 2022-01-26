@@ -52,10 +52,8 @@
         $resultado = $conexion->query($consulta);
         $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
 
+        //var_dump($registros); exit;
         cerrarConexion($conexion);
-
-
-
         return $registros[0];
     }
 

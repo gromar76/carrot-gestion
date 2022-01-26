@@ -1,0 +1,12 @@
+git
+---------------------------------------------------------------------------------------------------------------
+git init                  //Inicializa un repositorio
+git add nombre_archivo    //Agrega un archivo al area de prepracion (index)
+git add .                 //Agrega todos los archivos al area de prepracion (index)
+git commit -m "mensaje"   //Saca la foto del proyecto
+git log                   //Ver los commits
+git log --oneline         //Ver los commits resumidos
+git checkout HASH         //Vuelvo a un commit anterior
+git checkout nombre_arch  //Restaura un archivo al estado anterior
+---------------------------------------------------------------------------------------------------------------
+
