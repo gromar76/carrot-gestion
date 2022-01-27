@@ -9,12 +9,13 @@
 
 
      // si paso la variable id entonces..... la guardo en id
+     // si tengo la variable id es porque vengo de VER o EDITAR
      if ( isset($_GET["id"]) ){
         $id = $_GET["id"];    
      } 
 
 
-    // si paso la variable a entonces..... la guardo en accion
+    // si paso la variable a entonces..... la guardo en accion pase este valor en la ruta
     if ( isset($_GET["a"]) ){
         $accion = $_GET["a"];
     }
@@ -31,7 +32,8 @@
     switch( $accion ){
 
         case "listado":
-            //1- Obtener los datos de los clientes (Pide al modelo de clientes)       
+            //1- Obtener los datos de los clientes (Pide al modelo de clientes)
+            // opcion por default, arranco por aca clientes      
             $data["registros"] = obtenerTodos();
             //var_dump($data["registros"][0]);
 
@@ -45,6 +47,7 @@
             //1. Verificar si viene con datos del formulario (payload)
             // aca hizo click en el boton GUARDAR ....ya vania editando
             if( isset( $_POST["nombre"] ) ){
+
                 modificar($_POST, $id);
 
                 header('Location: index.php?m=clientes&a=listado&mensaje=Cliente modificado correctamente&tipoMensaje=success');

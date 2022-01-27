@@ -6,11 +6,13 @@ include 'funciones/html.php';
 
 //si la accion es EDITAR O VER debo mostrar los valores, solo no muestro cuando es alta
 // si la accion es modificar, entonces tomo los datos,  
-$nombre         = $accion != 'agregar' ? $data['registros']['nombre'] : '';
-$descripcion    = $accion != 'agregar' ? $data['registros']['descripcion'] : '';
-$precio         = $accion != 'agregar' ? $data['registros']['precio'] : '';
-$idCategoria    = $accion != 'agregar' ? $data['registros']['id_categoria'] : '';
 
+
+$nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
+$descripcion    = isset($data['registros']['descripcion']) ? $data['registros']['descripcion'] : '';
+$precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
+
+$idCategoria    = $accion != 'agregar' ? $data['registros']['id_categoria'] : '';
 $catSelect      = $data['categorias'] ;
 
 // si la accion es VER entonces disabled esta vacio
@@ -18,8 +20,15 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 
 // la variable $accion viene con agregar, editar, ver
 //echo $accion;
-?>
 
+if (trim($nombre)=='')
+{
+    echo "NOMBRE VACIO";
+}
+
+
+
+?>
 
 <div class="row d-flex justify-content-center">
     <?php // si existe $data["registros"]["id"] es porque estoy modificando?>

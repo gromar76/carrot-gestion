@@ -1,7 +1,8 @@
 <?php
 // este archivo debe manejar el AGREGAR,VER Y EDITAR ----> CLIENTE
-
 // si la accion es editar o ver, guardo en la variable el dato, sino pongo espacio vacio porque voy a dar de alta
+
+// si existe registros nombre, entonces a $nombre ponele $data['registros']['nombre'], sino ponele ''
 $nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
 $apellido       = isset($data['registros']['apellido']) ? $data['registros']['apellido'] : '';
 $dni            = isset($data['registros']['dni'])  ? $data['registros']['dni'] : '';

@@ -18,6 +18,12 @@
         $accion = $_GET["a"];
     }
 
+
+    function validarDatos(){
+        return isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3 ;              
+    }
+
+
     switch( $accion ){
 
         case "listado":
@@ -50,6 +56,34 @@
                 }
     
                 break;
+
+
+            case "agregar":
+                //1. Verificar si viene con datos del formulario (payload)
+            if( isset( $_POST["nombre"] ) ){
+
+                if ( validarDatos() ){
+                    agregar($_POST, $_SESSION['usuario']['id']);
+
+                    header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
+                }else{
+                    $data["mensaje"] = 'Completar todos los campos obligatorios';
+                    $data["tipoMensaje"] = 'danger';
+
+                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : ''; 
+ 
+                    include( 'vistas/productos/index.php');
+                }
+
+            }else{                  
+                //2. llamar a la vista pasandole los datos de ese cliente en particular           
+                include( 'vistas/productos/index.php');
+            }
+
+            break;
+
+
+
 
 
            

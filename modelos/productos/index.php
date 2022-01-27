@@ -33,7 +33,7 @@
         return $registros[0];
     }
 
-    function agregar($data){
+    function agregar($data, $id){
         $conexion = obtenerConexion();
         $nombre      = $data["nombre"];
         $descripcion = $data["descripcion"];

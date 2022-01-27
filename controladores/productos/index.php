@@ -32,14 +32,25 @@
             break;
 
 
-            case "editar":
+        case "editar":
      
                 //1. Verificar si viene con datos del formulario (payload)
                 // aca hizo click en el boton GUARDAR ....ya venia editando
-                if( isset( $_POST["nombre"] ) ){
-                    modificar($_POST, $id);
-    
-                    header('Location: index.php?m=productos&a=listado&mensaje=Producto modificado correctamente&tipoMensaje=success');
+                
+                
+
+
+                if (isset($_POST["nombre"]))
+                {
+                    if ($_POST["nombre"]!='')
+                    {
+                        modificar($_POST, $id);    
+                        header('Location: index.php?m=productos&a=listado&mensaje=Producto modificado correctamente&tipoMensaje=success');
+                    }   
+                    else
+                    {
+                        header('Location: index.php?m=productos&a=listado');
+                    }                 
                 }
                 else{
     
@@ -54,14 +65,17 @@
     
                 break;
 
-                case "agregar":      
+            case "agregar":      
             
-                    //1. Verificar si viene con datos del formulario (payload)
-                    if( isset( $_POST["nombre"] ) ){
-                        agregar($_POST);
+                    //1. Verificar si viene con datos del formulario (payload)                   
 
+                    if( isset( $_POST["nombre"] ) && strlen(trim($_POST["nombre"]))>0){
+                        agregar($_POST);
                         header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
                     }else{                  
+
+                        echo "acaaaa";
+                        exit();
 
                         $data["categorias"] = obtenerTodosCatProd();
 
