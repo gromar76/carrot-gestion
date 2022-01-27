@@ -39,7 +39,7 @@
 
                 if (isset($_POST["nombre"]))
                 {
-                    if ($_POST["nombre"]!='')
+                    if (strlen(trim($_POST["nombre"])) > 3)
                     {
                         modificar($_POST, $id);    
                         header('Location: index.php?m=productos&a=listado&mensaje=Producto modificado correctamente&tipoMensaje=success');

@@ -3,29 +3,29 @@
     // y puede contener ---> listado, editar, ver, agregar, etc    
     switch($accion){
         case "listado":
-            $data["contenido"] =  'vistas/clientes/partials/listado.php';
+            $data["contenido"] = 'vistas/clientes/partials/listado.php';
             $data["titulo"] = "Listado de Clientes";
             break;
 
         case "editar":
-            $data["contenido"] =  'vistas/clientes/partials/editor.php';
+            $data["contenido"] = 'vistas/clientes/partials/editor.php';
             $data["titulo"] = "Editando el Cliente";                       
             break;
         
         case "agregar":
-            $data["contenido"] =  'vistas/clientes/partials/editor.php';
+            $data["contenido"] = 'vistas/clientes/partials/editor.php';
             $data["titulo"] = "Agregando el Cliente";            
             break;
 
               
         case "eliminar":
-            $data["contenido"] =  'vistas/clientes/partials/listado.php';
+            $data["contenido"] = 'vistas/clientes/partials/listado.php';
             $data["titulo"] = "Listado de Clientes";
             break;
 
          case "ver":
             // agarro el contenido y luego lo muestro en vistas/base/index.php
-            $data["contenido"] =  'vistas/clientes/partials/editor.php';
+            $data["contenido"] = 'vistas/clientes/partials/editor.php';
             $data["titulo"] = "Viendo detalle de Cliente";
             break;
 

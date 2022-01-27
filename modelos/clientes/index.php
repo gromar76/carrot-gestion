@@ -14,7 +14,8 @@
         return $registros;
     }
 
-    function obtenerTodos(){
+    function obtenerTodos($usuario){
+
         $conexion = obtenerConexion();
 
         $consulta = 'SELECT cl.id id, cl.nombre, cl.apellido, CONCAT(cl.nombre, " ", cl.apellido) nombre_completo, REPLACE(whatsapp, " ", "") whatsapp, pa.nombre as id_pais, 
@@ -22,9 +23,12 @@
                      FROM clientes cl
                      LEFT JOIN localidades lc ON cl.id_localidad = lc.id
                      LEFT JOIN provincias pro ON pro.id = lc.id_provincia
-                     LEFT JOIN paises pa ON pro.id = lc.id_provincia
-                     GROUP BY id
-                     ORDER BY nombre';        
+                     LEFT JOIN paises pa ON pro.id = lc.id_provincia';
+
+        $consulta .= $usuario != -1 ? " WHERE usuario_alta = $usuario" : '';
+
+        $consulta .= ' GROUP BY id
+                       ORDER BY nombre';        
         
         $resultado = $conexion->query($consulta);
         $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;

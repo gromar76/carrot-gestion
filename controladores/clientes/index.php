@@ -2,6 +2,7 @@
     
     // aca incluyo todas las llamadas a la base de datos
     include("modelos/clientes/index.php");
+    include("modelos/usuarios/index.php");
 
     // seteo de variables por default cuando entro a la pagina
     $accion = "listado";
@@ -35,8 +36,13 @@
 
         case "listado":
             //1- Obtener los datos de los clientes (Pide al modelo de clientes)
+
+            $data["clientesDe"] =  isset($_GET['u'] ) ? $_GET['u'] : $_SESSION['usuario']['id'];
+
             // opcion por default, arranco por aca clientes      
-            $data["registros"] = obtenerTodos();
+            $data["registros"] = obtenerTodos($data["clientesDe"] );
+            $data["usuarios"]  = obtenerTodosUsuarios();
+            $data["usuario"]   =  $_SESSION['usuario'];
             //var_dump($data["registros"][0]);
 
             //2- Va a llamar a la vista pasandole los datos de los clientes

@@ -56,6 +56,14 @@ $(document).ready(function () {
   $("#provincia").change(cargarLocalidades);
 });
 
+$("#cliente-de-usuario").change(cargarClientesDe);
+
+function cargarClientesDe() {
+  const id = $(this).val();
+
+  window.location = `${URL_BASE}/index.php?m=clientes&u=${id}`;
+}
+
 function cargarPaises(idPaisSeleccionado) {
   const url = `${URL_BASE}/index.php?m=paises&a=listadoAjax`;
 

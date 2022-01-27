@@ -1,20 +1,45 @@
 <?php
+    include_once('funciones/html.php');
     include("config/constantes.php");
 
 //var_dump($data["registros"][0]["nombre"]);
+
+    $clientesDe  = $data["clientesDe"];
+    $usuario     = $data["usuario"];
+    $usuarios    = $data["usuarios"];
+
 ?>
 
-<a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=clientes&a=agregar">Nuevo</a>
 
-<div class="container">
-    <div class="col-3 row d-flex justify-content-center">
-            <select id="clienteDeUsuario" name="clienteDeUsuario" class="custom-select">
-                <option value="3" selected>Ambos</option>
-                <option value="2">Marcelo</option>
-                <option value="1">Nicolas</option>
-            </select>
+<div class="row">
+
+    <div class="col">
+        <a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=clientes&a=agregar">Nuevo</a> 
+    </div> 
+    <div class="col-3">
+        <div class="row">
+            <div class="col-4 text-right mr-1 mt-2">
+                <label for="cliente-de-usuario">Clientes de</label>
+            </div>
+            <div class="col">
+                <select class="form-control" id="cliente-de-usuario" name="cliente-de-usuario" >
+                    <!-- REFACTOR CARGAR DINAMICAMENTE-->
+                   <!--  <option value="-1">Ambos</option>
+                    <option value="2" selected>Marcelo</option>
+                    <option value="1">Nicolas</option> -->
+                    <option value="-1">Ambos</option>
+
+                    <?= dameOpcionesDelSelect($usuarios, $clientesDe);  ?>
+
+                </select>
+            </div>
+        </div>
     </div>
+
 </div>
+
+
+
 
 <table id="tabla" class="display table" >
     <thead>
