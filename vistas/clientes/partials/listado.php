@@ -6,6 +6,16 @@
 
 <a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=clientes&a=agregar">Nuevo</a>
 
+<div class="container">
+    <div class="col-3 row d-flex justify-content-center">
+            <select id="clienteDeUsuario" name="clienteDeUsuario" class="custom-select">
+                <option value="3" selected>Ambos</option>
+                <option value="2">Marcelo</option>
+                <option value="1">Nicolas</option>
+            </select>
+    </div>
+</div>
+
 <table id="tabla" class="display table" >
     <thead>
         <tr>

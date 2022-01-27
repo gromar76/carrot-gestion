@@ -36,9 +36,6 @@
      
                 //1. Verificar si viene con datos del formulario (payload)
                 // aca hizo click en el boton GUARDAR ....ya venia editando
-                
-                
-
 
                 if (isset($_POST["nombre"]))
                 {
@@ -49,7 +46,9 @@
                     }   
                     else
                     {
-                        header('Location: index.php?m=productos&a=listado');
+                        //$data["mensaje"] = 'Debe completar todos los campos';
+                        //$data["tipoMensaje"] = 'danger';
+                        header('Location: index.php?m=productos&a=listado&mensaje=Complete todos los campos obligatorios&tipoMensaje=danger');
                     }                 
                 }
                 else{

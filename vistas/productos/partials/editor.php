@@ -21,13 +21,6 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 // la variable $accion viene con agregar, editar, ver
 //echo $accion;
 
-if (trim($nombre)=='')
-{
-    echo "NOMBRE VACIO";
-}
-
-
-
 ?>
 
 <div class="row d-flex justify-content-center">

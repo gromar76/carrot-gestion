@@ -22,6 +22,8 @@
 
     function validarDatos(){
 
+        // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract
+        // y que provincia y localidad tenga algun valor valido, default viene con -1
         return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
                 isset( $_POST['pais'] ) &&
                 isset( $_POST['provincia'] ) && $_POST['provincia'] != '-1' &&
@@ -80,6 +82,7 @@
         case "agregar":      
             
             //1. Verificar si viene con datos del formulario (payload)
+            //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $_POST["nombre"] ) ){
 
                 if ( validarDatos() ){
