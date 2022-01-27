@@ -89,3 +89,7 @@
 .form-group {
   margin-bottom: 10px !important;
 }
+
+.campo-requerido {
+  color: red;
+}

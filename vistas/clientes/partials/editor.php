@@ -1,26 +1,26 @@
 <?php
 // este archivo debe manejar el AGREGAR,VER Y EDITAR ----> CLIENTE
 
-//si la accion es EDITAR O VER debo mostrar los valores, solo no muestro cuando es alta
-$nombre         = $accion != 'agregar' ? $data['registros']['nombre'] : '';
-$apellido       = $accion != 'agregar' ? $data['registros']['apellido'] : '';
-$dni            = $accion != 'agregar' ? $data['registros']['dni'] : '';
-$whatsapp       = $accion != 'agregar' ? $data['registros']['whatsapp'] : '';
-$telefono2      = $accion != 'agregar' ? $data['registros']['telefono2'] : '';
-$email          = $accion != 'agregar' ? $data['registros']['email'] : '';
-$esClienteDe    = $accion != 'agregar' ? $data['registros']['es_cliente_de'] : '';  //dio de alta marcelo o nicolas   esto vendra x la cookie luego del logueo
-$esDistribuidor = $accion != 'agregar' ? $data['registros']['es_distribuidor'] : '';  // 0 no , 1 si
-$domicilio      = $accion != 'agregar' ? $data['registros']['domicilio'] : '';
-$cPostal        = $accion != 'agregar' ? $data['registros']['cpostal'] : '';
-$pais           = $accion != 'agregar' ? $data['registros']['id_pais'] : 1; //ARGENTINA
-$provincia      = $accion != 'agregar' ? $data['registros']['id_provincia'] : -1;
-$localidad      = $accion != 'agregar' ? $data['registros']['id_localidad'] : -1;
-$paginaWeb      = $accion != 'agregar' ? $data['registros']['paginaweb'] : '';
-$instagram      = $accion != 'agregar' ? $data['registros']['instagram'] : '';
-$facebook       = $accion != 'agregar' ? $data['registros']['facebook'] : '';
-$observaciones  = $accion != 'agregar' ? $data['registros']['observaciones'] : '';
+// si la accion es editar o ver, guardo en la variable el dato, sino pongo espacio vacio porque voy a dar de alta
+$nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
+$apellido       = isset($data['registros']['apellido']) ? $data['registros']['apellido'] : '';
+$dni            = isset($data['registros']['dni'])  ? $data['registros']['dni'] : '';
+$whatsapp       = isset($data['registros']['whatsapp']) ? $data['registros']['whatsapp'] : '';
+$telefono2      = isset($data['registros']['telefono2']) ? $data['registros']['telefono2'] : '';
+$email          = isset($data['registros']['email']) ? $data['registros']['email'] : '';
+$esClienteDe    = isset($data['registros']['es_cliente_de']) ? $data['registros']['es_cliente_de'] : '';  //dio de alta marcelo o nicolas   esto vendra x la cookie luego del logueo
+$esDistribuidor = isset($data['registros']['es_distribuidor']) ? $data['registros']['es_distribuidor'] : 0;  // 0 no , 1 si
+$domicilio      = isset($data['registros']['domicilio']) ? $data['registros']['domicilio'] : '';
+$cPostal        = isset($data['registros']['cpostal']) ? $data['registros']['cpostal'] : '';
+$pais           = isset($data['registros']['id_pais']) ? $data['registros']['id_pais'] : 1; //ARGENTINA
+$provincia      = isset($data['registros']['id_provincia']) ? $data['registros']['id_provincia'] : -1;
+$localidad      = isset($data['registros']['id_localidad']) ? $data['registros']['id_localidad'] : -1;
+$paginaWeb      = isset($data['registros']['paginaweb']) ? $data['registros']['paginaweb'] : '';
+$instagram      = isset($data['registros']['instagram']) ? $data['registros']['instagram'] : '';
+$facebook       = isset($data['registros']['facebook']) ? $data['registros']['facebook'] : '';
+$observaciones  = isset($data['registros']['observaciones']) ? $data['registros']['observaciones'] : '';
 
-// si la accion es VER entonces disabled esta vacio
+// si la accion es VER entonces pongo disabled para que no se pueda editar el campo input, de lo contrario no pongo nada entonces se puede editar
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
 
 // la variable $accion viene con agregar, editar, ver
@@ -32,7 +32,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
 
         <div class="form-group row">
-            <label for="nombre" class="col-3 col-form-label">Nombre</label> 
+            <label for="nombre" class="col-3 col-form-label">Nombre <span class="campo-requerido">*</span></label> 
             <div class="col-9">
             <input id="nombre" name="nombre" type="text" class="form-control" <?=$disabled?>  value="<?=$nombre?>">
             </div>
@@ -99,19 +99,19 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
             </div>
         </div>
         <div class="form-group row">            
-            <label for="pais" class="col-3 col-form-label">Pais</label> 
+            <label for="pais" class="col-3 col-form-label">Pais <span class="campo-requerido">*</span></label> 
             <div class="col-9">
             <select id="pais" name="pais" data-id-original="<?=$pais?>" class="custom-select" <?=$disabled?>></select>
             </div>
         </div>
         <div class="form-group row">
-            <label for="provincia" class="col-3 col-form-label">Provincia</label> 
+            <label for="provincia" class="col-3 col-form-label">Provincia <span class="campo-requerido">*</span></label> 
             <div class="col-9">
             <select id="provincia" data-id-original="<?=$provincia?>" name="provincia" class="custom-select" <?=$disabled?>></select>
             </div>            
         </div>
         <div class="form-group row">
-            <label for="localidad" class="col-3 col-form-label">Localidad</label> 
+            <label for="localidad" class="col-3 col-form-label">Localidad <span class="campo-requerido">*</span></label> 
             <div class="col-9">
             <select id="localidad" data-id-original="<?=$localidad?>" name="id_localidad" class="custom-select" <?=$disabled?>>               
             </select>

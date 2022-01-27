@@ -11,11 +11,14 @@ $(document).ready(function () {
                   </button>                
                   <button class="btn btn-success btn-sm btn-editar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Editar">
                     <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-danger btn-sm btn-eliminar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Eliminar">
-                    <i class="fas fa-trash"></i>
-                  </button>                 
+                  </button>                            
                 `;
+
+          {
+            /* <button class="btn btn-danger btn-sm btn-eliminar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Eliminar">
+                      <i class="fas fa-trash"></i>
+                    </button>     */
+          }
         },
 
         targets: 5,

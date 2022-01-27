@@ -19,6 +19,15 @@
         $accion = $_GET["a"];
     }
 
+    function validarDatos(){
+
+        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
+                isset( $_POST['pais'] ) &&
+                isset( $_POST['provincia'] ) && $_POST['provincia'] != '-1' &&
+                isset( $_POST['id_localidad'] ) && $_POST['id_localidad'] != '-1';
+               
+    }
+
     switch( $accion ){
 
         case "listado":
@@ -69,9 +78,37 @@
             
             //1. Verificar si viene con datos del formulario (payload)
             if( isset( $_POST["nombre"] ) ){
-                agregar($_POST);
 
-                header('Location: index.php?m=clientes&a=listado&mensaje=Cliente agregado correctamente&tipoMensaje=success');
+                if ( validarDatos() ){
+                    agregar($_POST, $_SESSION['usuario']['id']);
+
+                    header('Location: index.php?m=clientes&a=listado&mensaje=Cliente agregado correctamente&tipoMensaje=success');
+                }else{
+
+                    $data["mensaje"] = 'Completar todos los campos obligatorios';
+                    $data["tipoMensaje"] = 'danger';
+
+                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
+                    $data["registros"]["apellido"] = $_POST['apellido'] ?  $_POST['apellido'] : '';
+                    $data["registros"]["dni"] = $_POST['dni'] ?  $_POST['dni'] : '';
+                    $data["registros"]["whatsapp"] = $_POST['whatsapp'] ?  $_POST['whatsapp'] : '';
+                    $data["registros"]["telefono2"] = $_POST['telefono2'] ?  $_POST['telefono2'] : '';
+                    $data["registros"]["email"] = $_POST['email'] ?  $_POST['email'] : '';
+                    $data["registros"]["es_cliente_de"] = $_POST['es_cliente_de'] ?  $_POST['es_cliente_de'] : '';
+                    $data["registros"]["es_distribuidor"] = $_POST['es_distribuidor'] ?  $_POST['es_distribuidor'] : '';
+                    $data["registros"]["domicilio"] = $_POST['domicilio'] ?  $_POST['domicilio'] : '';
+                    $data["registros"]["cpostal"] = $_POST['cpostal'] ?  $_POST['cpostal'] : '';
+                    $data["registros"]["id_pais"] = $_POST['pais'] ?  $_POST['pais'] : '';
+                    $data["registros"]["id_provincia"] = $_POST['provincia'] ?  $_POST['provincia'] : '';
+                    $data["registros"]["id_localidad"] = $_POST['id_localidad'] ?  $_POST['id_localidad'] : '';
+                    $data["registros"]["paginaweb"] = $_POST['paginaweb'] ?  $_POST['paginaweb'] : '';
+                    $data["registros"]["instagram"] = $_POST['instagram'] ?  $_POST['instagram'] : '';                    
+                    $data["registros"]["facebook"] = $_POST['facebook'] ?  $_POST['facebook'] : '';                    
+                    $data["registros"]["observaciones"] = $_POST['observaciones'] ?  $_POST['observaciones'] : '';
+ 
+                    include( 'vistas/clientes/index.php');
+                }
+
             }else{                  
                 //2. llamar a la vista pasandole los datos de ese cliente en particular           
                 include( 'vistas/clientes/index.php');

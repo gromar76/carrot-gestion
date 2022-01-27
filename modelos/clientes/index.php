@@ -17,7 +17,7 @@
     function obtenerTodos(){
         $conexion = obtenerConexion();
 
-        $consulta = 'SELECT cl.id id, cl.nombre, cl.apellido, CONCAT(cl.nombre, " ", cl.apellido) nombre_completo, whatsapp, pa.nombre as id_pais, 
+        $consulta = 'SELECT cl.id id, cl.nombre, cl.apellido, CONCAT(cl.nombre, " ", cl.apellido) nombre_completo, REPLACE(whatsapp, " ", "") whatsapp, pa.nombre as id_pais, 
                             lc.nombre id_localidad, pro.nombre as id_provincia, cl.baja
                      FROM clientes cl
                      LEFT JOIN localidades lc ON cl.id_localidad = lc.id
@@ -38,7 +38,7 @@
     function obtenerPorId($id){
         $conexion = obtenerConexion();
         
-        $consulta = "SELECT cl.*, pro.id id_provincia, pa.id id_pais
+        $consulta = "SELECT cl.*, REPLACE(whatsapp, ' ', '') whatsapp, pro.id id_provincia, pa.id id_pais
                      FROM clientes cl
                      LEFT JOIN localidades lc
                      ON cl.id_localidad = lc.id
@@ -57,13 +57,13 @@
         return $registros[0];
     }
 
-    function agregar($data){
+    function agregar($data, $idUsuario){
 
         $conexion = obtenerConexion();
 
         $nombre             = $data["nombre"];
         $apellido           = $data["apellido"];
-        $dni                = $data["dni"];
+        $dni                = $data["dni"] ? $data["dni"] : NULL ;
         $whatsApp           = $data["whatsapp"];
         $telefono2          = $data["telefono2"];
         $email              = $data["email"];
@@ -74,17 +74,19 @@
         $domicilio          = $data["domicilio"];    
         $cPostal            = $data["cpostal"];
         $observaciones      = $data["observaciones"];
-        $esDistribuidor    = $data["es_distribuidor"];
-        $esClienteDe      = $data["es_cliente_de"];
+        $esDistribuidor     = $data["es_distribuidor"];
+        $esClienteDe        = $data["es_cliente_de"];
+        $usuarioAlta        = $idUsuario;
 
         $consulta="insert into clientes (nombre, apellido, dni, whatsapp, telefono2, email, paginaweb, instagram, facebook,
-        id_localidad, domicilio, cpostal, observaciones, es_distribuidor, es_cliente_de)
-         values ('$nombre', '$apellido', '$dni', '$whatsApp', '$telefono2', '$email', '$paginaWeb', '$instagram'
+        id_localidad, domicilio, cpostal, observaciones, es_distribuidor, es_cliente_de, usuario_alta)
+         values ('$nombre', '$apellido', " . ($dni ? "'" . $dni . "'"  : 'NULL') . ", '$whatsApp', '$telefono2', '$email', '$paginaWeb', '$instagram'
          , '$facebook', '$idLocalidad', '$domicilio', '$cPostal', '$observaciones', '$esDistribuidor'
-         , '$esClienteDe')";
+         , '$esClienteDe', $usuarioAlta )";
 
-         $resultado = $conexion->query($consulta);
-         cerrarConexion($conexion);
+        $resultado = $conexion->query($consulta);
+
+        cerrarConexion($conexion);
 
     }
 
