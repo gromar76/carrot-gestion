@@ -22,7 +22,7 @@
 
         case "listado":
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
-            $data["registros"] = obtenerTodos();
+            $data["registros"] = obtenerTodosVentas();
 
             //2- Va a llamar a la vista pasandole los datos de los productos
             include( 'vistas/ventas/index.php');

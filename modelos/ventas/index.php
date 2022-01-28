@@ -2,22 +2,39 @@
 
     include_once 'funciones/conexion.php';
 
-    function obtenerTodos(){
+    function obtenerTodosVentas(){
+
+        $conexion = obtenerConexion();
+
+        $consulta = 'SELECT ventas.*, cli.nombre, usr.nombre
+                     FROM ventas
+                     INNER JOIN clientes cli
+                       ON cli.id = ventas.cliente
+                     INNER JOIN usuarios usr
+                       ON usr.id = ventas.id_usuario
+                     ORDER BY fecha DESC';
+        
+        $resultado = $conexion->query($consulta);
+        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+    
+        cerrarConexion($conexion);
+    
+        return $registros;
 
     }
 
-    function obtenerPorId($id){
+    function obtenerPorIdVentas($id){
 
     }
 
-    function agregar($data){
+    function agregarVenta($data){
 
     }
 
-    function modificar($data, $id){
+    function modificarVenta($data, $id){
         
     }
 
-    function eliminar($id){
+    function eliminarVenta($id){
 
     }
