@@ -54,24 +54,28 @@
      
             //1. Verificar si viene con datos del formulario (payload)
             // aca hizo click en el boton GUARDAR ....ya vania editando
-            if( isset( $_POST["nombre"] ) ){
-
-                modificar($_POST, $id);
-
-                header('Location: index.php?m=clientes&a=listado&mensaje=Cliente modificado correctamente&tipoMensaje=success');
+            if( isset( $_POST["nombre"] )) 
+            {   
+                    if (strlen(trim($_POST["nombre"]))>3)
+                    {           
+                        modificar($_POST, $id);
+                        header('Location: index.php?m=clientes&a=listado&mensaje=Cliente modificado correctamente&tipoMensaje=success');
+                    }                    
+                    else
+                    {
+                        header('Location: index.php?m=clientes&a=listado&mensaje=Complete los campos obligatorios&tipoMensaje=danger');
+                        
+                    }
             }
-            else{
-
-                //2. obtener datos del cliente a editar
-                // aca hizo click en el boton verde de editar
-                $data["registros"] = obtenerPorId($id);
-
-                //3. llamar a la vista pasandole los datos de ese cliente en particular           
-                include( 'vistas/clientes/index.php');
+            else
+            {
+                    //2. obtener datos del cliente a editar
+                    // aca hizo click en el boton verde de editar
+                    $data["registros"] = obtenerPorId($id);
+                    //3. llamar a la vista pasandole los datos de ese cliente en particular           
+                    include( 'vistas/clientes/index.php');               
             }
-
             break;
-
     
         case "ver":
             
