@@ -9,7 +9,8 @@ function obtenerTodos(){
     FROM paises order by nombre';
     
     $resultado = $conexion->query($consulta);
-    $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+    $registros = fetchAll( $resultado );
+
 
     cerrarConexion($conexion);
 

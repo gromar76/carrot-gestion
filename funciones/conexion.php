@@ -25,3 +25,13 @@
     function cerrarConexion( $conexion ){
         $conexion->close();
     }
+
+    function fetchAll( $resultado){
+        $registros = [];
+
+        while ( $registro = $resultado->fetch_assoc() ){
+            $registros[] = $registro;
+        }
+
+        return $registros;
+    }

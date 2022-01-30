@@ -7,7 +7,7 @@
 
         $consulta = "SELECT * FROM clientes ORDER BY nombre";
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -31,7 +31,7 @@
                        ORDER BY nombre';        
         
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -54,7 +54,7 @@
 
 
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         //var_dump($registros); exit;
         cerrarConexion($conexion);

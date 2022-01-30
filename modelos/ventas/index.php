@@ -15,7 +15,7 @@
                      ORDER BY fecha DESC';
         
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
     
         cerrarConexion($conexion);
     

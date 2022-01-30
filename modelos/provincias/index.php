@@ -7,7 +7,7 @@
         $consulta = "SELECT * FROM provincias ORDER BY nombre";
         
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -20,7 +20,7 @@
         $consulta = "SELECT * FROM provincias where pais_id=$id ORDER BY nombre";        
 
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -32,7 +32,7 @@
         $consulta = "INSERT INTO provincias (id, nombre, baja) ";
                 
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 

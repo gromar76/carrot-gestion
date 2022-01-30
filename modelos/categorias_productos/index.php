@@ -7,7 +7,7 @@
         $consulta = "SELECT id, nombre FROM categorias_productos ORDER BY nombre";
         
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -19,7 +19,7 @@
         $consulta = "SELECT * FROM categorias_productos where id='$id' ORDER BY nombre";        
         
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -31,7 +31,7 @@
         $consulta = "INSERT INTO categorias_productos (id, nombre, baja) ";
                 
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 

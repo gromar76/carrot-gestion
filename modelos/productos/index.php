@@ -9,7 +9,7 @@
                      WHERE art.id_categoria=cat.id
                      ORDER BY art.nombre";
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
         return $registros;
     }
 
@@ -27,7 +27,7 @@
                      WHERE ar.id_categoria=ca.id and ar.id=$id";
 
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
         return $registros[0];

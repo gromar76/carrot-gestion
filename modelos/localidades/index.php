@@ -6,7 +6,7 @@
         $conexion = obtenerConexion();
         $consulta = "SELECT * FROM localidades ORDER BY nombre";
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
         return $registros;
     }
 
@@ -21,7 +21,7 @@
                      WHERE id_provincia=' . $id .' order by nombre';
         
         $resultado = $conexion->query($consulta);
-        $registros = $resultado->fetch_all( MYSQLI_ASSOC ) ;
+         $registros = fetchAll( $resultado );
     
         cerrarConexion($conexion);
     
