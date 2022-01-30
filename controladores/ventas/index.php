@@ -29,9 +29,6 @@
 
             break;
 
-
-
-
             case "editar":
      
                 //1. Verificar si viene con datos del formulario (payload)
@@ -48,6 +45,35 @@
                     $data["registros"] = obtenerPorId($id);                   
     
                     //3. llamar a la vista pasandole los datos de ese cliente en particular           
+                    include( 'vistas/ventas/index.php');
+                }
+    
+                break;
+        
+            case "agregar":      
+        
+                //1. Verificar si viene con datos del formulario (payload)
+                //APRETE BOTON GUARDAN DANDO DE ALTA
+                if( isset( $_POST["nombre"] ) ){
+    
+                   // if ( validarDatos() ){
+                        agregar($_POST, $_SESSION['usuario']['id']);
+    
+                        header('Location: index.php?m=ventas&a=listado&mensaje=Venta agregada correctamente&tipoMensaje=success');
+                   /*  }else{
+    
+                        $data["mensaje"] = 'Completar todos los campos obligatorios';
+                        $data["tipoMensaje"] = 'danger';
+    
+                        $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
+                        $data["registros"]["apellido"] = $_POST['apellido'] ?  $_POST['apellido'] : '';
+
+        
+                        include( 'vistas/clientes/index.php');
+                    } */
+    
+                }else{                  
+                    //2. llamar a la vista pasandole los datos de ese cliente en particular           
                     include( 'vistas/ventas/index.php');
                 }
     

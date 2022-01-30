@@ -10,10 +10,10 @@ include("config/constantes.php");
 <table id="tabla" class="display table" >
     <thead>
         <tr>
-            <th>Codigo</th>
-            <th>Nombre</th>
-            <th>Precio</th>  
-            <th>Categoria</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Importe</th>  
+            <th>Usuario</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -23,10 +23,10 @@ include("config/constantes.php");
       {      
       ?>
       <tr>
-            <td><?php echo $data["registros"][$i]["id"];?></td>
-            <td><?php echo $data["registros"][$i]["nombre"];?></td> 
-            <td><?php echo $data["registros"][$i]["precio"];?></td>             
-            <td><?php echo $data["registros"][$i]["nomcat"];?></td>
+            <td><?php echo $data["registros"][$i]["cliente"];?></td>
+            <td><?php echo $data["registros"][$i]["fecha"];?></td> 
+            <td><?php echo $data["registros"][$i]["importe"];?></td>
+            <td><?php echo $data["registros"][$i]["usuario"];?></td>             
             <td></td>
         <?php
         }?>

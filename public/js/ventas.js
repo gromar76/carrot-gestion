@@ -1,3 +1,13 @@
+const venta = {
+  cliente: null,
+  fecha: null,
+  observaciones: "",
+  productos: [
+    { id: 1, nombre: "Monitor", precioUnit: 10000, cantidad: 2 },
+    { id: 2, nombre: "Teclado", precioUnit: 20000, cantidad: 1 },
+  ],
+};
+
 $(document).ready(function () {
   // cuando se carga el documento....convierto la clase TABLA a datatable...
   $("#tabla").DataTable({
@@ -29,6 +39,10 @@ $(document).ready(function () {
 
   //cuando hago click en boton de cancelar
   $("#btn-atras").click(atras);
+
+  $("#btn-agregar-detalle").click(agregarProductoDetalle);
+
+  $("#btn-guardar").click(guardarVenta);
 });
 
 function atras() {
@@ -45,8 +59,20 @@ function editar() {
 }
 
 const idVentaSeleccionada = $("#venta").attr("data-id-original");
-cargarCategorias(idVentaSeleccionada);
 
 function cargarVenta(id) {
   // alert("hola");
+}
+
+function agregarProductoDetalle() {
+  alert("Agregar producto al detalle");
+  actualizarVista();
+}
+
+function guardarVenta() {
+  alert("Guardar venta");
+}
+
+function actualizarVista() {
+  alert("Actualizo la vista");
 }
