@@ -7,13 +7,13 @@ include 'funciones/html.php';
 //si la accion es EDITAR O VER debo mostrar los valores, solo no muestro cuando es alta
 // si la accion es modificar, entonces tomo los datos,  
 
-
 $nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
 $descripcion    = isset($data['registros']['descripcion']) ? $data['registros']['descripcion'] : '';
 $precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
+$idCategoria    = isset($data['registros']['id_categoria']) ? $data['registros']['id_categoria'] : '';
 
-$idCategoria    = $accion != 'agregar' ? $data['registros']['id_categoria'] : '';
-$catSelect      = $data['categorias'] ;
+//Todas las categorias
+$categoriasDeProducto      = obtenerTodosCatProd();
 
 // si la accion es VER entonces disabled esta vacio
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
@@ -51,8 +51,8 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
             <label for="categoria" class="col-3 col-form-label">Categoria</label> 
             <div class="col-9">
               
-                <select id="categoria" name="id_categoria" data-id-original="<?=$idCategoria?>" class="custom-select" <?=$disabled?>>
-                    <?= dameOpcionesDelSelect($catSelect,  $idCategoria); ?>
+                <select id="id_categoria" name="id_categoria" data-id-original="<?=$idCategoria?>" class="custom-select" <?=$disabled?>>
+                    <?= dameOpcionesDelSelect($categoriasDeProducto,  $idCategoria); ?>
                 </select>
             </div>
         </div>       

@@ -19,12 +19,24 @@
         $accion = $_GET["a"];
     }
 
+
+
+    function validarDatos(){
+
+        // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract
+        // y que categoria tenga algun valor valido, default viene con -1
+        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
+                isset( $_POST['precio']);            
+               
+    }
+
+
     switch( $accion ){
 
         case "listado":
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
             $data["registros"] = obtenerTodos();
-            //var_dump($data["registros"][0]);
+            //var_dump($data["registros"][0]); exit();
 
             //2- Va a llamar a la vista pasandole los datos de los productos
             include( 'vistas/productos/index.php');
@@ -66,23 +78,33 @@
 
             case "agregar":      
             
-                    //1. Verificar si viene con datos del formulario (payload)                   
+                   //1. Verificar si viene con datos del formulario (payload)
+            //APRETE BOTON GUARDAN DANDO DE ALTA
+            if( isset( $_POST["nombre"] ) ){
 
-                    if( isset( $_POST["nombre"] ) && strlen(trim($_POST["nombre"]))>0){
-                        agregar($_POST);
-                        header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
-                    }else{                  
+                if ( validarDatos() ){
+                    agregar($_POST, $_SESSION['usuario']['id']);
+                    header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
+                }else{
 
-                        echo "acaaaa";
-                        exit();
+                    $data["mensaje"] = 'Completar todos los campos obligatorios';
+                    $data["tipoMensaje"] = 'danger';
 
-                        $data["categorias"] = obtenerTodosCatProd();
+                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
+                    $data["registros"]["descripcion"] = $_POST['descripcion'] ?  $_POST['descripcion'] : '';                  
+                    $data["registros"]["precio"] = $_POST['precio'] ?  $_POST['precio'] : '';                    
+                    $data["registros"]["id_categoria"] = $_POST['id_categoria'] ?  $_POST['id_categoria'] : '';                                       
+ 
+                    include( 'vistas/productos/index.php');
+                }
 
-                        //2. llamar a la vista         
-                        include( 'vistas/productos/index.php');
-                    }
+            }else{                  
+                //2. llamar a la vista pasandole los datos de ese cliente en particular           
+                include( 'vistas/productos/index.php');
+            }
+
+            break;
         
-                    break;
         
         default:
             include( 'vistas/404/index.php');
