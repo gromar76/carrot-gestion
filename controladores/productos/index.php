@@ -106,6 +106,17 @@
             break;
         
         
+        
+        case 'obtenerPrecio':
+
+            $idProducto = $_GET["id"];
+
+            $data["registros"] = intval( obtenerPrecio($idProducto)[0]["precio"] );
+
+            include( 'vistas/ajax/index.php');
+
+            break;
+
         default:
             include( 'vistas/404/index.php');
 

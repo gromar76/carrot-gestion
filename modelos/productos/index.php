@@ -81,3 +81,18 @@
     function eliminarProducto($id){
 
     }
+
+    function  obtenerPrecio($idProducto){
+        $conexion = obtenerConexion();
+
+        $consulta="SELECT precio
+                   FROM productos
+                   WHERE id = $idProducto";
+
+        $resultado = $conexion->query($consulta);
+        $registros = fetchAll( $resultado );
+
+        cerrarConexion($conexion);
+    
+        return $registros;
+}

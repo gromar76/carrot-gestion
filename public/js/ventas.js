@@ -5,6 +5,8 @@ const venta = {
   productos: [],
 };
 
+let numFilaEditar;
+
 $(document).ready(function () {
   // cuando se carga el documento....convierto la clase TABLA a datatable...
   $("#tabla").DataTable({
@@ -37,15 +39,40 @@ $(document).ready(function () {
   //cuando hago click en boton de cancelar
   $("#btn-atras").click(atras);
 
-  $("#btn-agregar-detalle").click(agregarProductoDetalle);
+  $("#btn-agregar-detalle").click(guardarProductoDetalle);
 
   $("#btn-guardar").click(guardarVenta);
 
-  $("#producto").change(function () {
-    alert("cambio el producto, poner el precio en el input");
-    $("#precio").val(99999999);
+  $("#producto").change(async function () {
+    const idProducto = $(this).val();
+
+    $("#precio").val(await obtenerPrecioProducto(idProducto));
   });
+
+  $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
 });
+
+function mostrarModalAgregarProducto() {
+  numFilaEditar = null;
+
+  $("#titulo-modal-agregar-producto").html("Agregar producto");
+
+  $("#modal-agregar-producto").modal("show");
+}
+
+function mostrarModalEditarProducto() {
+  numFilaEditar = $(this).attr("data-id");
+
+  const { id, cantidad, precioUnit } = venta.productos[numFilaEditar];
+
+  $("#producto").val(id);
+  $("#cantidad").val(cantidad);
+  $("#precio").val(precioUnit);
+
+  $("#titulo-modal-agregar-producto").html("Editar producto");
+
+  $("#modal-agregar-producto").modal("show");
+}
 
 function atras() {
   history.back();
@@ -66,7 +93,17 @@ function cargarVenta(id) {
   // alert("hola");
 }
 
-function agregarProductoDetalle() {
+async function obtenerPrecioProducto(id) {
+  //const url = `http://localhost/index.php?m=productos&a=obtenerPrecio&id=${id}`;
+  const url = `${URL_BASE}/index.php?m=productos&a=obtenerPrecio&id=${id}`;
+
+  const response = await fetch(url);
+  const precio = await response.json();
+
+  return precio;
+}
+
+function guardarProductoDetalle() {
   const producto = {
     id: $("#producto").val(),
     nombre: $("#producto option:selected").text(),
@@ -78,7 +115,13 @@ function agregarProductoDetalle() {
 
   // si seleccione algun producto y si el precio no es negativo
   if (producto.id != -1 && producto.precioUnit >= 0 && producto.cantidad >= 1) {
-    venta.productos.push(producto);
+    if (!numFilaEditar) {
+      venta.productos.push(producto);
+    } else {
+      venta.productos[numFilaEditar] = producto;
+      $("#modal-agregar-producto").modal("hide");
+    }
+
     $("#form-producto-detalle")[0].reset();
     actualizarVista();
   } else {
@@ -90,13 +133,12 @@ function guardarVenta() {
   alert("Guardar venta");
 }
 
-function editarProductoDetalle(event) {
-  console.log($(this).attr("data-id"));
-  alert("Editar producto detalle fila " + $(this).attr("data-id"));
-}
-
 function eliminarProductoDetalle() {
-  alert("Eliminar producto detalle fila " + $(this).attr("data-id"));
+  const idFilaEliminar = parseInt($(this).attr("data-id"));
+
+  venta.productos = venta.productos.filter((item, i) => i !== idFilaEliminar);
+
+  actualizarVista();
 }
 
 function actualizarVista() {
@@ -125,7 +167,7 @@ function actualizarVista() {
     );
   }
 
-  $(".btn-editar-producto-detalle").click(editarProductoDetalle);
+  $(".btn-editar-producto-detalle").click(mostrarModalEditarProducto);
   $(".btn-eliminar-producto-detalle").click(eliminarProductoDetalle);
 
   $("#total-factura").html(`$ ${total}`);

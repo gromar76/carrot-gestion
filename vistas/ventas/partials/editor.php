@@ -70,7 +70,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 
     <div class="row w-75">
         <div class="col">
-            <button id="btn-modal-agregar-producto" class="btn btn-primary" data-toggle="modal" data-target="#modal-agregar-producto">Agregar producto</button>
+            <button id="btn-modal-agregar-producto" class="btn btn-primary" >Agregar producto</button>
         </div>
     </div>
     
@@ -127,7 +127,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar producto</h5>
+                <h5 id="titulo-modal-agregar-producto" class="modal-title">Agregar producto</h5>
                 <button type="button" class="close" data-dismiss="modal" >
                 <span aria-hidden="true">&times;</span>
                 </button>
