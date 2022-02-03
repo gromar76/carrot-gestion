@@ -40,7 +40,7 @@
             $data["clientesDe"] =  isset($_GET['u'] ) ? $_GET['u'] : $_SESSION['usuario']['id'];
 
             // opcion por default, arranco por aca clientes      
-            $data["registros"] = obtenerTodos($data["clientesDe"] );
+            $data["registros"] = obtenerTodosClientes($data["clientesDe"] );
             $data["usuarios"]  = obtenerTodosUsuarios();
             $data["usuario"]   =  $_SESSION['usuario'];
             //var_dump($data["registros"][0]);
@@ -58,7 +58,7 @@
             {   
                     if (strlen(trim($_POST["nombre"]))>3)
                     {           
-                        modificar($_POST, $id);
+                        modificarClientes($_POST, $id);
                         header('Location: index.php?m=clientes&a=listado&mensaje=Cliente modificado correctamente&tipoMensaje=success');
                     }                    
                     else
@@ -71,7 +71,7 @@
             {
                     //2. obtener datos del cliente a editar
                     // aca hizo click en el boton verde de editar
-                    $data["registros"] = obtenerPorId($id);
+                    $data["registros"] = obtenerPorIdClientes($id);
                     //3. llamar a la vista pasandole los datos de ese cliente en particular           
                     include( 'vistas/clientes/index.php');               
             }
@@ -81,7 +81,7 @@
             
             // aqui la direccion es m=clientes&a=ver
             //1. obtener datos del cliente a editar
-            $data["registros"] = obtenerPorId($id);
+            $data["registros"] = obtenerPorIdClientes($id);
 
             //2. llamar a la vista pasandole los datos de ese cliente en particular           
             include( 'vistas/clientes/index.php');
@@ -96,7 +96,7 @@
             if( isset( $_POST["nombre"] ) ){
 
                 if ( validarDatos() ){
-                    agregar($_POST, $_SESSION['usuario']['id']);
+                    agregarClientes($_POST, $_SESSION['usuario']['id']);
 
                     header('Location: index.php?m=clientes&a=listado&mensaje=Cliente agregado correctamente&tipoMensaje=success');
                 }else{
@@ -133,7 +133,7 @@
             break;
         
         case "eliminar":  
-            eliminar($id);
+            eliminarClientes($id);
             
             header('Location: index.php?m=clientes&a=listado&mensaje=Cliente eliminado correctamente&tipoMensaje=success');
 

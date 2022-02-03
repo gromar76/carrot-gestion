@@ -14,7 +14,7 @@
         return $registros;
     }
 
-    function obtenerTodos($usuario){
+    function obtenerTodosClientes($usuario = -1){
 
         $conexion = obtenerConexion();
 
@@ -31,7 +31,7 @@
                        ORDER BY nombre';        
         
         $resultado = $conexion->query($consulta);
-         $registros = fetchAll( $resultado );
+        $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
@@ -39,7 +39,7 @@
     }
     
 
-    function obtenerPorId($id){
+    function obtenerPorIdClientes($id){
         $conexion = obtenerConexion();
         
         $consulta = "SELECT cl.*, REPLACE(whatsapp, ' ', '') whatsapp, pro.id id_provincia, pa.id id_pais
@@ -61,7 +61,7 @@
         return $registros[0];
     }
 
-    function agregar($data, $idUsuario){
+    function agregarClientes($data, $idUsuario){
 
         $conexion = obtenerConexion();
 
@@ -94,7 +94,7 @@
 
     }
 
-    function modificar($data, $id){
+    function modificarClientes($data, $id){
         $conexion = obtenerConexion();
 
         $nombre             = $data["nombre"];
@@ -135,7 +135,7 @@
         cerrarConexion($conexion);
     }
 
-    function eliminar($id){
+    function eliminarClientes($id){
         $conexion = obtenerConexion();
 
         $consulta = "DELETE FROM clientes WHERE id=$id";
@@ -143,3 +143,6 @@
         $resultado = $conexion->query($consulta);
         cerrarConexion($conexion);
     }
+
+
+  

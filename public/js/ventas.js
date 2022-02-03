@@ -2,10 +2,7 @@ const venta = {
   cliente: null,
   fecha: null,
   observaciones: "",
-  productos: [
-    { id: 1, nombre: "Monitor", precioUnit: 10000, cantidad: 2 },
-    { id: 2, nombre: "Teclado", precioUnit: 20000, cantidad: 1 },
-  ],
+  productos: [],
 };
 
 $(document).ready(function () {
@@ -43,6 +40,11 @@ $(document).ready(function () {
   $("#btn-agregar-detalle").click(agregarProductoDetalle);
 
   $("#btn-guardar").click(guardarVenta);
+
+  $("#producto").change(function () {
+    alert("cambio el producto, poner el precio en el input");
+    $("#precio").val(99999999);
+  });
 });
 
 function atras() {
@@ -65,14 +67,66 @@ function cargarVenta(id) {
 }
 
 function agregarProductoDetalle() {
-  alert("Agregar producto al detalle");
-  actualizarVista();
+  const producto = {
+    id: $("#producto").val(),
+    nombre: $("#producto option:selected").text(),
+    cantidad: $("#cantidad").val(),
+    precioUnit: $("#precio").val(),
+  };
+
+  producto.precioUnit = producto.precioUnit || 0;
+
+  // si seleccione algun producto y si el precio no es negativo
+  if (producto.id != -1 && producto.precioUnit >= 0 && producto.cantidad >= 1) {
+    venta.productos.push(producto);
+    $("#form-producto-detalle")[0].reset();
+    actualizarVista();
+  } else {
+    alert("Complete campos!!");
+  }
 }
 
 function guardarVenta() {
   alert("Guardar venta");
 }
 
+function editarProductoDetalle(event) {
+  console.log($(this).attr("data-id"));
+  alert("Editar producto detalle fila " + $(this).attr("data-id"));
+}
+
+function eliminarProductoDetalle() {
+  alert("Eliminar producto detalle fila " + $(this).attr("data-id"));
+}
+
 function actualizarVista() {
-  alert("Actualizo la vista");
+  const detalleProductosTbody = $("#detalle-venta");
+
+  detalleProductosTbody.empty();
+
+  let total = 0;
+  let fila = 0;
+
+  for (let { nombre, cantidad, precioUnit } of venta.productos) {
+    total += cantidad * precioUnit;
+
+    detalleProductosTbody.append(
+      `<tr>
+          <td>${nombre}</td>
+          <td>${cantidad}</td>
+          <td>$ ${precioUnit}</td>
+          <td>$ ${cantidad * precioUnit}</td>
+          <td>
+            <button data-id="${fila}" class="btn-editar-producto-detalle">Editar</button>
+            <button data-id="${fila++}" class="btn-eliminar-producto-detalle">Eliminar</button>
+          </td>
+       </tr>
+      `
+    );
+  }
+
+  $(".btn-editar-producto-detalle").click(editarProductoDetalle);
+  $(".btn-eliminar-producto-detalle").click(eliminarProductoDetalle);
+
+  $("#total-factura").html(`$ ${total}`);
 }

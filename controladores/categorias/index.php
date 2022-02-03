@@ -41,7 +41,7 @@
                 //1. Verificar si viene con datos del formulario (payload)
                 // aca hizo click en el boton GUARDAR ....ya venia editando
                 if( isset( $_POST["nombre"] ) ){
-                    modificar($_POST, $id);    
+                    modificarCatProd($_POST, $id);    
                     header('Location: index.php?m=categorias&a=editar&mensaje=Categoria modificada correctamente&tipoMensaje=success');                }
                 else{
     
@@ -63,30 +63,26 @@
             if( isset( $_POST["nombre"] ) ){
 
                 if ( validarDatos() ){
-                    agregar($_POST, $_SESSION['usuario']['id']);
+                    agregarCatProd($_POST, $_SESSION['usuario']['id']);
 
-                    header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
+                    header('Location: index.php?m=categorias&a=listado&mensaje=Categoria agregada correctamente&tipoMensaje=success');
                 }else{
                     $data["mensaje"] = 'Completar todos los campos obligatorios';
                     $data["tipoMensaje"] = 'danger';
 
                     $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : ''; 
  
-                    include( 'vistas/productos/index.php');
+                    include( 'vistas/categorias/index.php');
                 }
 
             }else{                  
                 //2. llamar a la vista pasandole los datos de ese cliente en particular           
-                include( 'vistas/productos/index.php');
+                include( 'vistas/categorias/index.php');
             }
 
             break;
 
-
-
-
-
-           
+          
                
         default:
             include( 'vistas/404/index.php');

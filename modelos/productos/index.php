@@ -2,7 +2,7 @@
 
     include_once 'funciones/conexion.php';
 
-    function obtenerTodos(){
+    function obtenerTodosProductos(){
         $conexion = obtenerConexion();
         $consulta = "SELECT art.id, art.nombre, art.precio, cat.id as id_categoria, cat.nombre as nomcat
                      FROM productos art, categorias_productos cat
@@ -13,7 +13,7 @@
         return $registros;
     }
 
-    function obtenerPorId($id){
+    function obtenerPorIdProducto($id){
         $conexion = obtenerConexion();
         
         /*$consulta = "SELECT ar.*, ca.id id_categoria
@@ -33,24 +33,31 @@
         return $registros[0];
     }
 
-    function agregar($data, $id){
+    function agregarProducto($data, $id){
+
         $conexion = obtenerConexion();
         $nombre      = $data["nombre"];
         $descripcion = $data["descripcion"];
         $precio      = $data["precio"];                    
         $idCategoria = $data["id_categoria"];
 
+        /*echo $nombre;
+        echo $descripcion;
+        echo $precio;
+        echo $idCategoria;
+        exit();*/
+
+
         $consulta = "INSERT into productos (nombre, descripcion, precio, id_categoria)
                      VALUES ('$nombre', '$descripcion', $precio, $idCategoria)";
 
         //echo $consulta; exit();
 
-        $resultado = $conexion->query($consulta);
-        
+        $resultado = $conexion->query($consulta);        
         cerrarConexion($conexion);
     }      
     
-    function modificar($data, $id){
+    function modificarProducto($data, $id){
         $conexion = obtenerConexion();
 
         $nombre      = $data["nombre"];
@@ -71,6 +78,6 @@
     }  
     
     
-    function eliminar($id){
+    function eliminarProducto($id){
 
     }

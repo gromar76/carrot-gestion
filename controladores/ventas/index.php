@@ -1,6 +1,8 @@
 <?php
 
+    include("modelos/clientes/index.php");
     include("modelos/ventas/index.php");
+    include("modelos/productos/index.php");
 
     // seteo listado por default
     $accion = "listado";
@@ -18,6 +20,17 @@
         $accion = $_GET["a"];
     }
 
+    function validarDatos(){
+
+        // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract
+        // y que provincia y localidad tenga algun valor valido, default viene con -1
+        return  true; /* isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
+                isset( $_POST['pais'] ) &&
+                isset( $_POST['provincia'] ) && $_POST['provincia'] != '-1' &&
+                isset( $_POST['id_localidad'] ) && $_POST['id_localidad'] != '-1'; */
+               
+    }
+
     switch( $accion ){
 
         case "listado":
@@ -33,18 +46,18 @@
      
                 //1. Verificar si viene con datos del formulario (payload)
                 // aca hizo click en el boton GUARDAR ....ya vania editando
-                if( isset( $_POST["nombre"] ) ){
+                if( isset( $_POST["cliente"] ) ){
                     modificar($_POST, $id);
     
                     header('Location: index.php?m=ventas&a=listado&mensaje=Venta modificada correctamente&tipoMensaje=success');
                 }
                 else{
     
-                    //2. obtener datos del producto a editar
+                    //2. obtener datos de la venta a editar
                     // aca hizo click en el boton verde de editar
                     $data["registros"] = obtenerPorId($id);                   
     
-                    //3. llamar a la vista pasandole los datos de ese cliente en particular           
+                    //3. llamar a la vista pasandole los datos de esa venta en particular           
                     include( 'vistas/ventas/index.php');
                 }
     
@@ -54,26 +67,31 @@
         
                 //1. Verificar si viene con datos del formulario (payload)
                 //APRETE BOTON GUARDAN DANDO DE ALTA
-                if( isset( $_POST["nombre"] ) ){
+                if( isset( $_POST["cliente"] ) ){
     
-                   // if ( validarDatos() ){
-                        agregar($_POST, $_SESSION['usuario']['id']);
+                   if ( validarDatos() ){
+                       echo "Guardar venta...";
+                        /*agregar($_POST, $_SESSION['usuario']['id']);
     
-                        header('Location: index.php?m=ventas&a=listado&mensaje=Venta agregada correctamente&tipoMensaje=success');
-                   /*  }else{
+                        header('Location: index.php?m=ventas&a=listado&mensaje=Venta agregada correctamente&tipoMensaje=success');*/
+                   }else{
     
-                        $data["mensaje"] = 'Completar todos los campos obligatorios';
+                        /*$data["mensaje"] = 'Completar todos los campos obligatorios';
                         $data["tipoMensaje"] = 'danger';
     
                         $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
                         $data["registros"]["apellido"] = $_POST['apellido'] ?  $_POST['apellido'] : '';
 
         
-                        include( 'vistas/clientes/index.php');
-                    } */
+                        include( 'vistas/clientes/index.php');*/
+                    }
     
-                }else{                  
-                    //2. llamar a la vista pasandole los datos de ese cliente en particular           
+                }else{        
+                    
+                    $data["clientes"] = obtenerTodosClientes(); //REFACTOR: cambiar nombre a obtenerTodosClientes
+                    $data["productos"] = obtenerTodosProductos();
+
+                    //2. llamar a la vista del editor de venta vacio    
                     include( 'vistas/ventas/index.php');
                 }
     

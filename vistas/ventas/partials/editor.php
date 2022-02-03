@@ -1,15 +1,25 @@
 <?php
+
+include 'funciones/html.php';
+
 // este archivo debe manejar el AGREGAR,VER Y EDITAR ----> CLIENTE
 // si la accion es editar o ver, guardo en la variable el dato, sino pongo espacio vacio porque voy a dar de alta
 
 // si existe registros nombre, entonces a $nombre ponele $data['registros']['nombre'], sino ponele ''
 
-$cliente       = isset($data['registros']['cliente']) ? $data['registros']['cliente'] : '';
-$fecha            = isset($data['registros']['fecha'])  ? $data['registros']['fecha'] : '';
+$cliente        = isset($data['registros']['cliente']) ? $data['registros']['cliente'] : '';
+$fecha          = isset($data['registros']['fecha'])  ? $data['registros']['fecha'] : '';
 $observaciones  = isset($data['registros']['observaciones']) ? $data['registros']['observaciones'] : '';
 
-/*$nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
-$whatsapp       = isset($data['registros']['whatsapp']) ? $data['registros']['whatsapp'] : '';
+$producto       = isset($data['registros']['producto']) ? $data['registros']['producto'] : '-1';
+$cantidad       = isset($data['registros']['cantidad']) ? $data['registros']['cantidad'] : '1';
+
+$precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
+
+$clientes       = $data["clientes"];
+$productos      = $data["productos"];
+
+/*
 $telefono2      = isset($data['registros']['telefono2']) ? $data['registros']['telefono2'] : '';
 $email          = isset($data['registros']['email']) ? $data['registros']['email'] : '';
 $esClienteDe    = isset($data['registros']['es_cliente_de']) ? $data['registros']['es_cliente_de'] : '';  //dio de alta marcelo o nicolas   esto vendra x la cookie luego del logueo
@@ -40,8 +50,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                     <label for="cliente" class="col-3 col-form-label">Cliente</label> 
                     <div class="col-9">
                     <select id="cliente" name="cliente" class="custom-select" <?=$disabled?> value="<?=$cliente?>">
-                        <option>Pepe</option>
-                        <option>Juan</option>
+                        <?= dameOpcionesDelSelect($clientes); ?>
                     </select>
                     </div>
                 </div>
@@ -54,38 +63,49 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                 </div>
             </div>
             
-            <div class="col ml-4">
-                <div class="form-group">
-                    <label for="observaciones">Observaciones</label>
-                    <textarea name="observaciones" class="form-control" <?php echo $disabled?> id="observaciones" rows="5"><?=$observaciones?></textarea>
-                </div>
-            </div>
+
         
         </form>
     </div>
 
     <div class="row w-75">
         <div class="col">
-            <button id="btn-agregar-detalle" class="btn btn-primary">Agregar producto</button>
+            <button id="btn-modal-agregar-producto" class="btn btn-primary" data-toggle="modal" data-target="#modal-agregar-producto">Agregar producto</button>
         </div>
     </div>
     
     <div class="row w-75">
-        <div id="detalle-venta" class="col">
+        <div class="col">
             <table class="table mt-3">
                 <thead>
                     <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
                     <th>Precio Total</th>
+                    <th>Acciones</th>
                 </thead>
 
-                <tbody>
+                <tbody id="detalle-venta">
 
                 </tbody>
             </table>
         </div>
-    </div>           
+    </div>      
+
+    <div class="row w-75">
+        <div class="col">
+            Total: <span id="total-factura"></span>
+        </div>
+    </div>
+    
+    <div class="row w-100">
+        <div class="col ml-4">
+            <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea name="observaciones" class="form-control" <?php echo $disabled?> id="observaciones" rows="5"><?=$observaciones?></textarea>
+            </div>
+        </div>
+    </div>
         
     <div class="form-group row w-75">
         <div class="col text-center">                
@@ -98,6 +118,58 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 
             <input id="btn-atras" class="btn btn-primary" type="reset" value= "<?= $accion == 'ver' ? 'Volver' : 'Cancelar' ?>" >
         </div>            
-    </div>  
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-agregar-producto" data-backdrop="static" data-keyboard="false" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar producto</h5>
+                <button type="button" class="close" data-dismiss="modal" >
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-producto-detalle" method="post" class="col-12 col-sm-10 col-md-10">
+
+                    <div class="col">
+                        <div class="form-group row">
+                            <label for="producto" class="col-3 col-form-label">Producto</label> 
+                            <div class="col-9">
+                                <select id="producto" name="producto" class="custom-select" <?=$disabled?> value="<?=$producto?>">
+                                    <option value="-1">Seleccione el producto...</option>
+                                    <?= dameOpcionesDelSelect($productos); ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="cantidad" class="col-3 col-form-label">cantidad</label> 
+                            <div class="col-9">
+                            <input id="cantidad" name="cantidad" type="number" class="form-control" <?=$disabled?> value="<?=$cantidad?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="precio" class="col-3 col-form-label">precio</label> 
+                            <div class="col-9">
+                            <input id="precio" name="precio" type="number" class="form-control" <?=$disabled?> value="<?=$precio?>">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">                
+                <button id="btn-agregar-detalle" type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal -->
 
 </div>

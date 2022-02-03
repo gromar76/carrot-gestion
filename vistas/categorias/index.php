@@ -11,6 +11,16 @@
             $data["contenido"] =  'vistas/categorias/partials/editor.php';
             $data["titulo"] = "Editando el Categoria";                       
             break;
+
+        case "agregar":
+            $data["contenido"] = 'vistas/categorias/partials/editor.php';
+            $data["titulo"] = "Agregando la Categoria";            
+            break;
+
+
+
+
+
     }
 
     $data["mostrar_header"] = TRUE;

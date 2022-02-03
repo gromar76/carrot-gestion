@@ -17,8 +17,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?m=clientes">Clientes</a>
           <a class="dropdown-item" href="index.php?m=productos">Productos</a>          
-          <a class="dropdown-item" href="index.php?m=categorias">Categorias de Productos</a>
-          <a class="dropdown-item" href="#">Paises</a>
+          <a class="dropdown-item" href="index.php?m=categorias">Categorias de Productos</a>          
           <a class="dropdown-item" href="index.php?m=provincias">Provincias/Estados</a>
           <a class="dropdown-item" href="index.php?m=localidades">Localidades</a>
       </li>
@@ -28,6 +27,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>
+          <a class="dropdown-item" href="index.php?m=ventas">Modulo Pagos</a>
           <a class="dropdown-item" href="#">Registrar Egreso/Gasto</a>
           <a class="dropdown-item" href="#">Registrar Corte Contable entre fechas</a>                    
           <a class="dropdown-item" href="#">xxxxxxxxx</a>

@@ -28,10 +28,16 @@
 
     function agregarCatProd($data){
         $conexion = obtenerConexion();
-        $consulta = "INSERT INTO categorias_productos (id, nombre, baja) ";
+
+        $nombre      = $data["nombre"];
+        
+        /*echo $nombre;
+        exit();*/
+
+        $consulta = "INSERT INTO categorias_productos (nombre) VALUES ('$nombre')";       
                 
         $resultado = $conexion->query($consulta);
-         $registros = fetchAll( $resultado );
+        $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 

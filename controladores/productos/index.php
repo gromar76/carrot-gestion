@@ -35,7 +35,7 @@
 
         case "listado":
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
-            $data["registros"] = obtenerTodos();
+            $data["registros"] = obtenerTodosProductos();
             //var_dump($data["registros"][0]); exit();
 
             //2- Va a llamar a la vista pasandole los datos de los productos
@@ -53,7 +53,7 @@
                 {
                     if (strlen(trim($_POST["nombre"])) > 3)
                     {
-                        modificar($_POST, $id);    
+                        modificarProducto($_POST, $id);    
                         header('Location: index.php?m=productos&a=listado&mensaje=Producto modificado correctamente&tipoMensaje=success');
                     }   
                     else
@@ -67,7 +67,7 @@
     
                     //2. obtener datos del producto a editar
                     // aca hizo click en el boton verde de editar
-                    $data["registros"]  = obtenerPorId($id);
+                    $data["registros"]  = obtenerPorIdProducto($id);
                     $data["categorias"] = obtenerTodosCatProd();
 
                     //3. llamar a la vista pasandole los datos de ese cliente en particular           
@@ -83,7 +83,7 @@
             if( isset( $_POST["nombre"] ) ){
 
                 if ( validarDatos() ){
-                    agregar($_POST, $_SESSION['usuario']['id']);
+                    agregarProducto($_POST, $_SESSION['usuario']['id']);
                     header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
                 }else{
 
