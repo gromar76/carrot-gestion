@@ -5,6 +5,7 @@ const venta = {
   productos: [],
 };
 
+// con esto manejo la fila al hacer click en editar o eliminar
 let numFilaEditar;
 
 $(document).ready(function () {
@@ -44,8 +45,11 @@ $(document).ready(function () {
   $("#btn-guardar").click(guardarVenta);
 
   $("#producto").change(async function () {
+    
+    // guardo el id del producto del selector de productos, el VALUE
     const idProducto = $(this).val();
 
+    // pongo en el input de precio el valor
     $("#precio").val(await obtenerPrecioProducto(idProducto));
   });
 
@@ -63,6 +67,7 @@ function mostrarModalAgregarProducto() {
 function mostrarModalEditarProducto() {
   numFilaEditar = $(this).attr("data-id");
 
+  // traigo los datos de la fila a editar en id, cantidad y precio
   const { id, cantidad, precioUnit } = venta.productos[numFilaEditar];
 
   $("#producto").val(id);
@@ -93,8 +98,7 @@ function cargarVenta(id) {
   // alert("hola");
 }
 
-async function obtenerPrecioProducto(id) {
-  //const url = `http://localhost/index.php?m=productos&a=obtenerPrecio&id=${id}`;
+async function obtenerPrecioProducto(id) {  
   const url = `${URL_BASE}/index.php?m=productos&a=obtenerPrecio&id=${id}`;
 
   const response = await fetch(url);
@@ -133,13 +137,37 @@ function guardarVenta() {
   alert("Guardar venta");
 }
 
-function eliminarProductoDetalle() {
-  const idFilaEliminar = parseInt($(this).attr("data-id"));
+function eliminarProductoDetalle()
+{
 
-  venta.productos = venta.productos.filter((item, i) => i !== idFilaEliminar);
+        // click en eliminar
+        const idFilaEliminar = parseInt($(this).attr("data-id"));
+       
 
-  actualizarVista();
+          Swal.fire({
+            text: "¿Confirma la baja?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Aceptar",
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "red",
+          }).then((result) => {
+            if (result.isConfirmed) {
+                    // aqui quiero eliminar la fila idFilaEliminar
+                    // filter lo que hace es filtrar los que son distintos a esa fila, entonces
+                    // me elimina de venta.productos la fila que es igual a ifFilaEliminar  
+                    venta.productos = venta.productos.filter((item, i) => i !== idFilaEliminar);
+
+                    actualizarVista();              
+            }
+          });
+
 }
+
+
+
+
+
 
 function actualizarVista() {
   const detalleProductosTbody = $("#detalle-venta");
@@ -158,7 +186,7 @@ function actualizarVista() {
           <td>${cantidad}</td>
           <td>$ ${precioUnit}</td>
           <td>$ ${cantidad * precioUnit}</td>
-          <td>
+          <td> 
             <button data-id="${fila}" class="btn-editar-producto-detalle">Editar</button>
             <button data-id="${fila++}" class="btn-eliminar-producto-detalle">Eliminar</button>
           </td>

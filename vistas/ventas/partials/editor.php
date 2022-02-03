@@ -147,14 +147,14 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                         </div>
 
                         <div class="form-group row">
-                            <label for="cantidad" class="col-3 col-form-label">cantidad</label> 
+                            <label for="cantidad" class="col-3 col-form-label">Cant.</label> 
                             <div class="col-9">
                             <input id="cantidad" name="cantidad" type="number" class="form-control" <?=$disabled?> value="<?=$cantidad?>">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="precio" class="col-3 col-form-label">precio</label> 
+                            <label for="precio" class="col-3 col-form-label">Precio Unit.</label> 
                             <div class="col-9">
                             <input id="precio" name="precio" type="number" class="form-control" <?=$disabled?> value="<?=$precio?>">
                             </div>
