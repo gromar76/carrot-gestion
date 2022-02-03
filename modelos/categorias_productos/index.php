@@ -34,18 +34,30 @@
         /*echo $nombre;
         exit();*/
 
-        $consulta = "INSERT INTO categorias_productos (nombre) VALUES ('$nombre')";       
-                
+        $consulta = "INSERT INTO categorias_productos (nombre) VALUES ('$nombre')";      
+        
+        
+
         $resultado = $conexion->query($consulta);
-        $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
-        return $registros;
     }
 
     function modificarCatProd($data, $id){
-        
+
+        $conexion = obtenerConexion();
+
+        $nombre      = $data["nombre"];
+            
+        $consulta="UPDATE categorias_productos
+                     SET nombre = '$nombre'                                      
+                   WHERE id = $id";
+
+        //echo $consulta;exit();
+
+        $resultado = $conexion->query($consulta);        
+        cerrarConexion($conexion);
     }
 
     function eliminarCatProd($id){

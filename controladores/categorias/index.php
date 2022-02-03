@@ -41,15 +41,14 @@
                 //1. Verificar si viene con datos del formulario (payload)
                 // aca hizo click en el boton GUARDAR ....ya venia editando
                 if( isset( $_POST["nombre"] ) ){
-                    modificarCatProd($_POST, $id);    
-                    header('Location: index.php?m=categorias&a=editar&mensaje=Categoria modificada correctamente&tipoMensaje=success');                }
+                    
+                    modificarCatProd($_POST, $id);                    
+                    header('Location: index.php?m=categorias&a=listado&mensaje=Categoria modificada correctamente&tipoMensaje=success');                }
                 else{
     
                     //2. obtener datos del producto a editar
                     // aca hizo click en el boton verde de editar
-                    $data["registros"]  = obtenerPorIdCatProd($id);                  
-                    
-    
+                    $data["registros"]  = obtenerPorIdCatProd($id);   
 
                     //3. llamar a la vista pasandole los datos de ese cliente en particular           
                     include( 'vistas/categorias/index.php');

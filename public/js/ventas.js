@@ -45,7 +45,6 @@ $(document).ready(function () {
   $("#btn-guardar").click(guardarVenta);
 
   $("#producto").change(async function () {
-    
     // guardo el id del producto del selector de productos, el VALUE
     const idProducto = $(this).val();
 
@@ -98,7 +97,7 @@ function cargarVenta(id) {
   // alert("hola");
 }
 
-async function obtenerPrecioProducto(id) {  
+async function obtenerPrecioProducto(id) {
   const url = `${URL_BASE}/index.php?m=productos&a=obtenerPrecio&id=${id}`;
 
   const response = await fetch(url);
@@ -137,37 +136,30 @@ function guardarVenta() {
   alert("Guardar venta");
 }
 
-function eliminarProductoDetalle()
-{
+function eliminarProductoDetalle() {
+  // click en eliminar
+  const idFilaEliminar = parseInt($(this).attr("data-id"));
 
-        // click en eliminar
-        const idFilaEliminar = parseInt($(this).attr("data-id"));
-       
+  Swal.fire({
+    text: "¿Confirma la baja?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "red",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // aqui quiero eliminar la fila idFilaEliminar
+      // filter lo que hace es filtrar los que son distintos a esa fila, entonces
+      // me elimina de venta.productos la fila que es igual a ifFilaEliminar
+      venta.productos = venta.productos.filter(
+        (item, i) => i !== idFilaEliminar
+      );
 
-          Swal.fire({
-            text: "¿Confirma la baja?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Aceptar",
-            cancelButtonText: "Cancelar",
-            confirmButtonColor: "red",
-          }).then((result) => {
-            if (result.isConfirmed) {
-                    // aqui quiero eliminar la fila idFilaEliminar
-                    // filter lo que hace es filtrar los que son distintos a esa fila, entonces
-                    // me elimina de venta.productos la fila que es igual a ifFilaEliminar  
-                    venta.productos = venta.productos.filter((item, i) => i !== idFilaEliminar);
-
-                    actualizarVista();              
-            }
-          });
-
+      actualizarVista();
+    }
+  });
 }
-
-
-
-
-
 
 function actualizarVista() {
   const detalleProductosTbody = $("#detalle-venta");

@@ -16,10 +16,7 @@
             $data["contenido"] = 'vistas/categorias/partials/editor.php';
             $data["titulo"] = "Agregando la Categoria";            
             break;
-
-
-
-
+            
 
     }
 

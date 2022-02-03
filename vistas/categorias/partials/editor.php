@@ -7,7 +7,9 @@ include 'funciones/html.php';
 //si la accion es EDITAR O VER debo mostrar los valores, solo no muestro cuando es alta
 // si la accion es modificar, entonces tomo los datos,  
 
-$nombre = $accion != 'agregar' ? $data['registros']['nombre'] : '';
+$nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
+
+//$nombre = $accion != 'agregar' ? $data['registros']['nombre'] : '';
 
 // si la accion es VER entonces disabled esta vacio
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
