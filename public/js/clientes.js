@@ -73,12 +73,13 @@ function cargarPaises(idPaisSeleccionado) {
 }
 
 function cargarProvincias(idProvinciaSeleccionada) {
-  //primero lo que voy a hacer es borrar provincias y localidades
+  //primero lo que voy a hacer es borrar provincias y localidades  
+
   $("#provincia").empty();
   $("#localidad").empty();
 
   const idPais = $("#pais").val();
-
+  
   const url = `${URL_BASE}/index.php?m=provincias&a=listadoAjax&id=${idPais}`;
 
   $.get(url, function (provincias) {

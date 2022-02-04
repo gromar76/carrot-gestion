@@ -3,7 +3,7 @@
 
     switch($accion){
         case "listado":
-            $data["contenido"] =  'vistas/categorias/partials/listado.php';
+            $data["contenido"] =  'vistas/categorias/partials/listado.php';            
             $data["titulo"] = "Listado de Categorias";
             break;
 
@@ -24,8 +24,6 @@
     $data["mostrar_footer"] = TRUE;
     // aqui guardo en data los js asociados a esa vista....
     $data["js"] = [ "categorias.js" ];
-
-    $data["titulo"] = "Categorias";
-
+    
     include('vistas/base/index.php');
 ?>

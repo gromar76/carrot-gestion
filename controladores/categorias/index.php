@@ -30,7 +30,7 @@
             //1- Obtener los datos de los clientes (Pide al modelo de clientes)       
             $data["registros"] = obtenerTodosCatProd();
 
-            //2- Va a llamar a la vista pasandole los datos de los clientes
+            //2- Va a llamar a la vista pasandole los datos de los clientes            
             include( 'vistas/categorias/index.php');
 
             break;

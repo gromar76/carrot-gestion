@@ -41,7 +41,7 @@
         }
        
         if ( isset( $data["titulo"] )){
-        ?>        
+        ?>          
           <h2 id="titulo-modulo" class="mb-3"><?=$data["titulo"]?></h2>        
         <?php 
         }
