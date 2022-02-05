@@ -82,7 +82,9 @@
             //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $_POST["nombre"] ) ){
 
-                if ( validarDatos() ){
+
+                if ( validarDatos() ){     
+
                     agregarProducto($_POST, $_SESSION['usuario']['id']);
                     header('Location: index.php?m=productos&a=listado&mensaje=Producto agregado correctamente&tipoMensaje=success');
                 }else{

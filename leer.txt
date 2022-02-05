@@ -11,3 +11,5 @@ git checkout HASH         //Vuelvo a un commit anterior
 git checkout nombre_arch  //Restaura un archivo al estado anterior
 ---------------------------------------------------------------------------------------------------------------
 
+
+

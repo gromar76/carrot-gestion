@@ -1,3 +1,4 @@
+// armo la estructura de la venta
 const venta = {
   cliente: null,
   fecha: null,
@@ -119,8 +120,10 @@ function guardarProductoDetalle() {
   // si seleccione algun producto y si el precio no es negativo
   if (producto.id != -1 && producto.precioUnit >= 0 && producto.cantidad >= 1) {
     if (!numFilaEditar) {
+      //agrego el producto si no hay nro de fila...vengo por agregar
       venta.productos.push(producto);
     } else {
+      // edito el producto y pego el nuevo "producto"
       venta.productos[numFilaEditar] = producto;
       $("#modal-agregar-producto").modal("hide");
     }
@@ -132,8 +135,23 @@ function guardarProductoDetalle() {
   }
 }
 
-function guardarVenta() {
-  alert("Guardar venta");
+async function guardarVenta() {
+  venta.cliente = $("#cliente").val();
+  venta.fecha = $("#fecha").val();
+  venta.observaciones = $("#observaciones").val();
+
+  const url = `${URL_BASE}/index.php?m=ventas&a=agregar`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(venta),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  console.log(data);
 }
 
 function eliminarProductoDetalle() {

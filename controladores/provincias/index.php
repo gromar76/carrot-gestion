@@ -85,7 +85,7 @@
 
             case "agregar":      
             
-                   //1. Verificar si viene con datos del formulario (payload)
+            //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $_POST["nombre"] ) ){
 

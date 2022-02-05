@@ -42,60 +42,62 @@
 
             break;
 
-            case "editar":
-     
-                //1. Verificar si viene con datos del formulario (payload)
-                // aca hizo click en el boton GUARDAR ....ya vania editando
-                if( isset( $_POST["cliente"] ) ){
-                    modificar($_POST, $id);
+        case "editar":
     
-                    header('Location: index.php?m=ventas&a=listado&mensaje=Venta modificada correctamente&tipoMensaje=success');
-                }
-                else{
-    
-                    //2. obtener datos de la venta a editar
-                    // aca hizo click en el boton verde de editar
-                    $data["registros"] = obtenerPorId($id);                   
-    
-                    //3. llamar a la vista pasandole los datos de esa venta en particular           
-                    include( 'vistas/ventas/index.php');
-                }
-    
-                break;
-        
-            case "agregar":      
-        
-                //1. Verificar si viene con datos del formulario (payload)
-                //APRETE BOTON GUARDAN DANDO DE ALTA
-                if( isset( $_POST["cliente"] ) ){
-    
-                   if ( validarDatos() ){
-                       echo "Guardar venta...";
-                        /*agregar($_POST, $_SESSION['usuario']['id']);
-    
-                        header('Location: index.php?m=ventas&a=listado&mensaje=Venta agregada correctamente&tipoMensaje=success');*/
-                   }else{
-    
-                        /*$data["mensaje"] = 'Completar todos los campos obligatorios';
-                        $data["tipoMensaje"] = 'danger';
-    
-                        $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
-                        $data["registros"]["apellido"] = $_POST['apellido'] ?  $_POST['apellido'] : '';
+            //1. Verificar si viene con datos del formulario (payload)
+            // aca hizo click en el boton GUARDAR ....ya vania editando
+            if( isset( $_POST["cliente"] ) ){
+                modificar($_POST, $id);
 
+                header('Location: index.php?m=ventas&a=listado&mensaje=Venta modificada correctamente&tipoMensaje=success');
+            }
+            else{
+
+                //2. obtener datos de la venta a editar
+                // aca hizo click en el boton verde de editar
+                $data["registros"] = obtenerPorId($id);                   
+
+                //3. llamar a la vista pasandole los datos de esa venta en particular           
+                include( 'vistas/ventas/index.php');
+            }
+
+            break;
         
-                        include( 'vistas/clientes/index.php');*/
-                    }
+        case "agregar":      
     
-                }else{        
+            $postParams = json_decode( file_get_contents('php://input') );
+            
+            //1. Verificar si viene con datos del formulario (payload)
+            //APRETE BOTON GUARDAN DANDO DE ALTA
+            if( isset( $postParams->cliente ) ){
+
+                if ( validarDatos() ){
                     
-                    $data["clientes"] = obtenerTodosClientes(); //REFACTOR: cambiar nombre a obtenerTodosClientes
-                    $data["productos"] = obtenerTodosProductos();
+                    agregarVenta($postParams, $_SESSION['usuario']['id']);
 
-                    //2. llamar a la vista del editor de venta vacio    
-                    include( 'vistas/ventas/index.php');
-                }
+                    header('Location: index.php?m=ventas&a=listado&mensaje=Venta agregada correctamente&tipoMensaje=success');
+                }else{
+
+                    /*$data["mensaje"] = 'Completar todos los campos obligatorios';
+                    $data["tipoMensaje"] = 'danger';
+
+                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
+                    $data["registros"]["apellido"] = $_POST['apellido'] ?  $_POST['apellido'] : '';
+
     
-                break;
+                    include( 'vistas/clientes/index.php');*/
+                }
+
+            }else{        
+                
+                $data["clientes"] = obtenerTodosClientes(); //REFACTOR: cambiar nombre a obtenerTodosClientes
+                $data["productos"] = obtenerTodosProductos();
+
+                //2. llamar a la vista del editor de venta vacio    
+                include( 'vistas/ventas/index.php');
+            }
+
+            break;
 
         
         default:

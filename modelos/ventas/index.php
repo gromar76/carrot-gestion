@@ -31,22 +31,26 @@
 
 
     function agregarVenta($data){
-
-      $conexion = obtenerConexion();
-
-      $tipofact    = $data["nombre"];
-      $numfact     = $data["apellido"];
-      $cliente     = $data["cliente"];
-      $importe     = $data["whatsapp"];
-      $fecha       = $data["telefono2"];      
-      $id_usuario  = $idUsuario;
-      $comentario  = $data["comentario"];
       
-      $consulta="insert into ventas (tipofact, numfact, cliente, importe, fecha, id_usuario, comentario)
+      $conexion = obtenerConexion();
+      
+      /* $tipofact    = $data["nombre"];
+      $numfact     = $data["apellido"]; */
+      $cliente     = $data->cliente;
+      $fecha       = $data->fecha;      
+      $comentario  = $data->observaciones;
+      /*$importe     = $data["whatsapp"];
+      $id_usuario  = $idUsuario;*/
+      
+      echo( $comentario ); exit();
+
+
+      
+      /*$consulta="insert into ventas (tipofact, numfact, cliente, importe, fecha, id_usuario, comentario)
        values ('$tipofact', '$numfact', '$cliente', '$importe', '$fecha', $id_usuario, $comentario )";
 
       $resultado = $conexion->query($consulta);
-      cerrarConexion($conexion);
+      cerrarConexion($conexion);*/
 
     }
 
