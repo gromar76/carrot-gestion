@@ -65,28 +65,23 @@
         
         case "agregar":      
     
-            $postParams = json_decode( file_get_contents('php://input') );
-            
+            // lo que viene por _POST lo tomo con file_get_contents
+            // eso como es un json, con la funcion json_decode lo decodifico para leerlo en $postParams
+            $postParams = json_decode( file_get_contents('php://input') );                     
+
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $postParams->cliente ) ){
 
-                if ( validarDatos() ){
-                    
+                if ( validarDatos() ){                    
                     agregarVenta($postParams, $_SESSION['usuario']['id']);
 
-                    header('Location: index.php?m=ventas&a=listado&mensaje=Venta agregada correctamente&tipoMensaje=success');
+                    $data["registros"] = ["status" => "OK", "message" => "La venta se registro satisfactoriamente"];                                        
                 }else{
-
-                    /*$data["mensaje"] = 'Completar todos los campos obligatorios';
-                    $data["tipoMensaje"] = 'danger';
-
-                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
-                    $data["registros"]["apellido"] = $_POST['apellido'] ?  $_POST['apellido'] : '';
-
-    
-                    include( 'vistas/clientes/index.php');*/
+                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar la venta"];
                 }
+
+                include( 'vistas/ajax/index.php');
 
             }else{        
                 

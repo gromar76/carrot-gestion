@@ -19,20 +19,6 @@ $precio         = isset($data['registros']['precio']) ? $data['registros']['prec
 $clientes       = $data["clientes"];
 $productos      = $data["productos"];
 
-/*
-$telefono2      = isset($data['registros']['telefono2']) ? $data['registros']['telefono2'] : '';
-$email          = isset($data['registros']['email']) ? $data['registros']['email'] : '';
-$esClienteDe    = isset($data['registros']['es_cliente_de']) ? $data['registros']['es_cliente_de'] : '';  //dio de alta marcelo o nicolas   esto vendra x la cookie luego del logueo
-$esDistribuidor = isset($data['registros']['es_distribuidor']) ? $data['registros']['es_distribuidor'] : 0;  // 0 no , 1 si
-$domicilio      = isset($data['registros']['domicilio']) ? $data['registros']['domicilio'] : '';
-$cPostal        = isset($data['registros']['cpostal']) ? $data['registros']['cpostal'] : '';
-$pais           = isset($data['registros']['id_pais']) ? $data['registros']['id_pais'] : 1; //ARGENTINA
-$provincia      = isset($data['registros']['id_provincia']) ? $data['registros']['id_provincia'] : -1;
-$localidad      = isset($data['registros']['id_localidad']) ? $data['registros']['id_localidad'] : -1;
-$paginaWeb      = isset($data['registros']['paginaweb']) ? $data['registros']['paginaweb'] : '';
-$instagram      = isset($data['registros']['instagram']) ? $data['registros']['instagram'] : '';
-$facebook       = isset($data['registros']['facebook']) ? $data['registros']['facebook'] : '';
- */
 
 // si la accion es VER entonces pongo disabled para que no se pueda editar el campo input, de lo contrario no pongo nada entonces se puede editar
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
@@ -113,7 +99,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                 // si la accion es distinto de VER es porque estoy haciendo un alta o modificacion
                 // entonces tiene que tener el boton de GUARDAR
                 if ( $accion != 'ver' ){ ?>
-                <button id="btn-guardar" class="btn btn-primary">Guardar</button>                
+                <button id="btn-guardar" class="btn btn-primary">Guardar Venta</button>                
             <?php }?>
 
             <input id="btn-atras" class="btn btn-primary" type="reset" value= "<?= $accion == 'ver' ? 'Volver' : 'Cancelar' ?>" >

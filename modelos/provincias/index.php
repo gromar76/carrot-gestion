@@ -39,10 +39,10 @@
         return $registros;
     }
 
-    function modificarCatProd($data, $id){
+    function modificarCatProv($data, $id){
         
     }
 
-    function eliminarCatProd($id){
+    function eliminarCatProv($id){
 
     }

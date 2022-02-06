@@ -14,7 +14,7 @@
 
         case "listado":
             //1- Obtener los datos de los clientes (Pide al modelo de clientes)       
-            $data["registros"] = obtenerTodos();
+            $data["registros"] = obtenerTodosLocalidades();
 
             //2- Va a llamar a la vista pasandole los datos de los clientes
             include( 'vistas/localidades/index.php');
@@ -24,7 +24,7 @@
 
         case "listadoAjax":
             //1- Obtener los datos de los paises (Pide al modelo de paises)       
-            $data["registros"] = obtenerPorId($_GET["id"]);
+            $data["registros"] = obtenerPorIdLocalidades($_GET["id"]);
 
             //2- Va a llamar a la vista pasandole los datos de los paises (JSON)
             include( 'vistas/ajax/index.php');

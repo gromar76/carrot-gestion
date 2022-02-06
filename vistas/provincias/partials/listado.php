@@ -1,5 +1,7 @@
 <?php
 //var_dump($data["registros"][0]["nombre"]);
+include("config/constantes.php");
+
 ?>
 
 <a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=provincias&a=agregar">Nuevo</a>

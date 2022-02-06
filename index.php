@@ -62,6 +62,12 @@
             $modulo = "provincias";
             break;
         
+        case "depositos":
+            $modulo = "depositos";
+            break;
+        
+
+        
         // si modulo no es ninguno de los anteriores entonces es 404
         default: 
             $modulo = "404";

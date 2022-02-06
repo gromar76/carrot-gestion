@@ -2,22 +2,22 @@
 
     include_once 'funciones/conexion.php';
 
-    function obtenerTodosLocalidades(){
+    function obtenerTodosDepositos(){
         $conexion = obtenerConexion();
-        $consulta = "SELECT * FROM localidades ORDER BY nombre";
+        $consulta = "SELECT * FROM depositos ORDER BY nombre";
         $resultado = $conexion->query($consulta);
          $registros = fetchAll( $resultado );
         return $registros;
     }
 
 
-    function obtenerPorIdLocalidades($id){
+    function obtenerPorId($id){
    
 
         $conexion = obtenerConexion();
     
         $consulta = 'SELECT id, nombre
-                     FROM localidades
+                     FROM depositos
                      WHERE id_provincia=' . $id .' order by nombre';
         
         $resultado = $conexion->query($consulta);
@@ -31,14 +31,14 @@
     }
    
 
-    function agregarLocalidad($data){
+    function agregarDeposito($data){
 
     }
 
-    function modificarLocalidad($data, $id){
+    function modificarDeposito($data, $id){
         
     }
 
-    function eliminarLocalidad($id){
+    function eliminarDeposito($id){
 
     }

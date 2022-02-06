@@ -142,6 +142,9 @@ async function guardarVenta() {
 
   const url = `${URL_BASE}/index.php?m=ventas&a=agregar`;
 
+  // aqui paso la venta por el body con el metodo post
+  // pongo el header y le digo que va como json para que sepa cuando recibe
+  // credentials lo pongo porque sino no toma la cookie y se pierde....
   const response = await fetch(url, {
     method: "POST",
     body: JSON.stringify(venta),
@@ -151,7 +154,19 @@ async function guardarVenta() {
 
   const data = await response.json();
 
-  console.log(data);
+  if (data.status === "OK") {
+    Swal.fire({
+      text: data.message,
+      icon: "success",
+    }).then(() => {
+      window.location = "index.php?m=ventas&a=listado";
+    });
+  } else {
+    Swal.fire({
+      text: data.message,
+      icon: "error",
+    });
+  }
 }
 
 function eliminarProductoDetalle() {

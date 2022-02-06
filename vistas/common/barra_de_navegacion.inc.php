@@ -20,6 +20,7 @@
           <a class="dropdown-item" href="index.php?m=categorias">Categorias de Productos</a>          
           <a class="dropdown-item" href="index.php?m=provincias">Provincias/Estados</a>
           <a class="dropdown-item" href="index.php?m=localidades">Localidades</a>
+          <a class="dropdown-item" href="#">Depositos</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
