@@ -1,6 +1,8 @@
 <?php
 
     include("modelos/provincias/index.php");
+    include("modelos/paises/index.php");
+
     
     // seteo listado por default
     $accion = "listado";
@@ -23,9 +25,7 @@
 
         // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract
         // y que categoria tenga algun valor valido, default viene con -1
-        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
-                isset( $_POST['precio']);            
-               
+        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3;
     }
 
     switch( $accion ){
@@ -42,7 +42,7 @@
 
         case "listado":
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
-            $data["registros"] = obtenerTodosProvincias();
+            $data["registros"] = obtenerTodosProvinciasTabla();
             //var_dump($data["registros"][0]); exit();
 
             //2- Va a llamar a la vista pasandole los datos de los productos
@@ -91,21 +91,19 @@
 
                 if ( validarDatos() ){
                     agregarProvincia($_POST, $_SESSION['usuario']['id']);
-                    header('Location: index.php?m=provincias&a=listado&mensaje=Provincia agregado correctamente&tipoMensaje=success');
+                    header('Location: index.php?m=provincias&a=listado&mensaje=Provincia agregada correctamente&tipoMensaje=success');
                 }else{
 
                     $data["mensaje"] = 'Completar todos los campos obligatorios';
                     $data["tipoMensaje"] = 'danger';
 
-                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
-                    $data["registros"]["descripcion"] = $_POST['descripcion'] ?  $_POST['descripcion'] : '';                                      
-                    $data["registros"]["id_categoria"] = $_POST['id_categoria'] ?  $_POST['id_categoria'] : '';                                       
+                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';                    
+                    $data["registros"]["id_pais"] = $_POST['id_pais'] ?  $_POST['id_pais'] : '';                                       
  
                     include( 'vistas/provincias/index.php');
                 }
 
-            }else{                  
-                //2. llamar a la vista pasandole los datos de ese cliente en particular           
+            }else{                                 
                 include( 'vistas/provincias/index.php');
             }
 

@@ -5,9 +5,16 @@
 //var_dump($data["registros"][0]["nombre"]);
 
     $clientesDe  = $data["clientesDe"];
+    $actividad   = $data["actividad"];
+
     $usuario     = $data["usuario"];
     $usuarios    = $data["usuarios"];
 
+    $actividades =  [ 
+                        [ "id" => "ambos", "nombre" => "Ambos"], 
+                        [ "id" => "padel", "nombre" => "Padel"],
+                        [ "id" => "tenis", "nombre" => "Tenis"]
+                    ];
 ?>
 
 
@@ -16,21 +23,21 @@
     <div class="col">
         <a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=clientes&a=agregar">Nuevo</a> 
     </div> 
-    <div class="col-3">
+    <div class="col-4">
         <div class="row">
-            <div class="col-4 text-right mr-1 mt-2">
-                <label for="cliente-de-usuario">Clientes de</label>
-            </div>
-            <div class="col">
-                <select class="form-control" id="cliente-de-usuario" name="cliente-de-usuario" >
-                    <!-- REFACTOR CARGAR DINAMICAMENTE-->
-                   <!--  <option value="-1">Ambos</option>
-                    <option value="2" selected>Marcelo</option>
-                    <option value="1">Nicolas</option> -->
+            <div class="text-right mr-1 mt-2 d-inline-flex">
+                <label class="mx-2"  for="cliente-de-usuario">Clientes de</label>
+           
+                <select  class="form-control" id="cliente-de-usuario" name="cliente-de-usuario" >
                     <option value="-1">Ambos</option>
 
                     <?= dameOpcionesDelSelect($usuarios, $clientesDe);  ?>
-
+                </select>
+                    
+                <label class="mx-2" for="cliente-de-usuario">Actividad</label>
+     
+                <select  class="form-control" id="actividad" name="actividad" >
+                    <?= dameOpcionesDelSelect($actividades, $actividad);  ?>
                 </select>
             </div>
         </div>

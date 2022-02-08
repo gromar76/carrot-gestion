@@ -14,7 +14,7 @@
 
         case "listadoAjax":
             //1- Obtener los datos de los paises (Pide al modelo de paises)       
-            $data["registros"] = obtenerTodos();
+            $data["registros"] = obtenerTodosPaises();
 
             //2- Va a llamar a la vista pasandole los datos de los paises (JSON)
             include( 'vistas/ajax/index.php');

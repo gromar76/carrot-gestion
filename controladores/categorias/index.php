@@ -40,7 +40,7 @@
             case "editar":     
                 //1. Verificar si viene con datos del formulario (payload)
                 // aca hizo click en el boton GUARDAR ....ya venia editando
-                if( isset( $_POST["nombre"] ) ){
+                if( isset( $_POST["nombre"] ) && trim( $_POST["nombre"] )!='' ){                   
                     
                     modificarCatProd($_POST, $id);                    
                     header('Location: index.php?m=categorias&a=listado&mensaje=Categoria modificada correctamente&tipoMensaje=success');                }

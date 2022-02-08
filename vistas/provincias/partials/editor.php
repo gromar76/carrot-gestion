@@ -7,7 +7,13 @@ include 'funciones/html.php';
 //si la accion es EDITAR O VER debo mostrar los valores, solo no muestro cuando es alta
 // si la accion es modificar, entonces tomo los datos,  
 
-$nombre = $accion != 'agregar' ? $data['registros']['nombre'] : '';
+$nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
+$descripcion    = isset($data['registros']['descripcion']) ? $data['registros']['descripcion'] : '';
+$precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
+$idPais         = isset($data['registros']['id_pais']) ? $data['registros']['id_pais'] : '';
+
+//Todos los paises
+$paises      = obtenerTodosPaises();
 
 // si la accion es VER entonces disabled esta vacio
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
@@ -18,15 +24,26 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 ?>
 
 <div class="row d-flex justify-content-center">
+    <?php // si existe $data["registros"]["id"] es porque estoy modificando?>
     <form method="post" action="index.php?m=provincias&a=<?= isset($data["registros"]["id"]) ? "editar&id=" . $data['registros']['id'] : "agregar" ?>"
         class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
 
         <div class="form-group row"> 
             <label for="nombre" class="col-3 col-form-label">Nombre</label> 
             <div class="col-9">
-            <input id="nombre" name="nombre" data-id-original="<?=$idCategoria?>" type="text" class="form-control" <?=$disabled?>  value="<?=$nombre?>">
+            <input id="nombre" name="nombre" type="text" class="form-control" <?=$disabled?>  value="<?=$nombre?>">
             </div>
-        </div>     
+        </div>      
+        
+        <div class="form-group row">            
+            <label for="categoria" class="col-3 col-form-label">Pais</label> 
+            <div class="col-9">
+              
+                <select id="id_pais" name="id_pais" data-id-original="<?=$idPais?>" class="custom-select" <?=$disabled?>>
+                    <?= dameOpcionesDelSelect($paises,  $idPais); ?>
+                </select>
+            </div>
+        </div>       
         <div class="form-group row">
             <div class="col text-center">                
                 <?php 

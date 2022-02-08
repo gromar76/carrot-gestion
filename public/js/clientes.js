@@ -56,12 +56,14 @@ $(document).ready(function () {
   $("#provincia").change(cargarLocalidades);
 });
 
-$("#cliente-de-usuario").change(cargarClientesDe);
+$("#cliente-de-usuario").change(cargarClientes);
+$("#actividad").change(cargarClientes);
 
-function cargarClientesDe() {
-  const id = $(this).val();
+function cargarClientes() {
+  const id = $("#cliente-de-usuario").val();
+  const actividad = $("#actividad").val();
 
-  window.location = `${URL_BASE}/index.php?m=clientes&u=${id}`;
+  window.location = `${URL_BASE}/index.php?m=clientes&u=${id}&actividad=${actividad}`;
 }
 
 function cargarPaises(idPaisSeleccionado) {
@@ -73,13 +75,13 @@ function cargarPaises(idPaisSeleccionado) {
 }
 
 function cargarProvincias(idProvinciaSeleccionada) {
-  //primero lo que voy a hacer es borrar provincias y localidades  
+  //primero lo que voy a hacer es borrar provincias y localidades
 
   $("#provincia").empty();
   $("#localidad").empty();
 
   const idPais = $("#pais").val();
-  
+
   const url = `${URL_BASE}/index.php?m=provincias&a=listadoAjax&id=${idPais}`;
 
   $.get(url, function (provincias) {
@@ -107,8 +109,6 @@ function mostrarLocalidadesEnSelect(localidades, idLocalidadSeleccionada) {
   );
 
   for (let localidad of localidades) {
-    console.log(localidad);
-
     $("#localidad").append(
       `<option value="${localidad.id}" ${
         idLocalidadSeleccionada === localidad.id ? "selected" : ""

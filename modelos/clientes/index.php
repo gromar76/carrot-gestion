@@ -7,16 +7,18 @@
 
         $consulta = "SELECT * FROM clientes ORDER BY nombre";
         $resultado = $conexion->query($consulta);
-         $registros = fetchAll( $resultado );
+        $registros = fetchAll( $resultado );
 
         cerrarConexion($conexion);
 
         return $registros;
     }
 
-    function obtenerTodosClientes($usuario = -1){
+    function obtenerTodosClientes($usuario = -1, $actividad = 'ambos'){
 
         $conexion = obtenerConexion();
+
+        $where = '';
 
         $consulta = 'SELECT cl.id id, cl.nombre, cl.apellido, CONCAT(cl.nombre, " ", cl.apellido) nombre_completo, REPLACE(whatsapp, " ", "") whatsapp, pa.nombre as id_pais, 
                             lc.nombre id_localidad, pro.nombre as id_provincia, cl.baja
@@ -25,10 +27,19 @@
                      LEFT JOIN provincias pro ON pro.id = lc.id_provincia
                      LEFT JOIN paises pa ON pro.id = lc.id_provincia';
 
-        $consulta .= $usuario != -1 ? " WHERE usuario_alta = $usuario" : '';
+        $where = $usuario != -1 ? " WHERE usuario_alta = $usuario" : '';        
+
+        if ( $actividad != 'ambos' ){            
+            $where .= $where != '' ?  " AND " : " WHERE ";
+
+            $where .= " es_cliente_de = '$actividad'";
+        }
+        
+        $consulta .=  $where;
 
         $consulta .= ' GROUP BY id
-                       ORDER BY nombre';        
+                       ORDER BY nombre';    
+                       
         
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );
@@ -144,5 +155,20 @@
         cerrarConexion($conexion);
     }
 
+  function esClienteExistente($whatsapp){
+    $conexion = obtenerConexion();
 
-  
+    $ultimos7DigitosWhatsapp = substr($whatsapp, -7);
+ 
+    $consulta = "SELECT * FROM 
+                 clientes WHERE
+                 whatsapp LIKE '%$ultimos7DigitosWhatsapp%'";
+
+    $resultado = $conexion->query($consulta);
+
+    $existe = $resultado->num_rows == 1;
+
+    cerrarConexion($conexion);
+
+    return $existe;
+  }

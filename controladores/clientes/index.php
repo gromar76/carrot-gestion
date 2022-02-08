@@ -38,9 +38,11 @@
             //1- Obtener los datos de los clientes (Pide al modelo de clientes)
 
             $data["clientesDe"] =  isset($_GET['u'] ) ? $_GET['u'] : $_SESSION['usuario']['id'];
+            $data["actividad"]  =  isset($_GET['actividad'] ) ? $_GET['actividad'] : 'ambos';
+           
 
             // opcion por default, arranco por aca clientes      
-            $data["registros"] = obtenerTodosClientes($data["clientesDe"] );
+            $data["registros"] = obtenerTodosClientes($data["clientesDe"], $data["actividad"] );
             $data["usuarios"]  = obtenerTodosUsuarios();
             $data["usuario"]   =  $_SESSION['usuario'];
             //var_dump($data["registros"][0]);
@@ -93,15 +95,22 @@
             
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
-            if( isset( $_POST["nombre"] ) ){
+            if( isset( $_POST["nombre"] ) ){        
 
-                if ( validarDatos() ){
+                $clienteExistente = $_POST['whatsapp'] ? esClienteExistente( trim($_POST['whatsapp']) ) : false;
+
+                if ( validarDatos() && !$clienteExistente ){
                     agregarClientes($_POST, $_SESSION['usuario']['id']);
 
                     header('Location: index.php?m=clientes&a=listado&mensaje=Cliente agregado correctamente&tipoMensaje=success');
                 }else{
 
-                    $data["mensaje"] = 'Completar todos los campos obligatorios';
+                    if ( !esClienteExistente( trim($_POST['whatsapp']) ) ){
+                        $data["mensaje"] = 'Completar todos los campos obligatorios';
+                    }else{
+                        $data["mensaje"] = 'El cliente ya existe';
+                    }
+
                     $data["tipoMensaje"] = 'danger';
 
                     $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
@@ -121,9 +130,11 @@
                     $data["registros"]["instagram"] = $_POST['instagram'] ?  $_POST['instagram'] : '';                    
                     $data["registros"]["facebook"] = $_POST['facebook'] ?  $_POST['facebook'] : '';                    
                     $data["registros"]["observaciones"] = $_POST['observaciones'] ?  $_POST['observaciones'] : '';
- 
+
                     include( 'vistas/clientes/index.php');
                 }
+                
+               
 
             }else{                  
                 //2. llamar a la vista pasandole los datos de ese cliente en particular           

@@ -22,14 +22,17 @@ $(document).ready(function () {
           return `  
                     <button class="btn btn-success btn-sm btn-editar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Editar">
                       <i class="fas fa-edit"></i>
-                    </button>                                 
+                    </button>       
+                    <button class="btn btn-info btn-sm btn-ver" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Ver detalle">
+                    <i class="fas fa-eye"></i>
+                  </button>                
                   `;
         },
 
         targets: 4,
       },
     ],
-    order: [[1, "asc"]],
+    //order: [[1, "asc"]],
     language: {
       url: `${URL_BASE}/public/js/datatable/es_es.json`,
     },

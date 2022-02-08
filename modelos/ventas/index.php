@@ -12,7 +12,7 @@
                      ON cli.id = ventas.cliente
                        INNER JOIN usuarios usr 
                      ON usr.id = ventas.id_usuario 
-                       ORDER BY fecha DESC';
+                       ORDER BY ventas.fecha desc';
         
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );

@@ -25,6 +25,14 @@
             include('vistas/base/index.php');
 
             break;
+
+
+            case "editar":
+                $data["contenido"] = 'vistas/provincias/partials/editor.php';
+                $data["titulo"] = "Editando Provincia";
+                include('vistas/base/index.php');
+    
+                break;
             
 
         case "listadoAjax":

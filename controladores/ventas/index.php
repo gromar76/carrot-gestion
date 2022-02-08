@@ -85,7 +85,7 @@
 
             }else{        
                 
-                $data["clientes"] = obtenerTodosClientes(); //REFACTOR: cambiar nombre a obtenerTodosClientes
+                $data["clientes"] = obtenerTodosClientes();
                 $data["productos"] = obtenerTodosProductos();
 
                 //2. llamar a la vista del editor de venta vacio    

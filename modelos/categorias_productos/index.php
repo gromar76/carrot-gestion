@@ -30,14 +30,8 @@
         $conexion = obtenerConexion();
 
         $nombre      = $data["nombre"];
-        
-        /*echo $nombre;
-        exit();*/
-
-        $consulta = "INSERT INTO categorias_productos (nombre) VALUES ('$nombre')";      
-        
-        
-
+                
+        $consulta = "INSERT INTO categorias_productos (nombre) VALUES ('$nombre')";
         $resultado = $conexion->query($consulta);
 
         cerrarConexion($conexion);

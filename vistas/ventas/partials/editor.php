@@ -20,6 +20,9 @@ $clientes       = $data["clientes"];
 $productos      = $data["productos"];
 
 
+//var_dump ($clientes);exit();
+
+
 // si la accion es VER entonces pongo disabled para que no se pueda editar el campo input, de lo contrario no pongo nada entonces se puede editar
 $disabled =  $accion == 'ver' ? "disabled" : ""; 
 
@@ -36,7 +39,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                     <label for="cliente" class="col-3 col-form-label">Cliente</label> 
                     <div class="col-9">
                     <select id="cliente" name="cliente" class="custom-select" <?=$disabled?> value="<?=$cliente?>">
-                        <?= dameOpcionesDelSelect($clientes); ?>
+                        <?= dameOpcionesDelSelect2($clientes); ?>
                     </select>
                     </div>
                 </div>
