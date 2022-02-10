@@ -32,7 +32,8 @@
                 $data["titulo"] = "Editando Provincia";
                 include('vistas/base/index.php');
     
-                break;
+                break;           
+      
             
 
         case "listadoAjax":

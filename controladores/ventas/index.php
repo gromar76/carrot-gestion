@@ -33,6 +33,15 @@
 
     switch( $accion ){
 
+        case "detalleVentaAjax":
+            //1- Obtener el detalle de la venta   
+            
+            $data["registros"] = obtenerPorIdVentas($_GET["id"]);
+            
+            include( 'vistas/ajax/index.php');
+
+            break;
+
         case "listado":
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
             $data["registros"] = obtenerTodosVentas();
@@ -53,9 +62,8 @@
             }
             else{
 
-                //2. obtener datos de la venta a editar
-                // aca hizo click en el boton verde de editar
-                $data["registros"] = obtenerPorId($id);                   
+                $data["clientes"] = obtenerTodosClientes();
+                $data["productos"] = obtenerTodosProductos();
 
                 //3. llamar a la vista pasandole los datos de esa venta en particular           
                 include( 'vistas/ventas/index.php');

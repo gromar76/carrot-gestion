@@ -1,7 +1,20 @@
+function dateFechaDeHoyParaInputDate() {
+  const hoy = new Date();
+
+  const dia = hoy.getDate() > 9 ? hoy.getDate() : "0" + hoy.getDate();
+  const anio = hoy.getFullYear();
+  const mes =
+    hoy.getMonth() + 1 > 9 ? hoy.getMonth() + 1 : "0" + (hoy.getMonth() + 1);
+
+  const fechaHoyParaInputDate = `${anio}-${mes}-${dia}`;
+
+  return fechaHoyParaInputDate;
+}
+
 // armo la estructura de la venta
-const venta = {
+let venta = {
   cliente: null,
-  fecha: null,
+  fecha: dateFechaDeHoyParaInputDate(),
   observaciones: "",
   productos: [],
 };
@@ -13,6 +26,11 @@ $(document).ready(function () {
   // cuando se carga el documento....convierto la clase TABLA a datatable...
   $("#tabla").DataTable({
     columnDefs: [
+      {
+        targets: [0],
+        visible: false,
+        searchable: false,
+      },
       {
         // por cada fila tengo el row, entonces en la posicion 0 es el codigo
         // por eso se lo paso al data-id para que sepa que id de categoria es cuando hago click
@@ -28,11 +46,10 @@ $(document).ready(function () {
                   </button>                
                   `;
         },
-
         targets: 4,
       },
     ],
-    //order: [[1, "asc"]],
+    order: [[1, "desc"]],
     language: {
       url: `${URL_BASE}/public/js/datatable/es_es.json`,
     },
@@ -57,7 +74,41 @@ $(document).ready(function () {
   });
 
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
+
+  const params = new URLSearchParams(window.location.search);
+
+  const id = params.get("id");
+
+  if (id) {
+    cargarDetalleVenta(id);
+  } else {
+    actualizarVista();
+  }
 });
+
+async function cargarDetalleVenta(id) {
+  const { venta: ventaBd, productos } = await obtenerDetalleVenta(id);
+
+  venta = {
+    cliente: ventaBd.cliente,
+    fecha: ventaBd.fecha,
+    observaciones: ventaBd.comentario,
+    productos,
+  };
+
+  actualizarVista();
+}
+
+async function obtenerDetalleVenta(id) {
+  console.log("Cargar el detalle " + id);
+
+  const url = `${URL_BASE}/index.php?m=ventas&a=detalleVentaAjax&id=${id}`;
+
+  const response = await fetch(url);
+  const detalleVenta = await response.json();
+
+  return detalleVenta;
+}
 
 function mostrarModalAgregarProducto() {
   numFilaEditar = null;
@@ -198,6 +249,12 @@ function eliminarProductoDetalle() {
 }
 
 function actualizarVista() {
+  console.log(venta.cliente);
+
+  $("#cliente").val(venta.cliente);
+  $("#fecha").val(venta.fecha);
+  $("#observaciones").val(venta.observaciones);
+
   const detalleProductosTbody = $("#detalle-venta");
 
   detalleProductosTbody.empty();

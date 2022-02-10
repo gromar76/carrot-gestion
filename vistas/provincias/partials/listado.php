@@ -24,7 +24,7 @@ include("config/constantes.php");
       <tr>
             <td><?php echo $data["registros"][$i]["id"];?></td>
             <td><?php echo $data["registros"][$i]["nombre"];?></td>
-            <td><?php echo $data["registros"][$i]["pais_id"];?></td>
+            <td><?php echo $data["registros"][$i]["pais_nombre"];?></td>
             <td></td>     
         <?php
         }?>

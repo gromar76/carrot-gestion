@@ -10,6 +10,7 @@ include("config/constantes.php");
 <table id="tabla" class="display table" >
     <thead>
         <tr>
+            <th>Id</th>
             <th>Cliente</th>
             <th>Fecha</th>
             <th>Importe</th>  
@@ -23,6 +24,7 @@ include("config/constantes.php");
       {      
       ?>
       <tr>
+             <td><?php echo $data["registros"][$i]["id"];?></td>
             <td><?php echo $data["registros"][$i]["cliente"];?></td>
             <td><?php echo $data["registros"][$i]["fecha"];?></td> 
             <td><?php echo $data["registros"][$i]["importe"];?></td>

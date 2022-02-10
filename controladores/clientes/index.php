@@ -42,7 +42,7 @@
            
 
             // opcion por default, arranco por aca clientes      
-            $data["registros"] = obtenerTodosClientes($data["clientesDe"], $data["actividad"] );
+            $data["registros"] = obtenerTodosClientes($data["clientesDe"], $data["actividad"] );           
             $data["usuarios"]  = obtenerTodosUsuarios();
             $data["usuario"]   =  $_SESSION['usuario'];
             //var_dump($data["registros"][0]);

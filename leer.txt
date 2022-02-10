@@ -13,18 +13,10 @@ git checkout nombre_arch  //Restaura un archivo al estado anterior
 
 
 Ver con pablo
-
-poner en pantalla de clientes un select con padel, tenis, ambos
-
-cuando doy de alta un cliente, si el nro de whats app es igual 8 nros consecutivos no dejar dar de alta
-como control
+-------------
 
 en ventas ver al inicio por fecha descendiente
 
-select de venta de clientes hice una pequeña modificacion ver si esta ok
-
-
-
-
+cuando termino una factura que me pregunte si quiero registrar le pago ahi mismo...y de cuanto....
 
 

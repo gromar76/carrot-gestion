@@ -14,14 +14,14 @@
         return $registros;
     }
 
-    function obtenerTodosClientes($usuario = -1, $actividad = 'ambos'){
+    function obtenerTodosClientes($usuario = -1, $actividad = 'todas'){
 
         $conexion = obtenerConexion();
 
         $where = '';
 
         $consulta = 'SELECT cl.id id, cl.nombre, cl.apellido, CONCAT(cl.nombre, " ", cl.apellido) nombre_completo, REPLACE(whatsapp, " ", "") whatsapp, pa.nombre as id_pais, 
-                            lc.nombre id_localidad, pro.nombre as id_provincia, cl.baja
+                            lc.nombre id_localidad, pro.nombre as id_provincia, cl.baja, cl.es_cliente_de
                      FROM clientes cl
                      LEFT JOIN localidades lc ON cl.id_localidad = lc.id
                      LEFT JOIN provincias pro ON pro.id = lc.id_provincia
@@ -29,7 +29,7 @@
 
         $where = $usuario != -1 ? " WHERE usuario_alta = $usuario" : '';        
 
-        if ( $actividad != 'ambos' ){            
+        if ( $actividad != 'todas' ){            
             $where .= $where != '' ?  " AND " : " WHERE ";
 
             $where .= " es_cliente_de = '$actividad'";

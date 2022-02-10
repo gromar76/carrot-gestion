@@ -8,9 +8,7 @@ $(document).ready(function () {
         // guardo en data-id el id del producto.... y lo puedo usar luego como en la funcion editar()
         render: (data, type, row) => {
           console.log(row);
-          return `<button class="btn btn-info btn-sm btn-ver" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Ver detalle">
-                    <i class="fas fa-eye"></i>
-                  </button>                
+          return `          
                   <button class="btn btn-success btn-sm btn-editar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Editar">
                     <i class="fas fa-edit"></i>
                   </button>                            

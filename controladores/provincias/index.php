@@ -7,11 +7,10 @@
     // seteo listado por default
     $accion = "listado";
     $id = null;
-
-
+    
      // si paso la variable id entonces..... la guardo en id
      if ( isset($_GET["id"]) ){
-        $id = $_GET["id"];    
+        $id = $_GET["id"];  
      } 
 
 
@@ -19,7 +18,6 @@
     if ( isset($_GET["a"]) ){
         $accion = $_GET["a"];
     }
-
 
     function validarDatos(){
 
@@ -60,6 +58,7 @@
                 {
                     if (strlen(trim($_POST["nombre"])) > 3)
                     {
+                       
                         modificarProvincia($_POST, $id);    
                         header('Location: index.php?m=provincias&a=listado&mensaje=Provincia modificado correctamente&tipoMensaje=success');
                     }   
@@ -67,17 +66,25 @@
                     {
                         //$data["mensaje"] = 'Debe completar todos los campos';
                         //$data["tipoMensaje"] = 'danger';
+                        
                         header('Location: index.php?m=provincias&a=listado&mensaje=Complete todos los campos obligatorios&tipoMensaje=danger');
                     }                 
                 }
                 else{
     
                     //2. obtener datos del producto a editar
-                    // aca hizo click en el boton verde de editar
-                    $data["registros"]  = obtenerPorIdProvincia($id);
-                    $data["provincias"] = obtenerTodosPaises();
+                    // aca hizo click en el boton verde de editar                     
 
-                    //3. llamar a la vista pasandole los datos de ese cliente en particular           
+                    $data["registros"]  = obtenerPorIdProvincias($id);
+
+                    //var_dump( $data["registros"] );exit();
+
+                   //echo $data['registros']['nombre'];exit();            
+
+                    $data["paises"]     = obtenerTodosPaises();                    
+                    
+
+                    //3. llamar a la vista pasandole los datos de esa provincia en particular           
                     include( 'vistas/provincias/index.php');
                 }
     

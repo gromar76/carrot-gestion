@@ -25,7 +25,27 @@
 
 
     function obtenerPorIdVentas($id){
+      $conexion = obtenerConexion();
 
+      $consulta = "SELECT *
+                   FROM ventas
+                   WHERE id = $id";
+
+      $resultado = $conexion->query($consulta);
+      $venta = fetchAll( $resultado );
+
+      $consulta = "SELECT prod.nombre, dv.id_articulo id, dv.cant cantidad, dv.precio precioUnit
+                   FROM detalle_ventas dv
+                   INNER JOIN productos prod
+                   ON prod.id = dv.id_articulo
+                   WHERE id_venta = $id";
+
+      $resultado = $conexion->query($consulta);
+      $detalleVenta = fetchAll( $resultado );
+
+      cerrarConexion($conexion);   
+
+      return [ "venta" => $venta[0], "productos" => $detalleVenta ];
     }
 
     function calcularTotal($productos){

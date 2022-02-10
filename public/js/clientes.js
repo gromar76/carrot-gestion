@@ -3,6 +3,11 @@ $(document).ready(function () {
   $("#tabla").DataTable({
     columnDefs: [
       {
+        targets: [0],
+        visible: false,
+        searchable: false,
+      },
+      {
         // por cada fila tengo el row, entonces en la posicion 0 es el codigo
         // por eso se lo paso al data-id para que sepa que id de categoria es cuando hago click
         render: (data, type, row) => {
@@ -21,7 +26,7 @@ $(document).ready(function () {
           }
         },
 
-        targets: 5,
+        targets: 6,
       },
     ],
     order: [[1, "asc"]],

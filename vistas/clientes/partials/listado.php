@@ -11,7 +11,7 @@
     $usuarios    = $data["usuarios"];
 
     $actividades =  [ 
-                        [ "id" => "ambos", "nombre" => "Ambos"], 
+                        [ "id" => "ambos", "nombre" => "Padel y Tenis"], 
                         [ "id" => "padel", "nombre" => "Padel"],
                         [ "id" => "tenis", "nombre" => "Tenis"]
                     ];
@@ -29,7 +29,7 @@
                 <label class="mx-2"  for="cliente-de-usuario">Clientes de</label>
            
                 <select  class="form-control" id="cliente-de-usuario" name="cliente-de-usuario" >
-                    <option value="-1">Ambos</option>
+                    <option value="-1">Todos</option>
 
                     <?= dameOpcionesDelSelect($usuarios, $clientesDe);  ?>
                 </select>
@@ -37,6 +37,7 @@
                 <label class="mx-2" for="cliente-de-usuario">Actividad</label>
      
                 <select  class="form-control" id="actividad" name="actividad" >
+                    <option value="todas">Todas</option>
                     <?= dameOpcionesDelSelect($actividades, $actividad);  ?>
                 </select>
             </div>
@@ -56,6 +57,7 @@
             <th>whatsapp</th>            
             <th>Provincia</th>
             <th>Localidad</th>
+            <th>Compra para</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -70,6 +72,7 @@
             <td><?php echo $data["registros"][$i]["whatsapp"];?></td>
             <td><?php echo $data["registros"][$i]["id_provincia"];?></td>
             <td><?php echo $data["registros"][$i]["id_localidad"];?></td>
+            <td><?php echo $data["registros"][$i]["es_cliente_de"];?></td>
             <td></td>
         <?php
         }?>

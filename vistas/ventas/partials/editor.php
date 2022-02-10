@@ -7,7 +7,7 @@ include 'funciones/html.php';
 
 // si existe registros nombre, entonces a $nombre ponele $data['registros']['nombre'], sino ponele ''
 
-$cliente        = isset($data['registros']['cliente']) ? $data['registros']['cliente'] : '';
+/* $cliente        = isset($data['registros']['cliente']) ? $data['registros']['cliente'] : '';
 $fecha          = isset($data['registros']['fecha'])  ? $data['registros']['fecha'] : '';
 $observaciones  = isset($data['registros']['observaciones']) ? $data['registros']['observaciones'] : '';
 
@@ -15,7 +15,7 @@ $producto       = isset($data['registros']['producto']) ? $data['registros']['pr
 $cantidad       = isset($data['registros']['cantidad']) ? $data['registros']['cantidad'] : '1';
 
 $precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
-
+ */
 $clientes       = $data["clientes"];
 $productos      = $data["productos"];
 
@@ -38,7 +38,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                 <div class="form-group row">
                     <label for="cliente" class="col-3 col-form-label">Cliente</label> 
                     <div class="col-9">
-                    <select id="cliente" name="cliente" class="custom-select" <?=$disabled?> value="<?=$cliente?>">
+                    <select id="cliente" name="cliente" class="custom-select" <?=$disabled?>">
                         <?= dameOpcionesDelSelect2($clientes); ?>
                     </select>
                     </div>
@@ -47,7 +47,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                 <div class="form-group row">
                     <label for="fecha" class="col-3 col-form-label">Fecha</label> 
                     <div class="col-9">
-                    <input id="fecha" name="fecha" type="date" class="form-control" <?=$disabled?> value="<?=$fecha?>">
+                    <input id="fecha" name="fecha" type="date" class="form-control" <?=$disabled?>">
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         <div class="col ml-4">
             <div class="form-group">
                 <label for="observaciones">Observaciones</label>
-                <textarea name="observaciones" class="form-control" <?php echo $disabled?> id="observaciones" rows="5"><?=$observaciones?></textarea>
+                <textarea name="observaciones" class="form-control" <?php echo $disabled?> id="observaciones" rows="5"></textarea>
             </div>
         </div>
     </div>
