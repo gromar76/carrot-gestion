@@ -51,23 +51,39 @@
 
             break;
 
-        case "editar":
+        case "editarAjax":
     
             //1. Verificar si viene con datos del formulario (payload)
             // aca hizo click en el boton GUARDAR ....ya vania editando
-            if( isset( $_POST["cliente"] ) ){
-                modificar($_POST, $id);
+            $putParams = json_decode( file_get_contents('php://input') );                     
+           
+            if( isset( $_GET["id"] ) ){            
+        
+                modificarVenta( $_GET["id"] , $putParams, $_SESSION['usuario']['id']);
 
-                header('Location: index.php?m=ventas&a=listado&mensaje=Venta modificada correctamente&tipoMensaje=success');
+                $data["registros"] = ["status" => "OK", "message" => "La venta se ha modificado correctamente."];
+
+                include( 'vistas/ajax/index.php');
+            
+            }else{
+                //REFACTOR  -> VALIDAR
             }
-            else{
 
-                $data["clientes"] = obtenerTodosClientes();
-                $data["productos"] = obtenerTodosProductos();
+            break;
 
-                //3. llamar a la vista pasandole los datos de esa venta en particular           
-                include( 'vistas/ventas/index.php');
-            }
+        case "editar":
+    
+          
+            //1. Verificar si viene con datos del formulario (payload)
+            //APRETE BOTON GUARDAN DANDO DE ALTA
+
+
+            $data["clientes"] = obtenerTodosClientes();
+            $data["productos"] = obtenerTodosProductos();
+
+            //3. llamar a la vista pasandole los datos de esa venta en particular           
+            include( 'vistas/ventas/index.php');
+       
 
             break;
         
@@ -102,6 +118,14 @@
 
             break;
 
+        case "eliminar":
+            eliminarVenta( $_GET["id"] );
+
+            $data["registros"] = ["status" => "OK", "message" => "La venta se ha eliminado correctamente."];
+
+            include( 'vistas/ajax/index.php');
+
+            break;
         
         default:
             include( 'vistas/404/index.php');

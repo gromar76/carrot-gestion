@@ -31,7 +31,7 @@
         case "listadoAjax":
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
             
-            $data["registros"] = obtenerPorIdProvincias($_GET["id"]);
+            $data["registros"] = obtenerPorIdProvinciasDeUnPais($_GET["id"]);
 
             //2- Va a llamar a la vista pasandole los datos de los productos
             include( 'vistas/provincias/index.php');
@@ -75,7 +75,7 @@
                     //2. obtener datos del producto a editar
                     // aca hizo click en el boton verde de editar                     
 
-                    $data["registros"]  = obtenerPorIdProvincias($id);
+                    $data["registros"]  = obtenerPorIdProvincia($id);
 
                     //var_dump( $data["registros"] );exit();
 

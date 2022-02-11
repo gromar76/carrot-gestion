@@ -58,6 +58,25 @@
       return $total;
     }
 
+
+    function guardarDetalleVenta($idVenta, $productos, $conexion){
+      foreach ( $productos as $producto  ){
+        $consulta="INSERT INTO detalle_ventas (id_venta, id_articulo, cant, precio)
+                   VALUES ( $idVenta, $producto->id, $producto->cantidad, $producto->precioUnit )";
+
+        $resultado = $conexion->query($consulta);                  
+      }
+    }
+
+    function eliminarDetalleVenta($idVenta, $conexion){
+      $consulta="DELETE FROM detalle_ventas
+                 WHERE id_venta=$idVenta
+                ";
+
+      $resultado = $conexion->query($consulta);
+    }
+
+
     function agregarVenta($data, $idUsuario){      
       $conexion = obtenerConexion();
  
@@ -74,24 +93,53 @@
 
       $idVenta = $conexion->insert_id;
 
-      foreach ( $productos as $producto  ){
-        $consulta="INSERT INTO detalle_ventas (id_venta, id_articulo, cant, precio)
-                   VALUES ( $idVenta, $producto->id, $producto->cantidad, $producto->precioUnit )";
-
-        $resultado = $conexion->query($consulta);                  
-      }
+      guardarDetalleVenta($idVenta, $productos, $conexion);
 
       cerrarConexion($conexion);
     }
 
 
+    function modificarVenta($idVenta, $data, $usuario){
+      $conexion = obtenerConexion();
+ 
+      $cliente     = $data->cliente;
+      $fecha       = $data->fecha;      
+      $comentario  = $data->observaciones;        
+      $productos   = $data->productos;
+      $importe     = calcularTotal($productos);      
+           
+      //Actualizo el encabezado de la venta 
+      $consulta="UPDATE ventas 
+                    SET cliente    = $cliente,
+                        importe    = $importe,
+                        fecha      = '$fecha',
+                        comentario = '$comentario'
+                    WHERE id = $idVenta
+                 ";
 
-    function modificarVenta($data, $id){
-        
-    }
+      $resultado = $conexion->query($consulta);
 
-    
+      //Eliminar detalle de venta anterior
+      eliminarDetalleVenta($idVenta, $conexion);
 
-    function eliminarVenta($id){
+      //Guardar nuevo detalle venta
+      guardarDetalleVenta($idVenta, $productos, $conexion);
 
+      cerrarConexion($conexion);
+    }  
+
+    function eliminarVenta($idVenta){
+      $conexion = obtenerConexion();
+
+      //Eliminar detalle venta
+      eliminarDetalleVenta($idVenta, $conexion);
+
+      //Eliminar venta (Encabezado)
+      $consulta="DELETE FROM ventas
+                 WHERE id = $idVenta
+      ";
+
+      $resultado = $conexion->query($consulta);
+
+      cerrarConexion($conexion);
     }

@@ -1,3 +1,5 @@
+let idVenta = null;
+
 function dateFechaDeHoyParaInputDate() {
   const hoy = new Date();
 
@@ -42,11 +44,14 @@ $(document).ready(function () {
                       <i class="fas fa-edit"></i>
                     </button>       
                     <button class="btn btn-info btn-sm btn-ver" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Ver detalle">
-                    <i class="fas fa-eye"></i>
-                  </button>                
+                      <i class="fas fa-eye"></i>
+                    </button>     
+                    <button class="btn btn-danger btn-sm btn-eliminar-venta" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Eliminar">
+                      <i class="fas fa-trash"></i>
+                    </button>                    
                   `;
         },
-        targets: 4,
+        targets: 5,
       },
     ],
     order: [[1, "desc"]],
@@ -65,6 +70,18 @@ $(document).ready(function () {
 
   $("#btn-guardar").click(guardarVenta);
 
+  $("#cliente").change(function () {
+    venta.cliente = $(this).val();
+  });
+
+  $("#fecha").change(function () {
+    venta.fecha = $(this).val();
+  });
+
+  $("#observaciones").change(function () {
+    venta.observaciones = $(this).val();
+  });
+
   $("#producto").change(async function () {
     // guardo el id del producto del selector de productos, el VALUE
     const idProducto = $(this).val();
@@ -77,10 +94,10 @@ $(document).ready(function () {
 
   const params = new URLSearchParams(window.location.search);
 
-  const id = params.get("id");
+  idVenta = params.get("id");
 
-  if (id) {
-    cargarDetalleVenta(id);
+  if (idVenta) {
+    cargarDetalleVenta(idVenta);
   } else {
     actualizarVista();
   }
@@ -100,8 +117,6 @@ async function cargarDetalleVenta(id) {
 }
 
 async function obtenerDetalleVenta(id) {
-  console.log("Cargar el detalle " + id);
-
   const url = `${URL_BASE}/index.php?m=ventas&a=detalleVentaAjax&id=${id}`;
 
   const response = await fetch(url);
@@ -112,6 +127,7 @@ async function obtenerDetalleVenta(id) {
 
 function mostrarModalAgregarProducto() {
   numFilaEditar = null;
+  $("#cantidad").val(1);
 
   $("#titulo-modal-agregar-producto").html("Agregar producto");
 
@@ -183,6 +199,7 @@ function guardarProductoDetalle() {
     }
 
     $("#form-producto-detalle")[0].reset();
+    $("#cantidad").val(1);
     actualizarVista();
   } else {
     alert("Complete campos!!");
@@ -190,17 +207,24 @@ function guardarProductoDetalle() {
 }
 
 async function guardarVenta() {
+  let accion = "agregar";
+  let metodo = "POST";
+
+  if (idVenta) {
+    accion = `editarAjax&id=${idVenta}`;
+    metodo = "PUT";
+  }
   venta.cliente = $("#cliente").val();
   venta.fecha = $("#fecha").val();
   venta.observaciones = $("#observaciones").val();
 
-  const url = `${URL_BASE}/index.php?m=ventas&a=agregar`;
+  const url = `${URL_BASE}/index.php?m=ventas&a=${accion}`;
 
   // aqui paso la venta por el body con el metodo post
   // pongo el header y le digo que va como json para que sepa cuando recibe
   // credentials lo pongo porque sino no toma la cookie y se pierde....
   const response = await fetch(url, {
-    method: "POST",
+    method: metodo,
     body: JSON.stringify(venta),
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -221,6 +245,41 @@ async function guardarVenta() {
       icon: "error",
     });
   }
+}
+
+function eliminarVenta() {
+  // click en eliminar
+  const idVentaEliminar = parseInt($(this).attr("data-id"));
+
+  Swal.fire({
+    text: "¿Confirma la baja?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "red",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      // aqui quiero eliminar la fila idFilaEliminar
+      // filter lo que hace es filtrar los que son distintos a esa fila, entonces
+      // me elimina de venta.productos la fila que es igual a ifFilaEliminar
+
+      const url = `${URL_BASE}/index.php?m=ventas&a=eliminar&id=${idVentaEliminar}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status === "OK") {
+        window.location =
+          "index.php?m=ventas&a=listado&mensaje=La venta se ha eliminado correctamente&tipoMensaje=danger";
+      } else {
+        Swal.fire({
+          text: data.message,
+          icon: "error",
+        });
+      }
+    }
+  });
 }
 
 function eliminarProductoDetalle() {
@@ -282,6 +341,8 @@ function actualizarVista() {
 
   $(".btn-editar-producto-detalle").click(mostrarModalEditarProducto);
   $(".btn-eliminar-producto-detalle").click(eliminarProductoDetalle);
+
+  $(".btn-eliminar-venta").click(eliminarVenta);
 
   $("#total-factura").html(`$ ${total}`);
 }

@@ -14,11 +14,24 @@
         return $registros;
     }
 
-    function obtenerPorIdProvincias($id){
+    function obtenerPorIdProvinciasDeUnPais($idPais){
         
         $conexion = obtenerConexion();
-        //$consulta = "SELECT * FROM provincias where pais_id=$id ORDER BY nombre";        
-        $consulta = "SELECT * FROM provincias where id=$id ORDER BY nombre";        
+    
+        $consulta = "SELECT * FROM provincias WHERE pais_id=$idPais ORDER BY nombre";        
+
+        $resultado = $conexion->query($consulta);
+        $registros = fetchAll( $resultado );       
+
+        cerrarConexion($conexion);
+
+        return $registros;
+    }
+
+    function obtenerPorIdProvincia($idProvincia){
+        
+        $conexion = obtenerConexion();
+        $consulta = "SELECT * FROM provincias WHERE id=$idProvincia";        
 
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );       
@@ -27,6 +40,7 @@
 
         return $registros[0];
     }
+
 
     function agregarProvincia($data){
         $conexion = obtenerConexion();

@@ -15,8 +15,18 @@ git checkout nombre_arch  //Restaura un archivo al estado anterior
 Ver con pablo
 -------------
 
+select de actividad en clientes que comience por TODAS
+
+select de clientes en ventas que sea mas facil poder acceder al cliente que va a haber muchos.....
+
+en cliente cuando selecciono padel, tenis, tambien debe traerme los de padel & tenis
+
 en ventas ver al inicio por fecha descendiente
 
-cuando termino una factura que me pregunte si quiero registrar le pago ahi mismo...y de cuanto....
+cuando termino una factura que me pregunte si quiero registrar el pago ahi mismo...y de cuanto....como para generar ya ahi el primer pago
+que generalmente es asi y ya queda cerrada la factura   (deberiamos agregar campo totalPagado a la tabla ventas???)
 
 
+Cambiar Select de actividad por checkboxes
+
+Cambiar campo actividad en la base de datos por campos independientes (padel, tennis)
