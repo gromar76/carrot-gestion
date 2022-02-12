@@ -28,6 +28,9 @@
           crossorigin="anonymous"
     />
     
+    <link rel="stylesheet"
+          href="public/vendor/multi-column-dropdown-inputpicker/jquery.inputpicker.css" />
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
     
     <link rel=StyleSheet href="public/css/estilos1.css" type="text/css">
@@ -75,7 +78,8 @@
     <script>
       const URL_BASE="<?=$URL_BASE?>";
     </script>
-    
+
+
     <script 
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -97,6 +101,8 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="public/vendor/multi-column-dropdown-inputpicker/jquery.inputpicker.js"></script>
 
     <script>
       

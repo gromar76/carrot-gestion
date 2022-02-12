@@ -51,6 +51,22 @@
             include( 'vistas/clientes/index.php');
 
             break;
+        
+        case "listadoAjax":
+            //1- Obtener los datos de los clientes (Pide al modelo de clientes)
+
+            $data["clientesDe"] =  -1; //isset($_GET['u'] ) ? $_GET['u'] : $_SESSION['usuario']['id'];
+            $data["actividad"]  =  isset($_GET['actividad'] ) ? $_GET['actividad'] : 'todas';
+            
+
+            // opcion por default, arranco por aca clientes      
+            $data["registros"] = obtenerTodosClientes($data["clientesDe"], $data["actividad"] );           
+
+            //2- Va a llamar a la vista pasandole los datos de los clientes
+            include( 'vistas/ajax/index.php');
+
+            break;
+    
 
         case "editar":
      

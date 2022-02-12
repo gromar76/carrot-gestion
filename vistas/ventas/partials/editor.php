@@ -29,6 +29,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 // la variable $accion viene con agregar, editar, ver
 //echo $accion;
 ?>
+
 <div class="row d-flex justify-content-center">
 
     <div class="row w-75">
@@ -37,10 +38,11 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
             <div class="col">
                 <div class="form-group row">
                     <label for="cliente" class="col-3 col-form-label">Cliente</label> 
+
                     <div class="col-9">
-                    <select id="cliente" name="cliente" class="custom-select" <?=$disabled?>">
-                        <?= dameOpcionesDelSelect2($clientes); ?>
-                    </select>
+
+                        <input class="form-control" id="cliente" value="jQuery">
+
                     </div>
                 </div>
 
@@ -50,10 +52,10 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                     <input id="fecha" name="fecha" type="date" class="form-control" <?=$disabled?>">
                     </div>
                 </div>
+
             </div>
             
 
-        
         </form>
     </div>
 

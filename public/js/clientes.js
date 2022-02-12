@@ -16,7 +16,10 @@ $(document).ready(function () {
                   </button>                
                   <button class="btn btn-success btn-sm btn-editar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Editar">
                     <i class="fas fa-edit"></i>
-                  </button>                            
+                  </button>
+                  <button class="btn btn-secondary btn-sm btn-ir-venta" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Realizar Venta">
+                  <i class="fas fa-list"></i>
+                </button> 
                 `;
 
           {

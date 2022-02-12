@@ -24,7 +24,7 @@ let venta = {
 // con esto manejo la fila al hacer click en editar o eliminar
 let numFilaEditar;
 
-$(document).ready(function () {
+$(document).ready(async function () {
   // cuando se carga el documento....convierto la clase TABLA a datatable...
   $("#tabla").DataTable({
     columnDefs: [
@@ -54,7 +54,7 @@ $(document).ready(function () {
         targets: 5,
       },
     ],
-    order: [[1, "desc"]],
+    order: [[2, "desc"]],
     language: {
       url: `${URL_BASE}/public/js/datatable/es_es.json`,
     },
@@ -101,6 +101,32 @@ $(document).ready(function () {
   } else {
     actualizarVista();
   }
+
+  const clientesParaSelect = await obteneClientesParaSelect();
+
+  $("#cliente").inputpicker({
+    data: clientesParaSelect,
+    fields: [
+      { name: "id", text: "Codigo" },
+      { name: "nombre", text: "Nombre" },
+      { name: "whatsapp", text: "Whatsapp" },
+      { name: "id_provincia", text: "Provincia" },
+      { name: "id_localidad", text: "Localidad" },
+    ],
+    headShow: true,
+    fieldValue: "id",
+    fieldText: "nombre",
+    filterOpen: true,
+    autoOpen: true,
+    filterOpen: true,
+    highlightResult: true,
+    pagination: true,
+
+    /*listBackgroundColor: "orange",
+    listBorderColor: "red",
+    rowSelectedBackgroundColor: "green",
+    rowSelectedFontColor: "white",*/
+  });
 });
 
 async function cargarDetalleVenta(id) {
@@ -123,6 +149,15 @@ async function obtenerDetalleVenta(id) {
   const detalleVenta = await response.json();
 
   return detalleVenta;
+}
+
+async function obteneClientesParaSelect() {
+  const url = `${URL_BASE}/index.php?m=clientes&a=listadoAjax`;
+
+  const response = await fetch(url);
+  const clientes = await response.json();
+
+  return clientes;
 }
 
 function mostrarModalAgregarProducto() {
@@ -330,9 +365,13 @@ function actualizarVista() {
           <td>${cantidad}</td>
           <td>$ ${precioUnit}</td>
           <td>$ ${cantidad * precioUnit}</td>
-          <td> 
-            <button data-id="${fila}" class="btn-editar-producto-detalle">Editar</button>
-            <button data-id="${fila++}" class="btn-eliminar-producto-detalle">Eliminar</button>
+          <td>           
+            <button class="btn btn-success btn-sm btn-editar-producto-detalle" data-id="${fila}" data-toggle="tooltip" data-placement="top" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-danger btn-sm btn-eliminar-producto-detalle" data-id="${fila++}" data-toggle="tooltip" data-placement="top" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
           </td>
        </tr>
       `

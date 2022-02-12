@@ -26,7 +26,8 @@
         {
             $selected = $idSeleccionado == $registro[$campoId] ? "selected" : "";
             
-            $opcionesSelect .= '<option value="' . $registro[$campoId] . '"' . $selected . '>' . $registro['apellido'] .' '.$registro['nombre'].' - '.' WS: '.trim($registro['whatsapp']).' - Cod: '.$registro['id'].'</option>';                                                       
+            //$opcionesSelect .= '<option value="' . $registro[$campoId] . '"' . $selected . '>' . $registro['apellido'] .' '.$registro['nombre'].' - '.' WS: '.trim($registro['whatsapp']).'</option>';                                                       
+            $opcionesSelect .= '<option value="' . $registro[$campoId] . '"' . $selected . '>' . $registro['nombre'] .' '.$registro['apellido'].' - '.' WS: '.trim($registro['whatsapp']).'</option>';                                                       
         }
 
         return  $opcionesSelect;
