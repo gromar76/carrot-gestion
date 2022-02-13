@@ -19,7 +19,6 @@ cuando termino una factura que me pregunte si quiero registrar el pago ahi mismo
 que generalmente es asi y ya queda cerrada la factura   (deberiamos agregar campo totalPagado a la tabla ventas???)
 
 Cambiar Select de actividad por checkboxes
-
 Cambiar campo actividad en la base de datos por campos independientes (padel, tennis)
 
 en ventas la columna fecha mostrar formato "Sab 31-10-2021"
@@ -27,4 +26,8 @@ en ventas la columna fecha mostrar formato "Sab 31-10-2021"
 desde el listado de cliente poder ir a realizar una factura directamente con un btn
 
 agregar en campo de selecciones si es distribuidor o no (para ver en la tabla)
+
+el select de productos ordenado de otra manera...a mano...   (lo hice mostrarle a pablo si es la mejor manera)
+
+
 

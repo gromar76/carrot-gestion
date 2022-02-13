@@ -13,6 +13,19 @@
         return $registros;
     }
 
+
+    function obtenerTodosProductosxOrdenManual(){
+        $conexion = obtenerConexion();
+        $consulta = "SELECT art.id, art.nombre, art.precio, cat.id as id_categoria, cat.nombre as nomcat
+                     FROM productos art, categorias_productos cat
+                     WHERE art.id_categoria=cat.id
+                     ORDER BY art.orden";
+        $resultado = $conexion->query($consulta);
+         $registros = fetchAll( $resultado );
+        return $registros;
+    }
+
+
     function obtenerPorIdProducto($id){
         $conexion = obtenerConexion();
         

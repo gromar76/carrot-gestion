@@ -79,8 +79,9 @@
 
 
             $data["clientes"] = obtenerTodosClientes();
-            $data["productos"] = obtenerTodosProductos();
-
+            //$data["productos"] = obtenerTodosProductos();
+            $data["productos"] = obtenerTodosProductosxOrdenManual();
+            
             //3. llamar a la vista pasandole los datos de esa venta en particular           
             include( 'vistas/ventas/index.php');
        
@@ -109,8 +110,9 @@
 
             }else{        
                 
-                $data["clientes"] = obtenerTodosClientes();
-                $data["productos"] = obtenerTodosProductos();
+                $data["clientes"] = obtenerTodosClientes();                
+                //$data["productos"] = obtenerTodosProductos();
+                $data["productos"] = obtenerTodosProductosxOrdenManual();
 
                 //2. llamar a la vista del editor de venta vacio    
                 include( 'vistas/ventas/index.php');

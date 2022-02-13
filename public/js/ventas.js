@@ -1,5 +1,6 @@
 let idVenta = null;
 
+//formateo la fecha para mostrar en el input date
 function dateFechaDeHoyParaInputDate() {
   const hoy = new Date();
 
@@ -109,6 +110,7 @@ $(document).ready(async function () {
     fields: [
       { name: "id", text: "Codigo" },
       { name: "nombre", text: "Nombre" },
+      { name: "apellido", text: "Apellido" },
       { name: "whatsapp", text: "Whatsapp" },
       { name: "id_provincia", text: "Provincia" },
       { name: "id_localidad", text: "Localidad" },
@@ -156,6 +158,8 @@ async function obteneClientesParaSelect() {
 
   const response = await fetch(url);
   const clientes = await response.json();
+
+  //alert(clientes[0].id);
 
   return clientes;
 }
@@ -250,6 +254,9 @@ async function guardarVenta() {
     metodo = "PUT";
   }
   venta.cliente = $("#cliente").val();
+
+  //alert(venta.cliente);
+
   venta.fecha = $("#fecha").val();
   venta.observaciones = $("#observaciones").val();
 
