@@ -41,7 +41,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
 
                     <div class="col-9">
 
-                        <input class="form-control" id="cliente" value="jQuery">
+                        <input class="form-control" id="cliente" value="Cargando..." <?=$disabled?>>
 
                     </div>
                 </div>
@@ -49,7 +49,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                 <div class="form-group row">
                     <label for="fecha" class="col-3 col-form-label">Fecha</label> 
                     <div class="col-9">
-                    <input id="fecha" name="fecha" type="date" class="form-control" <?=$disabled?>">
+                    <input id="fecha" name="fecha" type="date" class="form-control" <?=$disabled?>>
                     </div>
                 </div>
 
@@ -59,11 +59,13 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         </form>
     </div>
 
-    <div class="row w-75">
-        <div class="col">
-            <button id="btn-modal-agregar-producto" class="btn btn-primary" >Agregar producto</button>
+    <?php if ( !$disabled ) { ?>
+        <div class="row w-75">
+            <div class="col">
+                <button id="btn-modal-agregar-producto" class="btn btn-primary" >Agregar producto</button>
+            </div>
         </div>
-    </div>
+    <?php } ?>
     
     <div class="row w-75">
         <div class="col">

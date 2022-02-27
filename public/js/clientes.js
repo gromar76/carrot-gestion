@@ -47,6 +47,8 @@ $(document).ready(function () {
   // si hago click en btn-eliminar ir a funcion eliminar
   $("body").on("click", ".btn-eliminar", eliminar);
 
+  $("body").on("click", ".btn-ir-venta", generarVenta);
+
   //cuando hago click en boton de cancelar
   $("#btn-atras").click(atras);
 
@@ -66,6 +68,11 @@ $(document).ready(function () {
 
 $("#cliente-de-usuario").change(cargarClientes);
 $("#actividad").change(cargarClientes);
+
+function generarVenta(){
+  const idCliente = $(this).attr("data-id");
+  window.location = `${URL_BASE}/index.php?m=ventas&a=agregar&idCliente=${idCliente}`
+}
 
 function cargarClientes() {
   const id = $("#cliente-de-usuario").val();

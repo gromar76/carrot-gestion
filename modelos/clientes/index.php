@@ -48,6 +48,21 @@
 
         return $registros;
     }
+
+    function dameNombreCliente( $id ){
+        $conexion = obtenerConexion();
+        
+        $consulta = "SELECT CONCAT(cl.nombre, ' ', cl.apellido) nombre_completo
+                     FROM clientes cl
+                     WHERE id = $id";
+        
+        $resultado = $conexion->query($consulta);
+        $registros = fetchAll( $resultado );
+
+        cerrarConexion($conexion);
+
+        return $registros[0];
+    }
     
 
     function obtenerPorIdClientes($id){

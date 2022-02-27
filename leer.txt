@@ -23,11 +23,8 @@ Cambiar campo actividad en la base de datos por campos independientes (padel, te
 
 en ventas la columna fecha mostrar formato "Sab 31-10-2021"
 
-desde el listado de cliente poder ir a realizar una factura directamente con un btn
-
 agregar en campo de selecciones si es distribuidor o no (para ver en la tabla)
 
-el select de productos ordenado de otra manera...a mano...   (lo hice mostrarle a pablo si es la mejor manera)
+tema depositos y movimiento de mercaderia
 
-
-
+articulos con unidades...todo a tubos...a unidades

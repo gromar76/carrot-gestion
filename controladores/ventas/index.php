@@ -14,6 +14,8 @@
         $id = $_GET["id"];    
      } 
 
+     
+
 
     // si paso la variable a entonces..... la guardo en accion
     if ( isset($_GET["a"]) ){
@@ -30,6 +32,7 @@
                 isset( $_POST['id_localidad'] ) && $_POST['id_localidad'] != '-1'; */
                
     }
+
 
     switch( $accion ){
 
@@ -71,8 +74,8 @@
 
             break;
 
+        case "ver":
         case "editar":
-    
           
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
@@ -88,11 +91,14 @@
 
             break;
         
-        case "agregar":      
-    
+        case "agregar":   
+            
+       
             // lo que viene por _POST lo tomo con file_get_contents
             // eso como es un json, con la funcion json_decode lo decodifico para leerlo en $postParams
             $postParams = json_decode( file_get_contents('php://input') );                     
+
+           
 
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
@@ -110,7 +116,8 @@
 
             }else{        
                 
-                $data["clientes"] = obtenerTodosClientes();                
+                $data["clientes"] = obtenerTodosClientes();       
+                
                 //$data["productos"] = obtenerTodosProductos();
                 $data["productos"] = obtenerTodosProductosxOrdenManual();
 

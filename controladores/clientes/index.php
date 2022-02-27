@@ -66,7 +66,14 @@
             include( 'vistas/ajax/index.php');
 
             break;
-    
+        
+        case "dameNombreAjax":
+            $data["registros"] = dameNombreCliente( $id ); 
+
+            include( 'vistas/ajax/index.php');
+
+            break;
+           
 
         case "editar":
      

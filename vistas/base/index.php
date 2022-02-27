@@ -111,6 +111,8 @@
       function cerrarMensaje (){      
         $('#mensaje').alert('close')
       }
+
+      const userId = <?= $data['usuario']['id'] ?>;
       
     </script>
 
@@ -119,7 +121,10 @@
        if ( isset($data['js'] ) ){
     ?>    
         <script src="public/js/<?=$data['js'][0]?>"></script>
-    <?php } ?>
+    <?php } 
+    
+
+    ?>
 
 </body>
 </html>

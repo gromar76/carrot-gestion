@@ -6,7 +6,8 @@
 
         $conexion = obtenerConexion();
 
-        $consulta = 'SELECT ventas.id, ventas.fecha, ventas.importe, CONCAT(cli.nombre, " ", cli.apellido) cliente, usr.nombre usuario 
+        $consulta = 'SELECT ventas.id, ventas.fecha, ventas.importe, CONCAT(cli.nombre, " ", cli.apellido) cliente, usr.nombre usuario, usr.id id_usuario,
+                            ventas.pagado
                      FROM ventas 
                        INNER JOIN clientes cli 
                      ON cli.id = ventas.cliente
@@ -27,9 +28,11 @@
     function obtenerPorIdVentas($id){
       $conexion = obtenerConexion();
 
-      $consulta = "SELECT *
-                   FROM ventas
-                   WHERE id = $id";
+      $consulta = "SELECT ventas.*, CONCAT(nombre, ' ', apellido) cliente, cli.id id_cliente
+                   FROM ventas 
+                   INNER JOIN clientes cli 
+                   ON cli.id = ventas.cliente 
+                   WHERE ventas.id = $id";
 
       $resultado = $conexion->query($consulta);
       $venta = fetchAll( $resultado );

@@ -23,6 +23,7 @@
                     //Si esta ok (Redirigimos al modulo clientes)
                     if ( $usuario ){
                         $_SESSION['usuario'] = $usuario;
+
                         header('Location: index.php?m=clientes');
                     }else{
                         //Si no esta ok (Vuelvo al login) 

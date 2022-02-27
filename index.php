@@ -66,7 +66,10 @@
             $modulo = "depositos";
             break;
         
-
+        case "pagos":
+            $modulo = "pagos";
+            break;
+    
         
         // si modulo no es ninguno de los anteriores entonces es 404
         default: 
