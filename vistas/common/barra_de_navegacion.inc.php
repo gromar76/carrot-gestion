@@ -20,17 +20,19 @@
           <a class="dropdown-item" href="index.php?m=categorias">Categorias de Productos</a>          
           <a class="dropdown-item" href="index.php?m=provincias">Provincias/Estados</a>
           <a class="dropdown-item" href="index.php?m=localidades">Localidades</a>
-          <a class="dropdown-item" href="#">Depositos</a>
+          <a class="dropdown-item" href="index.php?m=depositos">Depositos</a>
+          <a class="dropdown-item" href="index.php?m=egresos">Egresos</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
           Procesos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>          
+          <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>
+          <a class="dropdown-item" href="#">Movimiento entre Depositos de Productos</a>
           <a class="dropdown-item" href="#">Registrar Egreso/Gasto</a>
           <a class="dropdown-item" href="#">Registrar Corte Contable entre fechas</a>                    
-          <a class="dropdown-item" href="#">xxxxxxxxx</a>
+          
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">

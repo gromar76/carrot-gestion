@@ -28,3 +28,17 @@ agregar en campo de selecciones si es distribuidor o no (para ver en la tabla)
 tema depositos y movimiento de mercaderia
 
 articulos con unidades...todo a tubos...a unidades
+
+en el listado de ventas, un icono mas para poder ver en un window open los datos de cliente.....
+y en el nombre de listado poner LOCALIDAD - PROVINCIA - Whats app.....???
+
+Modulo de Ventas poner barra con filtros
+DESDE      HASTA 
+TENIS (check)  PADEL (check)
+Select Todas / Pendientes / Canceladas
+
+en ventas poner la fecha bien, dia/mes/año
+
+desde el listado de clientes, salir con un boton a las VENTAS HISTORICAS DE ESE CLIENTE y manejar lo mismo....pagos, borrado...etc
+
+

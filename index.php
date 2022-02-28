@@ -69,6 +69,10 @@
         case "pagos":
             $modulo = "pagos";
             break;
+
+        case "egresos":
+            $modulo = "egresos";
+            break;
     
         
         // si modulo no es ninguno de los anteriores entonces es 404

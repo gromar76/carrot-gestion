@@ -2,21 +2,21 @@
 
     include_once 'funciones/conexion.php';
 
-    function obtenerTodosDepositos(){
+    function obtenerTodosEgresos(){
         $conexion = obtenerConexion();
-        $consulta = "SELECT * FROM depositos";
+        $consulta = "SELECT * FROM egresos";
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );
         return $registros;
     }
 
 
-    function obtenerDepositoPorId($id){   
+    function obtenerEgresoPorId($id){   
 
         $conexion = obtenerConexion();
     
         $consulta = 'SELECT id, nombre
-                     FROM depositos
+                     FROM egresos
                      WHERE id_provincia=' . $id .' order by nombre';
         
         $resultado = $conexion->query($consulta);
@@ -30,14 +30,3 @@
     }
    
 
-    function agregarDeposito($data){
-
-    }
-
-    function modificarDeposito($data, $id){
-        
-    }
-
-    function eliminarDeposito($id){
-
-    }

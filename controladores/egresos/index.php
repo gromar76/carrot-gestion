@@ -1,6 +1,6 @@
 <?php
    
-    include("modelos/depositos/index.php");
+    include("modelos/egresos/index.php");
 
     // seteo listado por default
     $accion = "listado";
@@ -33,12 +33,12 @@
 
         case "listado":
             //1- Obtener los datos de los depositos (Pide al modelo de depositos)       
-            $data["registros"] = obtenerTodosDepositos();
+            $data["registros"] = obtenerTodosEgresos();
 
             //var_dump($data["registros"]); exit();
 
             //2- Va a llamar a la vista pasandole los datos de los depositos
-            include( 'vistas/depositos/index.php');
+            include( 'vistas/egresos/index.php');
 
             break;
 
@@ -57,7 +57,7 @@
                 if ( validarDatos() ){     
 
                     agregarDeposito($_POST, $_SESSION['usuario']['id']);
-                    header('Location: index.php?m=depositos&a=listado&mensaje=Deposito agregado correctamente&tipoMensaje=success');
+                    header('Location: index.php?m=egresos&a=listado&mensaje=Deposito agregado correctamente&tipoMensaje=success');
                 }else{
 
                     $data["mensaje"] = 'Completar todos los campos obligatorios';
@@ -66,12 +66,12 @@
                     $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
                     $data["registros"]["descripcion"] = $_POST['descripcion'] ?  $_POST['descripcion'] : '';                                                                    
  
-                    include( 'vistas/depositos/index.php');
+                    include( 'vistas/egresos/index.php');
                 }
 
             }else{                  
                 //2. llamar a la vista pasandole los datos de ese deposito en particular           
-                include( 'vistas/depositos/index.php');
+                include( 'vistas/egresos/index.php');
             }
 
             break;        

@@ -9,10 +9,10 @@ $(document).ready(function () {
         render: (data, type, row) => {
           console.log(row);
           return `  
-                    <button class="btn btn-success btn-sm btn-editar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Editar">
-                      <i class="fas fa-edit"></i>
-                    </button>                                 
-                  `;
+                      <button class="btn btn-success btn-sm btn-editar" data-id=${row[0]} data-toggle="tooltip" data-placement="top" title="Editar">
+                        <i class="fas fa-edit"></i>
+                      </button>                                 
+                    `;
         },
 
         targets: 2,
@@ -38,9 +38,9 @@ function atras() {
 // hice click en editar
 function editar() {
   //console.log("editar", $(this).attr("data-id"));
-  // guardo en id el valor del atributo data-id del boton que pulse, eso es el id del deposito
+  // guardo en id el valor del atributo data-id del boton que pulse, eso es el id del egreso
   const id = $(this).attr("data-id");
-  window.location = `${URL_BASE}/index.php?m=depositos&a=editar&id=${id}`;
+  window.location = `${URL_BASE}/index.php?m=egresos&a=editar&id=${id}`;
   //console.log("editando", $(this).attr("data-id"));
 }
 

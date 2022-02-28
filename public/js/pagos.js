@@ -107,15 +107,25 @@ function editar() {
 }
 
 function eliminar() {
-  const id = $(this).attr("data-id");
+  const idEliminar = $(this).attr("data-id");
 
-  window.location = `${URL_BASE}/index.php?m=pagos&a=eliminar&id=${id}&idVenta=${idVenta}`;
+  Swal.fire({
+    text: "¿Confirma la baja?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "red",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location = `${URL_BASE}/index.php?m=pagos&a=eliminar&id=${idEliminar}&idVenta=${idVenta}`;
+    }
+  });
 }
 
 function ver() {
-  const id = $(this).attr("data-id");
-
-  window.location = `${URL_BASE}/index.php?m=pagos&a=ver&id=${id}&idVenta=${idVenta}`;
+  const idPago = $(this).attr("data-id");
+  window.location = `${URL_BASE}/index.php?m=pagos&a=ver&id=${idPago}&idVenta=${idVenta}`;
 }
 
 function atras() {
