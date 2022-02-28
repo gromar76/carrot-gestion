@@ -52,6 +52,10 @@ $(document).ready(function () {
   //cuando hago click en boton de cancelar
   $("#btn-atras").click(atras);
 
+  $("#btn-mostrar-agregar-localidad").click(mostrarAgregarLocalidad);
+
+  $("#btn-guardar-localidad").click(guardarLocalidad);
+
   //cuando carga la pagina (el documento esta ready) entonces.....
 
   //Me fijo si hay un pais para seleccionar
@@ -69,9 +73,39 @@ $(document).ready(function () {
 $("#cliente-de-usuario").change(cargarClientes);
 $("#actividad").change(cargarClientes);
 
-function generarVenta(){
+async function guardarLocalidad() {
+  const localidad = $("#nuevaLocalidad").val();
+
+  if (localidad.length >= 2) {
+    const idProvincia = $("#provincia").val();
+
+    const url = `${URL_BASE}/index.php?m=localidades&a=agregarAjax&nombreLocalidad=${localidad}&idProvincia=${idProvincia}`;
+
+    const response = await fetch(url);
+    const idNuevaLocalidad = "" + (await response.json());
+
+    cargarLocalidades(idNuevaLocalidad);
+
+    $("#modal-agregar-localidad").modal("hide");
+
+    $("#nuevaLocalidad").val("");
+  } else {
+    Swal.fire({
+      icon: "error",
+      text: "El nombre de la localidad es obligatorio",
+    });
+  }
+}
+
+function mostrarAgregarLocalidad(event) {
+  event.preventDefault();
+
+  $("#modal-agregar-localidad").modal("show");
+}
+
+function generarVenta() {
   const idCliente = $(this).attr("data-id");
-  window.location = `${URL_BASE}/index.php?m=ventas&a=agregar&idCliente=${idCliente}`
+  window.location = `${URL_BASE}/index.php?m=ventas&a=agregar&idCliente=${idCliente}`;
 }
 
 function cargarClientes() {
@@ -129,6 +163,17 @@ function mostrarLocalidadesEnSelect(localidades, idLocalidadSeleccionada) {
         idLocalidadSeleccionada === localidad.id ? "selected" : ""
       }>${localidad.nombre}</option>`
     );
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  modoEditor = params.get("a");
+
+  console.log({ modoEditor });
+
+  if ($("#provincia").val() != "-1" && modoEditor !== "ver") {
+    $("#btn-mostrar-agregar-localidad").removeAttr("disabled");
+  } else {
+    $("#btn-mostrar-agregar-localidad").attr("disabled", "disabled");
   }
 }
 

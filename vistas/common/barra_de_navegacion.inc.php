@@ -27,8 +27,7 @@
           Procesos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>
-          <a class="dropdown-item" href="index.php?m=ventas">Modulo Pagos</a>
+          <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>          
           <a class="dropdown-item" href="#">Registrar Egreso/Gasto</a>
           <a class="dropdown-item" href="#">Registrar Corte Contable entre fechas</a>                    
           <a class="dropdown-item" href="#">xxxxxxxxx</a>

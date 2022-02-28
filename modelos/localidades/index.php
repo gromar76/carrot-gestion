@@ -31,8 +31,20 @@
     }
    
 
-    function agregarLocalidad($data){
+    function agregarLocalidad($nombreLocalidad, $idProvincia){
+        $conexion = obtenerConexion();
+    
+        $consulta = "INSERT INTO localidades(nombre, id_provincia)
+                     VALUES ('$nombreLocalidad', $idProvincia)
+                    ";
+        
+        $conexion->query($consulta);
+        
+        $idNuevaLocalidad = $conexion->insert_id;
 
+        cerrarConexion($conexion);
+            
+        return $idNuevaLocalidad;
     }
 
     function modificarLocalidad($data, $id){

@@ -31,6 +31,15 @@
         
             break;
 
+        case "agregarAjax":
+            
+            $data["registros"] = agregarLocalidad($_GET["nombreLocalidad"], $_GET["idProvincia"]);
+
+            //2- Va a llamar a la vista pasandole el id de la nueva localidad (JSON)
+            include( 'vistas/ajax/index.php');
+        
+            break;
+
 
 
         

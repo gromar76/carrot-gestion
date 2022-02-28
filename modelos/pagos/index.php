@@ -54,6 +54,7 @@ function actualizarImportePago($idVenta, $importe, $conexion){
     WHERE id = $idVenta" ;  
 
     $resultado = $conexion->query($consulta);
+
 }
 
 function eliminarPago($idPago,  $idVenta){
@@ -77,7 +78,6 @@ function eliminarPago($idPago,  $idVenta){
 
 function modificarPago($data, $idPago, $idVenta){
     $conexion = obtenerConexion();
-
 
     //OBTENGO EL IMPORTE DEL PAGO A BORRAR
     $importeOriginal = obtenerImportePago($idPago, $conexion);

@@ -114,8 +114,15 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         <div class="form-group row">
             <label for="localidad" class="col-3 col-form-label">Localidad <span class="campo-requerido">*</span></label> 
             <div class="col-9">
-            <select id="localidad" data-id-original="<?=$localidad?>" name="id_localidad" class="custom-select" <?=$disabled?>>               
-            </select>
+                <div class="row">
+                    <div class="col-10">
+                        <select id="localidad" data-id-original="<?=$localidad?>" name="id_localidad" class="custom-select" <?=$disabled?>>               
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button id="btn-mostrar-agregar-localidad" class="btn btn-primary btn-sm ml-2 mt-1" <?=$disabled?>>+</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -155,3 +162,40 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         </div> 
     </form>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-agregar-localidad" data-backdrop="static" data-keyboard="false" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="titulo-modal-agregar-localidad" class="modal-title">Agregar localidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form-localidad-detalle" method="post" class="col-12 col-sm-10 col-md-10">
+
+                        <div class="col">
+
+                            <div class="form-group row">
+                                <label for="nuevaLocalidad" class="col-3 col-form-label">Nombre</label> 
+                                <div class="col-9">
+                                    <input id="nuevaLocalidad" name="nuevaLocalidad" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">                
+                    <button id="btn-guardar-localidad" type="button" class="btn btn-primary">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal -->
