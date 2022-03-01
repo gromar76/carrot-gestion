@@ -8,7 +8,8 @@
             <th>Codigo</th>
             <th>Nombre Localidad</th>
             <th>Provincia</th>
-            <th>Pais</th>          
+            <th>Pais</th>
+            <th>Acciones</th>         
         </tr>
     </thead>
     <tbody>        
@@ -17,10 +18,11 @@
       {      
       ?>
       <tr>
-            <td><?php echo $data["registros"][$i]["id"];?></td>
-            <td><?php echo $data["registros"][$i]["nombre"];?></td>
-            <td><?php echo $data["registros"][$i]["nombre"];?></td>
-            <td><?php echo $data["registros"][$i]["nombre"];?></td>
+            <td><?php echo $data["registros"][$i]["idLocalidad"];?></td>
+            <td><?php echo $data["registros"][$i]["nomLocalidad"];?></td>
+            <td><?php echo $data["registros"][$i]["nomProvincia"];?></td>
+            <td><?php echo $data["registros"][$i]["nomPais"];?></td>
+            <td></td>
         <?php
         }?>
         </tr>

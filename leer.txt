@@ -41,4 +41,7 @@ en ventas poner la fecha bien, dia/mes/año
 
 desde el listado de clientes, salir con un boton a las VENTAS HISTORICAS DE ESE CLIENTE y manejar lo mismo....pagos, borrado...etc
 
+que pasa con tubos o mercaderia que no se vende ???
+
+
 

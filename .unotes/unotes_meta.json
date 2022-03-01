@@ -1,0 +1,70 @@
+{
+  "name": "",
+  "isOrdered": true,
+  "folders": {
+    "config": {
+      "name": "config",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "controladores": {
+      "name": "controladores",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "funciones": {
+      "name": "funciones",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "imagenes": {
+      "name": "imagenes",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "modelos": {
+      "name": "modelos",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "public": {
+      "name": "public",
+      "isOrdered": true,
+      "folders": {
+        "css": {
+          "name": "css",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "js": {
+          "name": "js",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "vendor": {
+          "name": "vendor",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        }
+      },
+      "files": {}
+    },
+    "vistas": {
+      "name": "vistas",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    }
+  },
+  "files": {
+    "cosas_por_hacer": 0
+  }
+}

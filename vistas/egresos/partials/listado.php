@@ -11,8 +11,7 @@ include("config/constantes.php");
     <thead>
         <tr>
             <th>Codigo</th>
-            <th>Nombre</th>           
-            <th>Categoria</th>
+            <th>Nombre</th>                       
             <th>Acciones</th>
         </tr>
     </thead>
@@ -23,8 +22,7 @@ include("config/constantes.php");
       ?>
       <tr>
             <td><?php echo $data["registros"][$i]["id"];?></td>
-            <td><?php echo $data["registros"][$i]["nombre"];?></td>            
-            <td><?php echo $data["registros"][$i]["nomcat"];?></td>
+            <td><?php echo $data["registros"][$i]["nombre"];?></td>                        
             <td></td>
         <?php
         }?>
