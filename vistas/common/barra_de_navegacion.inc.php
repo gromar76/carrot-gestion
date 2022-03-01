@@ -29,9 +29,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>
-          <a class="dropdown-item" href="#">Movimiento entre Depositos de Productos</a>
-          <a class="dropdown-item" href="#">Registrar Egreso/Gasto</a>
-          <a class="dropdown-item" href="#">Registrar Corte Contable entre fechas</a>                    
+          <a class="dropdown-item" href="#">Modulo Movimientos (entre depositos)</a>
+          <a class="dropdown-item" href="#">Modulo Compras</a>
+          <a class="dropdown-item" href="#">Modulo Egresos</a>
+          <a class="dropdown-item" href="#">Modulo Cortes entre fechas</a>                    
           
       </li>
       <li class="nav-item dropdown">

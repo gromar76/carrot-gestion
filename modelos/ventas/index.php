@@ -1,6 +1,7 @@
 <?php
 
     include_once 'funciones/conexion.php';
+    include_once 'modelos/pagos/index.php';
 
     function obtenerTodosVentas(){
 
@@ -83,11 +84,14 @@
     function agregarVenta($data, $idUsuario){      
       $conexion = obtenerConexion();
  
-      $cliente     = $data->cliente;
-      $fecha       = $data->fecha;      
-      $comentario  = $data->observaciones;        
-      $productos   = $data->productos;
-      $importe     = calcularTotal($productos);      
+      $cliente                 = $data->cliente;
+      $fecha                   = $data->fecha;      
+      $comentario              = $data->observaciones;        
+      $productos               = $data->productos;
+      $importe                 = calcularTotal($productos);   
+
+      $primerPago              = $data->primerPago;
+      $observacionesPrimerPago = $data->observacionesPrimerPago;
            
       $consulta="INSERT INTO ventas (cliente, importe, fecha, id_usuario, comentario)
                  VALUES ( $cliente, $importe, '$fecha', $idUsuario, '$comentario' )";
@@ -96,7 +100,19 @@
 
       $idVenta = $conexion->insert_id;
 
-      guardarDetalleVenta($idVenta, $productos, $conexion);
+      guardarDetalleVenta($idVenta, $productos, $conexion); 
+
+      //VERIFICO SI HAY PRIMER PAGO Y SI ES ASI, LO GUARDO 
+      $data = [];
+
+      if ( $primerPago > 0 ) {
+
+        $data["importe"]       = $primerPago;
+        $data["fecha"]         = $fecha;
+        $data["observaciones"] = $observacionesPrimerPago;
+
+        agregarPago($data, $idVenta);
+      }
 
       cerrarConexion($conexion);
     }

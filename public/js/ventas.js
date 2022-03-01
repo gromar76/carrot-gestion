@@ -126,7 +126,7 @@ $(document).ready(async function () {
 
   $("#btn-agregar-detalle").click(guardarProductoDetalle);
 
-  $("#btn-guardar").click(guardarVenta);
+  $("#btn-guardar").click(mostrarModalPrimerPago);
 
   $(".btn-pagos-venta").click(editarPagos);
 
@@ -338,7 +338,45 @@ function guardarProductoDetalle() {
   }
 }
 
+async function mostrarModalPrimerPago() {
+  const showModalPrimerPago = new Promise((resolve, reject) => {
+    const total = venta.productos.reduce(
+      (acumulado, { cantidad, precioUnit }) =>
+        acumulado + cantidad * precioUnit,
+      0
+    );
+
+    $("#importe-primer-pago").val(total);
+
+    $("#modal-primer-pago").modal("show");
+
+    $("#btn-aceptar-primer-pago").click(() => {
+      resolve();
+    });
+
+    $("#btn-cancelar-primer-pago").click(() => {
+      reject();
+    });
+  });
+
+  showModalPrimerPago
+    .then(() => {
+      venta.primerPago = $("#importe-primer-pago").val();
+      venta.observacionesPrimerPago = $("#observaciones-primer-pago").val();
+    })
+    .catch(() => {
+      venta.primerPago = 0;
+      venta.observacionesPrimerPago = "";
+    })
+    .finally(() => {
+      $("#modal-primer-pago").modal("hide");
+      guardarVenta();
+    });
+}
+
 async function guardarVenta() {
+  console.log(venta);
+
   let accion = "agregar";
   let metodo = "POST";
 
