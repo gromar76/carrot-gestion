@@ -38,6 +38,10 @@
             $modulo = "ventas";
             break;
 
+        case "compras":
+            $modulo = "compras";
+            break;
+
         case "localidades":
             $modulo = "localidades";
             break;

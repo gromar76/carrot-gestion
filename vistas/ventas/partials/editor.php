@@ -183,7 +183,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                         <div class="form-group row">
                             <label for="importe-primer-pago" class="col-4 col-form-label">Importe</label> 
                             <div class="col">
-                            <input id="importe-primer-pago" name="importe-primer-pago" type="number" class="form-control">
+                                <input id="importe-primer-pago" name="importe-primer-pago" type="number" class="form-control">
                             </div>
                         </div>
 

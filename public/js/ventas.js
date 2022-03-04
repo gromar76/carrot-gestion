@@ -38,6 +38,8 @@ let venta = {
 let numFilaEditar;
 
 $(document).ready(async function () {
+  // obtengo en params todos los parametros de la url pasados....
+  // luego puedo preguntar por ellos....
   const params = new URLSearchParams(window.location.search);
 
   const targets = [COLUMNAS.ID_VENTA, COLUMNAS.USUARIO_ID];
@@ -81,6 +83,7 @@ $(document).ready(async function () {
                                                   </button> `;
 
           return `${
+            // transformo a entero el id del usuario porque esta como caracter
             parseInt(row[COLUMNAS.USUARIO_ID]) === userId ? btnEditar : ""
           }    
                   ${btnVer} 
@@ -100,6 +103,7 @@ $(document).ready(async function () {
           console.log(row);
 
           const style =
+            // transformo a entero
             parseInt(row[COLUMNAS.PENDIENTE]) === 0
               ? "color: black"
               : "color: red";
@@ -242,6 +246,7 @@ async function obteneClientesParaSelect() {
 }
 
 function editarPagos() {
+  // traigo en id el codigo de la venta
   const id = $(this).attr("data-id");
 
   window.location = `${URL_BASE}/index.php?m=pagos&a=listado&id=${id}`;
@@ -339,39 +344,47 @@ function guardarProductoDetalle() {
 }
 
 async function mostrarModalPrimerPago() {
-  const showModalPrimerPago = new Promise((resolve, reject) => {
-    const total = venta.productos.reduce(
-      (acumulado, { cantidad, precioUnit }) =>
-        acumulado + cantidad * precioUnit,
-      0
-    );
+  // si estoy editando no hacer esto
+  // si no hay id es porque no estoy editando la venta
+  const params = new URLSearchParams(window.location.search);
 
-    $("#importe-primer-pago").val(total);
+  if (params.get("id")) {
+    guardarVenta();
+  } else {
+    const showModalPrimerPago = new Promise((resolve, reject) => {
+      const total = venta.productos.reduce(
+        (acumulado, { cantidad, precioUnit }) =>
+          acumulado + cantidad * precioUnit,
+        0
+      );
 
-    $("#modal-primer-pago").modal("show");
+      $("#importe-primer-pago").val(total);
 
-    $("#btn-aceptar-primer-pago").click(() => {
-      resolve();
+      $("#modal-primer-pago").modal("show");
+
+      $("#btn-aceptar-primer-pago").click(() => {
+        resolve();
+      });
+
+      $("#btn-cancelar-primer-pago").click(() => {
+        reject();
+      });
     });
 
-    $("#btn-cancelar-primer-pago").click(() => {
-      reject();
-    });
-  });
-
-  showModalPrimerPago
-    .then(() => {
-      venta.primerPago = $("#importe-primer-pago").val();
-      venta.observacionesPrimerPago = $("#observaciones-primer-pago").val();
-    })
-    .catch(() => {
-      venta.primerPago = 0;
-      venta.observacionesPrimerPago = "";
-    })
-    .finally(() => {
-      $("#modal-primer-pago").modal("hide");
-      guardarVenta();
-    });
+    showModalPrimerPago
+      .then(() => {
+        venta.primerPago = $("#importe-primer-pago").val();
+        venta.observacionesPrimerPago = $("#observaciones-primer-pago").val();
+      })
+      .catch(() => {
+        venta.primerPago = 0;
+        venta.observacionesPrimerPago = "";
+      })
+      .finally(() => {
+        $("#modal-primer-pago").modal("hide");
+        guardarVenta();
+      });
+  }
 }
 
 async function guardarVenta() {
