@@ -163,4 +163,46 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
     </div>
     <!-- Modal Agregar Producto a Detalle -->    
 
+     <!-- Modal Primer Pago -->
+     <div class="modal fade" id="modal-primer-pago" data-backdrop="static" data-keyboard="false" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="titulo-modal-agregar-producto" class="modal-title">¿Registrar primer pago?</h5>
+                <button type="button" class="close" data-dismiss="modal" >
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-producto-detalle" method="post" class="col-12 col-sm-10 col-md-10">
+
+                    <div class="col">
+
+                        <div class="form-group row">
+                            <label for="importe-primer-pago" class="col-4 col-form-label">Importe</label> 
+                            <div class="col">
+                                <input id="importe-primer-pago" name="importe-primer-pago" type="number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="observaciones-primer-pago" class="col-4 col-form-label">Observaciones</label> 
+                            <div class="col">
+                                <textarea id="observaciones-primer-pago" name="observaciones-primer-pago" rows="5" class="form-control w-100"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">                
+                <button id="btn-aceptar-primer-pago" type="button" class="btn btn-primary">Si</button>
+                <button id="btn-cancelar-primer-pago" type="button" class="btn btn-secondary">No</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal Primer Pago-->
+
 </div>

@@ -25,7 +25,7 @@ function dateFechaDeHoyParaInputDate() {
 
 // armo la estructura de la venta
 let compra = {
-  cliente: null,
+  proveedor: null,
   fecha: dateFechaDeHoyParaInputDate(),
   observaciones: "",
   productos: [],
@@ -66,13 +66,13 @@ $(document).ready(async function () {
                             <i class="fas fa-eye"></i>
                            </button>`;
 
-          const btnEliminar = `<button class="btn btn-danger btn-sm btn-eliminar-venta" data-id=${
+          const btnEliminar = `<button class="btn btn-danger btn-sm btn-eliminar-compra" data-id=${
             row[COLUMNAS.ID_COMPRA]
           } data-toggle="tooltip" data-placement="top" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                               </button> `;
 
-          const btnPagos = `<button class="btn btn-secondary btn-sm btn-pagos-venta" data-id=${
+          const btnPagos = `<button class="btn btn-secondary btn-sm btn-pagos-compra" data-id=${
             row[COLUMNAS.ID_COMPRA]
           } data-toggle="tooltip" data-placement="top" title="Pagos">
                                                     <i class="fas fa-dollar-sign"></i>
@@ -81,6 +81,7 @@ $(document).ready(async function () {
           return `${btnEditar} 
                   ${btnVer}
                   ${btnPagos}
+                  ${btnEliminar}
                   `;
         },
 
@@ -120,11 +121,11 @@ $(document).ready(async function () {
 
   $("#btn-guardar").click(mostrarModalPrimerPago);
 
-  $(".btn-pagos-venta").click(editarPagos);
+  $(".btn-pagos-compra").click(editarPagos);
 
-  $("#cliente").change(function () {
+  $("#proveedor").change(function () {
     console.log($(this).val());
-    compra.cliente = $(this).val();
+    compra.proveedor = $(this).val();
   });
 
   $("#fecha").change(function () {
@@ -146,7 +147,7 @@ $(document).ready(async function () {
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
   const proveedoresParaSelect = await obteneProveedoresParaSelect();
 
-  $("#cliente").inputpicker({
+  $("#proveedor").inputpicker({
     data: proveedoresParaSelect,
     fields: [
       { name: "id", text: "Codigo" },
@@ -199,19 +200,19 @@ $(document).ready(async function () {
 async function cargarDetalleCompra(id) {
   const { compra: compraBd, productos } = await obtenerDetalleCompra(id);
 
-  $("#inputpicker-1").val(compraBd.cliente); //FIX para que aparezca seleccionado el nombre
+  $("#inputpicker-1").val(compraBd.nombre_empresa); //FIX para que aparezca seleccionado el nombre
 
   compra = {
     proveedor: compraBd.id_proveedor,
     fecha: compraBd.fecha,
-    observaciones: compraBd.comentario,
+    observaciones: compraBd.observaciones,
     productos,
   };
 
   actualizarVista();
 }
 
-async function obtenerDetalleCompras(id) {
+async function obtenerDetalleCompra(id) {
   const url = `${URL_BASE}/index.php?m=compras&a=detalleCompraAjax&id=${id}`;
 
   const response = await fetch(url);
@@ -330,7 +331,47 @@ function guardarProductoDetalle() {
 }
 
 async function mostrarModalPrimerPago() {
-  guardarCompra();
+  // si estoy editando no hacer esto
+  // si no hay id es porque no estoy editando la compra
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("id")) {
+    guardarCompra();
+  } else {
+    const showModalPrimerPago = new Promise((resolve, reject) => {
+      const total = compra.productos.reduce(
+        (acumulado, { cantidad, precioUnit }) =>
+          acumulado + cantidad * precioUnit,
+        0
+      );
+
+      $("#importe-primer-pago").val(total);
+
+      $("#modal-primer-pago").modal("show");
+
+      $("#btn-aceptar-primer-pago").click(() => {
+        resolve();
+      });
+
+      $("#btn-cancelar-primer-pago").click(() => {
+        reject();
+      });
+    });
+
+    showModalPrimerPago
+      .then(() => {
+        compra.primerPago = $("#importe-primer-pago").val();
+        compra.observacionesPrimerPago = $("#observaciones-primer-pago").val();
+      })
+      .catch(() => {
+        compra.primerPago = 0;
+        compra.observacionesPrimerPago = "";
+      })
+      .finally(() => {
+        $("#modal-primer-pago").modal("hide");
+        guardarCompra();
+      });
+  }
 }
 
 async function guardarCompra() {
@@ -345,8 +386,6 @@ async function guardarCompra() {
   }
   compra.proveedor = $("#proveedor").val();
 
-  //alert(venta.cliente);
-
   compra.fecha = $("#fecha").val();
   compra.observaciones = $("#observaciones").val();
 
@@ -357,7 +396,7 @@ async function guardarCompra() {
   // credentials lo pongo porque sino no toma la cookie y se pierde....
   const response = await fetch(url, {
     method: metodo,
-    body: JSON.stringify(venta),
+    body: JSON.stringify(compra),
     headers: { "Content-Type": "application/json" },
     credentials: "include",
   });
@@ -440,11 +479,11 @@ function eliminarProductoDetalle() {
 }
 
 function actualizarVista() {
-  console.log(compra.cliente);
+  console.log(compra.proveedor);
 
   console.log($("#proveedor").val());
 
-  $("#proveedor").val(compra.cliente);
+  $("#proveedor").val(compra.proveedor);
   $("#fecha").val(compra.fecha);
   $("#observaciones").val(compra.observaciones);
 
@@ -488,7 +527,7 @@ function actualizarVista() {
   $(".btn-editar-producto-detalle").click(mostrarModalEditarProducto);
   $(".btn-eliminar-producto-detalle").click(eliminarProductoDetalle);
 
-  $(".btn-eliminar-venta").click(eliminarCompra);
+  $(".btn-eliminar-compra").click(eliminarCompra);
 
   $("#total-compra").html(`$ ${total}`);
 }

@@ -35,14 +35,14 @@
 
     switch( $accion ){
 
-       /*  case "detalleCompraAjax":
-            //1- Obtener el detalle de la venta   
+       case "detalleCompraAjax":
+            //1- Obtener el detalle de la compra   
             
-            $data["registros"] = obtenerPorIdVentas($_GET["id"]);
+            $data["registros"] = obtenerPorIdCompra($_GET["id"]);
             
             include( 'vistas/ajax/index.php');
 
-            break; */
+            break;
 
         case "listado":
             //1- Obtener los datos de las compras (Pide al modelo de compras)       
@@ -53,7 +53,7 @@
 
             break;
 
-       /*  case "editarAjax":
+       case "editarAjax":
     
             //1. Verificar si viene con datos del formulario (payload)
             // aca hizo click en el boton GUARDAR ....ya venia editando
@@ -61,7 +61,7 @@
            
             if( isset( $_GET["id"] ) ){            
         
-                modificarVenta( $_GET["id"] , $putParams, $_SESSION['usuario']['id']);
+                modificarCompra( $_GET["id"] , $putParams, $_SESSION['usuario']['id']);
 
                 $data["registros"] = ["status" => "OK", "message" => "La compra se ha modificado correctamente."];
 
@@ -72,7 +72,7 @@
             }
 
             break;
-
+        
         case "ver":
         case "editar":
           
@@ -80,7 +80,7 @@
             //APRETE BOTON GUARDAN DANDO DE ALTA
 
 
-            $data["clientes"] = obtenerTodosProveedores();
+            $data["proveedores"] = obtenerTodosProveedores();
             //$data["productos"] = obtenerTodosProductos();
             $data["productos"] = obtenerTodosProductosxOrdenManual();
             
@@ -89,7 +89,7 @@
        
 
             break;
-        */
+        
         case "agregar":
        
             // lo que viene por _POST lo tomo con file_get_contents
@@ -124,14 +124,14 @@
 
             break;
 
-        /*case "eliminar":
+        case "eliminar":
             eliminarCompra( $_GET["id"] );
 
             $data["registros"] = ["status" => "OK", "message" => "La compra se ha eliminado correctamente."];
 
             include( 'vistas/ajax/index.php');
 
-            break; */
+            break; 
         
         default:
             include( 'vistas/404/index.php');

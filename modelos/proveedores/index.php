@@ -17,7 +17,7 @@
     function obtenerTodosProveedores(){
         $conexion = obtenerConexion();
         
-        $consulta = 'SELECT pro.id id, CONCAT(pro.nombre_empresa, " ") nombre_completo 
+        $consulta = 'SELECT *
                      FROM proveedores pro';
         
         $resultado = $conexion->query($consulta);

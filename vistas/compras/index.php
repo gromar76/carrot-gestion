@@ -7,28 +7,27 @@
             $data["titulo"] = "Listado de Compras";
             break;
 
-      /*   case "editar":
+        case "editar":
             $data["contenido"] =  'vistas/compras/partials/editor.php';
             $data["titulo"] = "Editando la Compra";                       
             break;
-       */
+       
             
         case "agregar":
             $data["contenido"] =  'vistas/compras/partials/editor.php';
-            $data["titulo"] = "Agregando una Venta";            
+            $data["titulo"] = "Agregando una Compra";            
             break;
-
-         /*     
+           
         case "eliminar":
             $data["contenido"] =  'vistas/compras/partials/listado.php';
             $data["titulo"] = "Listado de Compras";
             break;
-
+        
          case "ver":
             // agarro el contenido y luego lo muestro en vistas/base/index.php
             $data["contenido"] =  'vistas/compras/partials/editor.php';
             $data["titulo"] = "Viendo detalle de Compra";
-            break; */
+            break; 
 
     }
     
