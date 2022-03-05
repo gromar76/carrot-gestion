@@ -1,8 +1,9 @@
 <?php
 
-    /*include("modelos/proveedores/index.php"); */
+    include("modelos/proveedores/index.php");
     include("modelos/compras/index.php"); 
     include("modelos/productos/index.php");
+
 
     // seteo listado por default
     $accion = "listado";
@@ -34,7 +35,7 @@
 
     switch( $accion ){
 
-       /*  case "detalleVentaAjax":
+       /*  case "detalleCompraAjax":
             //1- Obtener el detalle de la venta   
             
             $data["registros"] = obtenerPorIdVentas($_GET["id"]);
@@ -55,14 +56,14 @@
        /*  case "editarAjax":
     
             //1. Verificar si viene con datos del formulario (payload)
-            // aca hizo click en el boton GUARDAR ....ya vania editando
+            // aca hizo click en el boton GUARDAR ....ya venia editando
             $putParams = json_decode( file_get_contents('php://input') );                     
            
             if( isset( $_GET["id"] ) ){            
         
                 modificarVenta( $_GET["id"] , $putParams, $_SESSION['usuario']['id']);
 
-                $data["registros"] = ["status" => "OK", "message" => "La venta se ha modificado correctamente."];
+                $data["registros"] = ["status" => "OK", "message" => "La compra se ha modificado correctamente."];
 
                 include( 'vistas/ajax/index.php');
             
@@ -79,56 +80,54 @@
             //APRETE BOTON GUARDAN DANDO DE ALTA
 
 
-            $data["clientes"] = obtenerTodosClientes();
+            $data["clientes"] = obtenerTodosProveedores();
             //$data["productos"] = obtenerTodosProductos();
             $data["productos"] = obtenerTodosProductosxOrdenManual();
             
-            //3. llamar a la vista pasandole los datos de esa venta en particular           
-            include( 'vistas/ventas/index.php');
+            //3. llamar a la vista pasandole los datos de esa compra en particular           
+            include( 'vistas/compras/index.php');
        
 
             break;
-        
-        case "agregar":   
-            
+        */
+        case "agregar":
        
             // lo que viene por _POST lo tomo con file_get_contents
             // eso como es un json, con la funcion json_decode lo decodifico para leerlo en $postParams
-            $postParams = json_decode( file_get_contents('php://input') );                     
-
-           
+            $postParams = json_decode( file_get_contents('php://input') );
 
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
-            if( isset( $postParams->cliente ) ){
+            if( isset( $postParams->proveedor ) ){
 
                 if ( validarDatos() ){                    
-                    agregarVenta($postParams, $_SESSION['usuario']['id']);
+                    agregarCompra($postParams, $_SESSION['usuario']['id']);
 
-                    $data["registros"] = ["status" => "OK", "message" => "La venta se registro satisfactoriamente"];                                        
+                    $data["registros"] = ["status" => "OK", "message" => "La compra se registro satisfactoriamente"];                                        
                 }else{
-                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar la venta"];
+                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar la compra"];
                 }
 
                 include( 'vistas/ajax/index.php');
 
             }else{        
                 
-                $data["clientes"] = obtenerTodosClientes();       
+                $data["proveedores"] = obtenerTodosProveedores();       
                 
                 //$data["productos"] = obtenerTodosProductos();
-                $data["productos"] = obtenerTodosProductosxOrdenManual();
+                $data["productos"] = obtenerTodosProductosxOrdenManual(); 
+               
 
-                //2. llamar a la vista del editor de venta vacio    
-                include( 'vistas/ventas/index.php');
+                //2. llamar a la vista del editor de compra vacio    
+                include( 'vistas/compras/index.php');
             }
 
             break;
 
-        case "eliminar":
-            eliminarVenta( $_GET["id"] );
+        /*case "eliminar":
+            eliminarCompra( $_GET["id"] );
 
-            $data["registros"] = ["status" => "OK", "message" => "La venta se ha eliminado correctamente."];
+            $data["registros"] = ["status" => "OK", "message" => "La compra se ha eliminado correctamente."];
 
             include( 'vistas/ajax/index.php');
 

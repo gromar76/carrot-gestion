@@ -15,9 +15,6 @@ git checkout nombre_arch  //Restaura un archivo al estado anterior
 Ver con pablo
 -------------
 
-
-SI ESTAS MODIFICANDO NO HACER EL PRIMER PAGO
-
 Cambiar Select de actividad por checkboxes
 Cambiar campo actividad en la base de datos por campos independientes (padel, tennis)
 

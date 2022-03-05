@@ -29,6 +29,11 @@
         case "clientes":
             $modulo = "clientes";
             break;
+        
+        case "proveedores":
+            $modulo = "proveedores";
+            break;
+
 
         case "productos":
             $modulo = "productos";
@@ -77,6 +82,7 @@
         case "egresos":
             $modulo = "egresos";
             break;
+
     
         
         // si modulo no es ninguno de los anteriores entonces es 404
