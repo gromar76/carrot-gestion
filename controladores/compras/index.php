@@ -3,6 +3,7 @@
     include("modelos/proveedores/index.php");
     include("modelos/compras/index.php"); 
     include("modelos/productos/index.php");
+    include("modelos/depositos/index.php");
 
 
     // seteo listado por default
@@ -19,6 +20,11 @@
     // si paso la variable a entonces..... la guardo en accion
     if ( isset($_GET["a"]) ){
         $accion = $_GET["a"];
+    }
+
+    $idUsuarioActivo = NULL;
+    if ( $_SESSION['usuario'] ){
+        $idUsuarioActivo = $_SESSION['usuario']['id'];
     }
 
     function validarDatos(){
@@ -61,7 +67,7 @@
            
             if( isset( $_GET["id"] ) ){            
         
-                modificarCompra( $_GET["id"] , $putParams, $_SESSION['usuario']['id']);
+                modificarCompra( $_GET["id"] , $putParams, $idUsuarioActivo );
 
                 $data["registros"] = ["status" => "OK", "message" => "La compra se ha modificado correctamente."];
 
@@ -81,7 +87,7 @@
 
 
             $data["proveedores"] = obtenerTodosProveedores();
-            //$data["productos"] = obtenerTodosProductos();
+            $data["depositos"]    = obtenerTodosDepositos();     
             $data["productos"] = obtenerTodosProductosxOrdenManual();
             
             //3. llamar a la vista pasandole los datos de esa compra en particular           
@@ -101,7 +107,7 @@
             if( isset( $postParams->proveedor ) ){
 
                 if ( validarDatos() ){                    
-                    agregarCompra($postParams, $_SESSION['usuario']['id']);
+                    agregarCompra($postParams, $idUsuarioActivo );
 
                     $data["registros"] = ["status" => "OK", "message" => "La compra se registro satisfactoriamente"];                                        
                 }else{
@@ -112,12 +118,13 @@
 
             }else{        
                 
-                $data["proveedores"] = obtenerTodosProveedores();       
+                $data["proveedores"]  = obtenerTodosProveedores();       
+                $data["depositos"]    = obtenerTodosDepositos();     
+                $data["deposito"]     = obtenerDepositoDefault( $idUsuarioActivo ); 
                 
                 //$data["productos"] = obtenerTodosProductos();
                 $data["productos"] = obtenerTodosProductosxOrdenManual(); 
                
-
                 //2. llamar a la vista del editor de compra vacio    
                 include( 'vistas/compras/index.php');
             }

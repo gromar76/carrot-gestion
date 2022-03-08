@@ -23,12 +23,15 @@ function dateFechaDeHoyParaInputDate() {
   return fechaHoyParaInputDate;
 }
 
-// armo la estructura de la venta
+const params = new URLSearchParams(window.location.search);
+
+// armo la estructura de la compra
 let compra = {
   proveedor: null,
   fecha: dateFechaDeHoyParaInputDate(),
   observaciones: "",
   productos: [],
+  deposito: null,
 };
 
 // con esto manejo la fila al hacer click en editar o eliminar
@@ -37,7 +40,9 @@ let numFilaEditar;
 $(document).ready(async function () {
   // obtengo en params todos los parametros de la url pasados....
   // luego puedo preguntar por ellos....
-  const params = new URLSearchParams(window.location.search);
+
+  compra.deposito = params.get("id") ? null : $("#deposito").val();
+
   const targets = [COLUMNAS.ID_COMPRA];
 
   // cuando se carga el documento....convierto la clase TABLA a datatable...
@@ -124,8 +129,11 @@ $(document).ready(async function () {
   $(".btn-pagos-compra").click(editarPagos);
 
   $("#proveedor").change(function () {
-    console.log($(this).val());
     compra.proveedor = $(this).val();
+  });
+
+  $("#deposito").change(function () {
+    compra.deposito = $(this).val();
   });
 
   $("#fecha").change(function () {
@@ -207,6 +215,7 @@ async function cargarDetalleCompra(id) {
     fecha: compraBd.fecha,
     observaciones: compraBd.observaciones,
     productos,
+    deposito: compraBd.id_deposito,
   };
 
   actualizarVista();
@@ -287,10 +296,6 @@ function ver() {
 }
 
 const idCompraSeleccionada = $("#compra").attr("data-id-original");
-
-function cargarVenta(id) {
-  // alert("hola");
-}
 
 async function obtenerPrecioProducto(id) {
   const url = `${URL_BASE}/index.php?m=productos&a=obtenerPrecio&id=${id}`;
@@ -385,6 +390,7 @@ async function guardarCompra() {
     metodo = "PUT";
   }
   compra.proveedor = $("#proveedor").val();
+  compra.deposito = $("#deposito").val();
 
   compra.fecha = $("#fecha").val();
   compra.observaciones = $("#observaciones").val();
@@ -479,13 +485,10 @@ function eliminarProductoDetalle() {
 }
 
 function actualizarVista() {
-  console.log(compra.proveedor);
-
-  console.log($("#proveedor").val());
-
   $("#proveedor").val(compra.proveedor);
   $("#fecha").val(compra.fecha);
   $("#observaciones").val(compra.observaciones);
+  $("#deposito").val(compra.deposito);
 
   const detalleProductosTbody = $("#detalle-compra");
 

@@ -16,8 +16,10 @@ $cantidad       = isset($data['registros']['cantidad']) ? $data['registros']['ca
 
 $precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
  */
-$proveedores    = $data["proveedores"];
-$productos      = $data["productos"];
+$proveedores      = $data["proveedores"];
+$productos        = $data["productos"];
+$depositos        = $data["depositos"];
+$deposito         = isset( $data["deposito"] ) ?  $data["deposito"]  : NULL;
 
 //var_dump ($proveedores);exit();
 
@@ -48,6 +50,18 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                     <label for="fecha" class="col-3 col-form-label">Fecha</label> 
                     <div class="col-9">
                     <input id="fecha" name="fecha" type="date" class="form-control" <?=$disabled?>>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="deposito" class="col-3 col-form-label">Deposito</label> 
+
+                    <div class="col-9">
+
+                        <select class="form-control" id="deposito" value="Cargando..." <?=$disabled?>>
+                            <?= dameOpcionesDelSelect( $depositos, $deposito );  ?>
+                        </select>
+
                     </div>
                 </div>
 

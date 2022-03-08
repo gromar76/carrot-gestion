@@ -2,12 +2,12 @@
 
 include_once 'funciones/conexion.php';
 
-/* function obtenerPagosPorIdVenta($id){
+ function obtenerPagosPorIdCompra($idCompra){
     $conexion = obtenerConexion();
 
     $consulta = "SELECT *
-                 FROM pagos
-                 WHERE id_venta = $id";
+                 FROM pagos_compras
+                 WHERE id_compra = $idCompra";
     
     $resultado = $conexion->query($consulta);
     $registros = fetchAll( $resultado );
@@ -16,14 +16,14 @@ include_once 'funciones/conexion.php';
 
     return $registros;
 }
-    
+/* 
 
-function obtenerPorIdPago($id){
+function obtenerPorIdVenta($idCompra){
     $conexion = obtenerConexion();
 
     $consulta = "SELECT *
-                 FROM pagos
-                 WHERE id = $id";
+                 FROM pagos_compras
+                 WHERE id = $idCompra";
     
     $resultado = $conexion->query($consulta);
     $registros = fetchAll( $resultado );
@@ -33,16 +33,16 @@ function obtenerPorIdPago($id){
     return $registros[0]; 
 }
 
-function obtenerImportePago($idPago, $conexion){
-    $consulta = "SELECT importe 
-    FROM pagos
-    WHERE id = $idPago";
+function obtenerImporteCompra($idCompra, $conexion){
+    $consulta = "SELECT importe_pagado
+    FROM compras
+    WHERE id = $idCompra";
 
     $resultado = $conexion->query($consulta);
 
     $registros = fetchAll( $resultado );
 
-    $importe =  $registros[0]["importe"];
+    $importe =  $registros[0]["importe_pagado"];
 
     return $importe;
 }*/
@@ -57,14 +57,14 @@ function actualizarImportePagoCompra($idCompra, $importe, $conexion){
 
 }
 
-/*function eliminarPago($idPago,  $idVenta){
+/*function eliminarPago($idPago,  $idCompra){
     $conexion = obtenerConexion();
 
     //OBTENGO EL IMPORTE DEL PAGO A BORRAR
     $importe = obtenerImportePago($idPago, $conexion);
 
     $consulta = "DELETE 
-                 FROM pagos
+                 FROM pagos_compras
                  WHERE id = $idPago";
     
     $resultado = $conexion->query($consulta);
@@ -76,7 +76,7 @@ function actualizarImportePagoCompra($idCompra, $importe, $conexion){
     cerrarConexion($conexion);
 }
 
-function modificarPago($data, $idPago, $idVenta){
+function modificarPagoCompras($data, $idPago, $idCompra){
     $conexion = obtenerConexion();
 
     //OBTENGO EL IMPORTE DEL PAGO A BORRAR
@@ -95,7 +95,7 @@ function modificarPago($data, $idPago, $idVenta){
     $resultado = $conexion->query($consulta);
 
     //ACTUALIZO PAGADO
-    actualizarImportePago($idVenta, $importe - $importeOriginal, $conexion);
+    actualizarImportePago($idCompra, $importe - $importeOriginal, $conexion);
 
     cerrarConexion($conexion);
 } */

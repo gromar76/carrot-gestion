@@ -34,7 +34,6 @@
             $modulo = "proveedores";
             break;
 
-
         case "productos":
             $modulo = "productos";
             break;
@@ -77,6 +76,10 @@
         
         case "pagos":
             $modulo = "pagos";
+            break;
+
+        case "pagos_compras":
+            $modulo = "pagos_compras";
             break;
 
         case "egresos":

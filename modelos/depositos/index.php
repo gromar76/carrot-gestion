@@ -10,10 +10,21 @@
         return $registros;
     }
 
+    function obtenerDepositoDefault( $id_usuario ){
+        $conexion = obtenerConexion();
+        $consulta = "SELECT id_deposito_default
+                     FROM usuarios
+                     WHERE id = $id_usuario";
+
+        $resultado = $conexion->query($consulta);
+        $registros = fetchAll( $resultado );
+        
+        return $registros[0]["id_deposito_default"];
+    }
 
     function obtenerDepositoPorId($id){   
 
-        $conexion = obtenerConexion();
+/*         $conexion = obtenerConexion();
     
         $consulta = 'SELECT id, nombre
                      FROM depositos
@@ -24,7 +35,7 @@
     
         cerrarConexion($conexion);
     
-        return $registros;
+        return $registros; */
 
 
     }

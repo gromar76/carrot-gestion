@@ -18,13 +18,11 @@
         $accion = $_GET["a"];
     }
 
-
-
     function validarDatos(){
 
         // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract        
-        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
-                isset( $_POST['precio']);            
+        return  true; /* isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
+                isset( $_POST['precio']);     */        
                
     }
 
@@ -44,12 +42,11 @@
 
 
         case "editar":
-     
-              
+            break;
 
-            case "agregar":      
-            
-                   //1. Verificar si viene con datos del formulario (payload)
+        case "agregar":      
+        
+            /*//1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $_POST["nombre"] ) ){
 
@@ -65,7 +62,7 @@
 
                     $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
                     $data["registros"]["descripcion"] = $_POST['descripcion'] ?  $_POST['descripcion'] : '';                                                                    
- 
+
                     include( 'vistas/depositos/index.php');
                 }
 
@@ -74,7 +71,7 @@
                 include( 'vistas/depositos/index.php');
             }
 
-            break;        
+            break;      */   
         
         
         
