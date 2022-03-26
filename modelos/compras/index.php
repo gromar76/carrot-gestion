@@ -7,10 +7,12 @@
 
         $conexion = obtenerConexion();
 
-        $consulta = 'SELECT compras.id, compras.fecha, compras.importe_total, nombre_empresa, compras.importe_pagado
+        $consulta = 'SELECT compras.id, compras.fecha, compras.importe_total, nombre_empresa, compras.importe_pagado, dep.nombre deposito
                      FROM compras 
                      INNER JOIN proveedores prov 
                         ON prov.id = compras.id_proveedor
+                     INNER JOIN depositos dep 
+                        ON compras.id_deposito = dep.id
                      ORDER BY compras.fecha desc';
         
         $resultado = $conexion->query($consulta);
@@ -163,8 +165,9 @@
         $deposito      = $data->deposito;
 
 
-
-             
+        //Eliminar detalle de compra anterior
+        eliminarDetalleCompra($idCompra, $conexion);
+  
         //Actualizo el encabezado de la compra 
         $consulta="UPDATE compras 
                       SET id_proveedor    = $proveedor,
@@ -177,8 +180,6 @@
   
         $resultado = $conexion->query($consulta);
   
-        //Eliminar detalle de compra anterior
-        eliminarDetalleCompra($idCompra, $conexion);
   
         //Guardar nuevo detalle compra
         guardarDetalleCompra($idCompra, $productos, $conexion, $deposito);

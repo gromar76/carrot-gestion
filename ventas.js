@@ -1,14 +1,15 @@
 let idVenta = null;
 
 const COLUMNAS = {
-  ID_COMPRA: 0,
-  PROVEEDOR: 1,
+  ID_VENTA: 0,
+  CLIENTE: 1,
   FECHA: 2,
-  IMPORTE_TOTAL: 3,
-  IMPORTE_PAGADO: 4,
+  IMPORTE: 3,
+  PAGADO: 4,
   PENDIENTE: 5,
-  DEPOSITO: 6,
-  ACCIONES: 7,
+  USUARIO: 6,
+  USUARIO_ID: 7,
+  ACCIONES: 8,
 };
 
 //formateo la fecha para mostrar en el input date
@@ -21,18 +22,16 @@ function dateFechaDeHoyParaInputDate() {
     hoy.getMonth() + 1 > 9 ? hoy.getMonth() + 1 : "0" + (hoy.getMonth() + 1);
 
   const fechaHoyParaInputDate = `${anio}-${mes}-${dia}`;
+
   return fechaHoyParaInputDate;
 }
 
-const params = new URLSearchParams(window.location.search);
-
-// armo la estructura de la compra
-let compra = {
-  proveedor: null,
+// armo la estructura de la venta
+let venta = {
+  cliente: null,
   fecha: dateFechaDeHoyParaInputDate(),
   observaciones: "",
   productos: [],
-  deposito: null,
 };
 
 // con esto manejo la fila al hacer click en editar o eliminar
@@ -41,10 +40,9 @@ let numFilaEditar;
 $(document).ready(async function () {
   // obtengo en params todos los parametros de la url pasados....
   // luego puedo preguntar por ellos....
+  const params = new URLSearchParams(window.location.search);
 
-  compra.deposito = params.get("id") ? null : $("#deposito").val();
-
-  const targets = [COLUMNAS.ID_COMPRA];
+  const targets = [COLUMNAS.ID_VENTA, COLUMNAS.USUARIO_ID];
 
   // cuando se carga el documento....convierto la clase TABLA a datatable...
   $("#tabla").DataTable({
@@ -58,36 +56,43 @@ $(document).ready(async function () {
       {
         // por cada fila tengo el row, entonces en la posicion 0 es el codigo
         // por eso se lo paso al data-id para que sepa que id de categoria es cuando hago click
-        // guardo en data-id el id de la compra.... y lo puedo usar luego como en la funcion editar()
+        // guardo en data-id el id del producto.... y lo puedo usar luego como en la funcion editar()
         render: (data, type, row) => {
           const btnEditar = `<button class="btn btn-success btn-sm btn-editar" data-id=${
-            row[COLUMNAS.ID_COMPRA]
+            row[COLUMNAS.ID_VENTA]
           } data-toggle="tooltip" data-placement="top" title="Editar">
                                 <i class="fas fa-edit"></i>
                               </button>`;
 
           const btnVer = `<button class="btn btn-info btn-sm btn-ver" data-id=${
-            row[COLUMNAS.ID_COMPRA]
+            row[COLUMNAS.ID_VENTA]
           } data-toggle="tooltip" data-placement="top" title="Ver detalle">
                             <i class="fas fa-eye"></i>
                            </button>`;
 
-          const btnEliminar = `<button class="btn btn-danger btn-sm btn-eliminar-compra" data-id=${
-            row[COLUMNAS.ID_COMPRA]
+          const btnEliminar = `<button class="btn btn-danger btn-sm btn-eliminar-venta" data-id=${
+            row[COLUMNAS.ID_VENTA]
           } data-toggle="tooltip" data-placement="top" title="Eliminar">
                                 <i class="fas fa-trash"></i>
                               </button> `;
 
-          const btnPagos = `<button class="btn btn-secondary btn-sm btn-pagos-compra" data-id=${
-            row[COLUMNAS.ID_COMPRA]
+          const btnPagos = `<button class="btn btn-secondary btn-sm btn-pagos-venta" data-id=${
+            row[COLUMNAS.ID_VENTA]
           } data-toggle="tooltip" data-placement="top" title="Pagos">
                                                     <i class="fas fa-dollar-sign"></i>
                                                   </button> `;
 
-          return `${btnEditar} 
-                  ${btnVer}
-                  ${btnPagos}
-                  ${btnEliminar}
+          return `${
+            // transformo a entero el id del usuario porque esta como caracter
+            parseInt(row[COLUMNAS.USUARIO_ID]) === userId ? btnEditar : ""
+          }    
+                  ${btnVer} 
+                  ${btnPagos}           
+                  ${
+                    parseInt(row[COLUMNAS.USUARIO_ID]) === userId
+                      ? btnEliminar
+                      : ""
+                  }
                   `;
         },
 
@@ -127,22 +132,19 @@ $(document).ready(async function () {
 
   $("#btn-guardar").click(mostrarModalPrimerPago);
 
-  $(".btn-pagos-compra").click(editarPagos);
+  $(".btn-pagos-venta").click(editarPagos);
 
-  $("#proveedor").change(function () {
-    compra.proveedor = $(this).val();
-  });
-
-  $("#deposito").change(function () {
-    compra.deposito = $(this).val();
+  $("#cliente").change(function () {
+    console.log($(this).val());
+    venta.cliente = $(this).val();
   });
 
   $("#fecha").change(function () {
-    compra.fecha = $(this).val();
+    venta.fecha = $(this).val();
   });
 
   $("#observaciones").change(function () {
-    compra.observaciones = $(this).val();
+    venta.observaciones = $(this).val();
   });
 
   $("#producto").change(async function () {
@@ -154,19 +156,21 @@ $(document).ready(async function () {
   });
 
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
-  const proveedoresParaSelect = await obteneProveedoresParaSelect();
 
-  $("#proveedor").inputpicker({
-    data: proveedoresParaSelect,
+  const clientesParaSelect = await obteneClientesParaSelect();
+
+  $("#cliente").inputpicker({
+    data: clientesParaSelect,
     fields: [
       { name: "id", text: "Codigo" },
-      { name: "nombre_empresa", text: "Empresa" },
-      { name: "nombre_contacto", text: "Contacto" },
-      { name: "whatsapp_contacto", text: "WhatsApp" },
+      { name: "nombre_completo", text: "Nombre" },
+      { name: "whatsapp", text: "Whatsapp" },
+      { name: "id_provincia", text: "Provincia" },
+      { name: "id_localidad", text: "Localidad" },
     ],
     headShow: true,
     fieldValue: "id",
-    fieldText: "nombre_empresa",
+    fieldText: "nombre_completo",
     filterOpen: true,
     autoOpen: true,
     highlightResult: true,
@@ -178,17 +182,17 @@ $(document).ready(async function () {
     rowSelectedFontColor: "white",*/
   });
 
-  idCompra = params.get("id");
-  idProveedor = params.get("idProveedor");
+  idVenta = params.get("id");
+  idCliente = params.get("idCliente");
 
-  if (idCompra) {
-    await cargarDetalleCompra(idCompra);
+  if (idVenta) {
+    await cargarDetalleVenta(idVenta);
   } else {
-    if (idProveedor) {
-      compra.proveedor = idProveedor;
+    if (idCliente) {
+      venta.cliente = idCliente;
 
       const response = await fetch(
-        `${URL_BASE}/index.php?m=proveedor&a=dameNombreAjax&id=${idProveedor}`
+        `${URL_BASE}/index.php?m=clientes&a=dameNombreAjax&id=${idCliente}`
       );
 
       const data = await response.json();
@@ -206,47 +210,46 @@ $(document).ready(async function () {
   }
 });
 
-async function cargarDetalleCompra(id) {
-  const { compra: compraBd, productos } = await obtenerDetalleCompra(id);
+async function cargarDetalleVenta(id) {
+  const { venta: ventaBd, productos } = await obtenerDetalleVenta(id);
 
-  $("#inputpicker-1").val(compraBd.nombre_empresa); //FIX para que aparezca seleccionado el nombre
+  $("#inputpicker-1").val(ventaBd.cliente); //FIX para que aparezca seleccionado el nombre
 
-  compra = {
-    proveedor: compraBd.id_proveedor,
-    fecha: compraBd.fecha,
-    observaciones: compraBd.observaciones,
+  venta = {
+    cliente: ventaBd.id_cliente,
+    fecha: ventaBd.fecha,
+    observaciones: ventaBd.comentario,
     productos,
-    deposito: compraBd.id_deposito,
   };
 
   actualizarVista();
 }
 
-async function obtenerDetalleCompra(id) {
-  const url = `${URL_BASE}/index.php?m=compras&a=detalleCompraAjax&id=${id}`;
+async function obtenerDetalleVenta(id) {
+  const url = `${URL_BASE}/index.php?m=ventas&a=detalleVentaAjax&id=${id}`;
 
   const response = await fetch(url);
-  const detalleCompra = await response.json();
+  const detalleVenta = await response.json();
 
-  return detalleCompra;
+  return detalleVenta;
 }
 
-async function obteneProveedoresParaSelect() {
-  const url = `${URL_BASE}/index.php?m=proveedores&a=listadoAjax`;
+async function obteneClientesParaSelect() {
+  const url = `${URL_BASE}/index.php?m=clientes&a=listadoAjax`;
 
   const response = await fetch(url);
-  const proveedores = await response.json();
+  const clientes = await response.json();
 
-  //alert(proveedores[0].id);
+  //alert(clientes[0].id);
 
-  return proveedores;
+  return clientes;
 }
 
 function editarPagos() {
   // traigo en id el codigo de la venta
   const id = $(this).attr("data-id");
 
-  window.location = `${URL_BASE}/index.php?m=pagos_compras&a=listado&id=${id}`;
+  window.location = `${URL_BASE}/index.php?m=pagos&a=listado&id=${id}`;
 }
 
 function mostrarModalAgregarProducto() {
@@ -264,7 +267,7 @@ function mostrarModalEditarProducto() {
   numFilaEditar = $(this).attr("data-id");
 
   // traigo los datos de la fila a editar en id, cantidad y precio
-  const { id, cantidad, precioUnit } = compra.productos[numFilaEditar];
+  const { id, cantidad, precioUnit } = venta.productos[numFilaEditar];
 
   $("#producto").val(id);
   $("#cantidad").val(cantidad);
@@ -284,7 +287,7 @@ function editar() {
   //console.log("editar", $(this).attr("data-id"));
   // guardo en id el valor del atributo data-id del boton que pulse, eso es el id de la venta
   const id = $(this).attr("data-id");
-  window.location = `${URL_BASE}/index.php?m=compras&a=editar&id=${id}`;
+  window.location = `${URL_BASE}/index.php?m=ventas&a=editar&id=${id}`;
   //console.log("editando", $(this).attr("data-id"));
 }
 
@@ -292,11 +295,15 @@ function editar() {
 function ver() {
   // guardo en id el valor del atributo data-id del boton que pulse, eso es el id de la venta
   const id = $(this).attr("data-id");
-  window.location = `${URL_BASE}/index.php?m=compras&a=ver&id=${id}`;
+  window.location = `${URL_BASE}/index.php?m=ventas&a=ver&id=${id}`;
   //console.log("editando", $(this).attr("data-id"));
 }
 
-const idCompraSeleccionada = $("#compra").attr("data-id-original");
+const idVentaSeleccionada = $("#venta").attr("data-id-original");
+
+function cargarVenta(id) {
+  // alert("hola");
+}
 
 async function obtenerPrecioProducto(id) {
   const url = `${URL_BASE}/index.php?m=productos&a=obtenerPrecio&id=${id}`;
@@ -321,10 +328,10 @@ function guardarProductoDetalle() {
   if (producto.id != -1 && producto.precioUnit >= 0 && producto.cantidad >= 1) {
     if (!numFilaEditar) {
       //agrego el producto si no hay nro de fila...vengo por agregar
-      compra.productos.push(producto);
+      venta.productos.push(producto);
     } else {
       // edito el producto y pego el nuevo "producto"
-      compra.productos[numFilaEditar] = producto;
+      venta.productos[numFilaEditar] = producto;
       $("#modal-agregar-producto").modal("hide");
     }
 
@@ -338,14 +345,14 @@ function guardarProductoDetalle() {
 
 async function mostrarModalPrimerPago() {
   // si estoy editando no hacer esto
-  // si no hay id es porque no estoy editando la compra
+  // si no hay id es porque no estoy editando la venta
   const params = new URLSearchParams(window.location.search);
 
   if (params.get("id")) {
-    guardarCompra();
+    guardarVenta();
   } else {
     const showModalPrimerPago = new Promise((resolve, reject) => {
-      const total = compra.productos.reduce(
+      const total = venta.productos.reduce(
         (acumulado, { cantidad, precioUnit }) =>
           acumulado + cantidad * precioUnit,
         0
@@ -366,44 +373,45 @@ async function mostrarModalPrimerPago() {
 
     showModalPrimerPago
       .then(() => {
-        compra.primerPago = $("#importe-primer-pago").val();
-        compra.observacionesPrimerPago = $("#observaciones-primer-pago").val();
+        venta.primerPago = $("#importe-primer-pago").val();
+        venta.observacionesPrimerPago = $("#observaciones-primer-pago").val();
       })
       .catch(() => {
-        compra.primerPago = 0;
-        compra.observacionesPrimerPago = "";
+        venta.primerPago = 0;
+        venta.observacionesPrimerPago = "";
       })
       .finally(() => {
         $("#modal-primer-pago").modal("hide");
-        guardarCompra();
+        guardarVenta();
       });
   }
 }
 
-async function guardarCompra() {
-  console.log(compra);
+async function guardarVenta() {
+  console.log(venta);
 
   let accion = "agregar";
   let metodo = "POST";
 
-  if (idCompra) {
-    accion = `editarAjax&id=${idCompra}`;
+  if (idVenta) {
+    accion = `editarAjax&id=${idVenta}`;
     metodo = "PUT";
   }
-  compra.proveedor = $("#proveedor").val();
-  compra.deposito = $("#deposito").val();
+  venta.cliente = $("#cliente").val();
 
-  compra.fecha = $("#fecha").val();
-  compra.observaciones = $("#observaciones").val();
+  //alert(venta.cliente);
 
-  const url = `${URL_BASE}/index.php?m=compras&a=${accion}`;
+  venta.fecha = $("#fecha").val();
+  venta.observaciones = $("#observaciones").val();
+
+  const url = `${URL_BASE}/index.php?m=ventas&a=${accion}`;
 
   // aqui paso la venta por el body con el metodo post
   // pongo el header y le digo que va como json para que sepa cuando recibe
   // credentials lo pongo porque sino no toma la cookie y se pierde....
   const response = await fetch(url, {
     method: metodo,
-    body: JSON.stringify(compra),
+    body: JSON.stringify(venta),
     headers: { "Content-Type": "application/json" },
     credentials: "include",
   });
@@ -415,7 +423,7 @@ async function guardarCompra() {
       text: data.message,
       icon: "success",
     }).then(() => {
-      window.location = "index.php?m=compras&a=listado";
+      window.location = "index.php?m=ventas&a=listado";
     });
   } else {
     Swal.fire({
@@ -425,9 +433,9 @@ async function guardarCompra() {
   }
 }
 
-function eliminarCompra() {
+function eliminarVenta() {
   // click en eliminar
-  const idCompraEliminar = parseInt($(this).attr("data-id"));
+  const idVentaEliminar = parseInt($(this).attr("data-id"));
 
   Swal.fire({
     text: "¿Confirma la baja?",
@@ -442,14 +450,14 @@ function eliminarCompra() {
       // filter lo que hace es filtrar los que son distintos a esa fila, entonces
       // me elimina de venta.productos la fila que es igual a ifFilaEliminar
 
-      const url = `${URL_BASE}/index.php?m=compras&a=eliminar&id=${idCompraEliminar}`;
+      const url = `${URL_BASE}/index.php?m=ventas&a=eliminar&id=${idVentaEliminar}`;
 
       const response = await fetch(url);
       const data = await response.json();
 
       if (data.status === "OK") {
         window.location =
-          "index.php?m=compras&a=listado&mensaje=La compra se ha eliminado correctamente&tipoMensaje=danger";
+          "index.php?m=ventas&a=listado&mensaje=La venta se ha eliminado correctamente&tipoMensaje=danger";
       } else {
         Swal.fire({
           text: data.message,
@@ -476,7 +484,7 @@ function eliminarProductoDetalle() {
       // aqui quiero eliminar la fila idFilaEliminar
       // filter lo que hace es filtrar los que son distintos a esa fila, entonces
       // me elimina de venta.productos la fila que es igual a ifFilaEliminar
-      compra.productos = compra.productos.filter(
+      venta.productos = venta.productos.filter(
         (item, i) => i !== idFilaEliminar
       );
 
@@ -486,12 +494,15 @@ function eliminarProductoDetalle() {
 }
 
 function actualizarVista() {
-  $("#proveedor").val(compra.proveedor);
-  $("#fecha").val(compra.fecha);
-  $("#observaciones").val(compra.observaciones);
-  $("#deposito").val(compra.deposito);
+  console.log(venta.cliente);
 
-  const detalleProductosTbody = $("#detalle-compra");
+  console.log($("#cliente").val());
+
+  $("#cliente").val(venta.cliente);
+  $("#fecha").val(venta.fecha);
+  $("#observaciones").val(venta.observaciones);
+
+  const detalleProductosTbody = $("#detalle-venta");
 
   detalleProductosTbody.empty();
 
@@ -502,7 +513,7 @@ function actualizarVista() {
 
   let colAcciones = "";
 
-  for (let { nombre, cantidad, precioUnit } of compra.productos) {
+  for (let { nombre, cantidad, precioUnit } of venta.productos) {
     total += cantidad * precioUnit;
 
     if (params.get("a") && params.get("a") !== "ver") {
@@ -531,7 +542,7 @@ function actualizarVista() {
   $(".btn-editar-producto-detalle").click(mostrarModalEditarProducto);
   $(".btn-eliminar-producto-detalle").click(eliminarProductoDetalle);
 
-  $(".btn-eliminar-compra").click(eliminarCompra);
+  $(".btn-eliminar-venta").click(eliminarVenta);
 
-  $("#total-compra").html(`$ ${total}`);
+  $("#total-factura").html(`$ ${total}`);
 }

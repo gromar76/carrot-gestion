@@ -15,7 +15,8 @@ include("config/constantes.php");
             <th>Fecha</th>
             <th>Importe</th>  
             <th>Pagado</th>  
-            <th>Pendiente</th>             
+            <th>Pendiente</th> 
+            <th>Deposito</th> 
             <th>Acciones</th>
         </tr>
     </thead>
@@ -34,6 +35,7 @@ include("config/constantes.php");
             <td>$ <?php echo $data["registros"][$i]["importe_total"];?></td>
             <td>$ <?php echo $data["registros"][$i]["importe_pagado"];?></td>
             <td><?php echo $pendiente;?></td>               
+            <td><?php echo $data["registros"][$i]["deposito"];?></td>
             <td></td> 
         <?php
         }?>

@@ -134,6 +134,8 @@ $(document).ready(async function () {
 
   $(".btn-pagos-venta").click(editarPagos);
 
+  $(".btn-eliminar-venta").click(eliminarVenta);
+
   $("#cliente").change(function () {
     console.log($(this).val());
     venta.cliente = $(this).val();
@@ -434,6 +436,7 @@ async function guardarVenta() {
 }
 
 function eliminarVenta() {
+  console.log("eliminar...");
   // click en eliminar
   const idVentaEliminar = parseInt($(this).attr("data-id"));
 
@@ -541,8 +544,6 @@ function actualizarVista() {
 
   $(".btn-editar-producto-detalle").click(mostrarModalEditarProducto);
   $(".btn-eliminar-producto-detalle").click(eliminarProductoDetalle);
-
-  $(".btn-eliminar-venta").click(eliminarVenta);
 
   $("#total-factura").html(`$ ${total}`);
 }

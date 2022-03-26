@@ -98,12 +98,14 @@ async function guardarLocalidad() {
 }
 
 function mostrarAgregarLocalidad(event) {
+  //que hacia el preventDefault?
   event.preventDefault();
 
   $("#modal-agregar-localidad").modal("show");
 }
 
 function generarVenta() {
+  // guardo el id de cliente
   const idCliente = $(this).attr("data-id");
   window.location = `${URL_BASE}/index.php?m=ventas&a=agregar&idCliente=${idCliente}`;
 }
