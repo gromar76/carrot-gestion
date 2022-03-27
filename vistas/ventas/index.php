@@ -4,31 +4,29 @@
     switch($accion){
         case "listado":
             $data["contenido"] =  'vistas/ventas/partials/listado.php';
-            $data["titulo"] = "Listado de Ventas";
+            $data["titulo"]    = "Listado de Ventas";
             break;
 
         case "editar":
             $data["contenido"] =  'vistas/ventas/partials/editor.php';
-            $data["titulo"] = "Editando la Venta";                       
+            $data["titulo"]    = "Editando la Venta";        
             break;
         
         case "agregar":
             $data["contenido"] =  'vistas/ventas/partials/editor.php';
-            $data["titulo"] = "Agregando una Venta";            
+            $data["titulo"]    = "Agregando una Venta";            
             break;
-
               
         case "eliminar":
             $data["contenido"] =  'vistas/ventas/partials/listado.php';
-            $data["titulo"] = "Listado de Ventas";
+            $data["titulo"]    = "Listado de Ventas";
             break;
 
          case "ver":
             // agarro el contenido y luego lo muestro en vistas/base/index.php
             $data["contenido"] =  'vistas/ventas/partials/editor.php';
-            $data["titulo"] = "Viendo detalle de Venta";
+            $data["titulo"]    = "Viendo detalle de Venta";
             break;
-
     }
     
     // por AGREGAR, EDITAR O VER voy siempre a vistas/clientes/partials/editor.php
@@ -41,4 +39,3 @@
         
     include('vistas/base/index.php');
 ?>
-

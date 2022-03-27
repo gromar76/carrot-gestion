@@ -3,18 +3,47 @@
     include_once 'funciones/conexion.php';
     include_once 'modelos/pagos/index.php';
 
-    function obtenerTodosVentas(){
+    function obtenerTodosVentas($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes){
 
         $conexion = obtenerConexion();
 
-        $consulta = 'SELECT ventas.id, ventas.fecha, ventas.importe, CONCAT(cli.nombre, " ", cli.apellido) cliente, usr.nombre usuario, usr.id id_usuario,
+        $inicioWhere = false;
+
+        $formatFecha = "CONCAT(DAY(ventas.fecha), '/', MONTH(ventas.fecha), '/', YEAR(ventas.fecha)) fecha";
+
+        $consulta = "SELECT ventas.id, $formatFecha" . ', ventas.importe, CONCAT(cli.nombre, " ", cli.apellido) cliente, usr.nombre usuario, usr.id id_usuario,
                             ventas.pagado
                      FROM ventas 
                        INNER JOIN clientes cli 
                      ON cli.id = ventas.cliente
                        INNER JOIN usuarios usr 
-                     ON usr.id = ventas.id_usuario 
-                       ORDER BY ventas.fecha desc';
+                     ON usr.id = ventas.id_usuario';
+
+
+        if( $filtroCliente ){
+          $consulta .= " WHERE cli.id = $filtroCliente";
+          $inicioWhere = true;
+        }
+
+        if( $filtroDesde ){
+          $consulta .= $inicioWhere ? " AND " : " WHERE ";
+          $consulta .= " ventas.fecha >= '$filtroDesde'";
+          $inicioWhere = true;
+        }
+
+        if( $filtroHasta ){
+          $consulta .= $inicioWhere ? " AND " : " WHERE ";
+          $consulta .= " ventas.fecha <= '$filtroHasta'";
+          $inicioWhere = true;
+        }
+
+        if( $filtroSoloPendientes == 'true' ){
+          $consulta .= $inicioWhere ? " AND " : " WHERE ";
+          $consulta .= " ventas.importe - ventas.pagado > 0";
+          $inicioWhere = true;
+        }
+
+        $consulta .= ' ORDER BY ventas.fecha desc';
         
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );
@@ -23,7 +52,6 @@
         return $registros;
 
     }
-
 
 
     function obtenerPorIdVentas($id){

@@ -145,6 +145,29 @@ $(document).ready(async function () {
     venta.fecha = $(this).val();
   });
 
+  $("#btn-aplicar-filtros").click(aplicarFiltros);
+
+  $("#btn-limpiar-filtros").click(function () {
+    $("#filtro-desde").val("");
+    $("#filtro-hasta").val("");
+    $("#inputpicker-1").val("");
+    $("#filtro-solo-pendientes").prop("checked", false);
+
+    aplicarFiltros();
+  });
+
+  function aplicarFiltros() {
+    const filtroCliente =
+      $("#inputpicker-1").val() == "" ? "" : $("#filtro-cliente").val(); //FIX PARA CUANDO NO HAY CLIENTE SELECCIONADO!!
+    const filtroDesde = $("#filtro-desde").val();
+    const filtroHasta = $("#filtro-hasta").val();
+    const filtroSoloPendientes = $("#filtro-solo-pendientes").prop("checked");
+
+    const url = `${URL_BASE}/index.php?m=ventas&a=listado&cli=${filtroCliente}&desde=${filtroDesde}&hasta=${filtroHasta}&sp=${filtroSoloPendientes}`;
+
+    window.location = url;
+  }
+
   $("#observaciones").change(function () {
     venta.observaciones = $(this).val();
   });
@@ -184,8 +207,41 @@ $(document).ready(async function () {
     rowSelectedFontColor: "white",*/
   });
 
+  $("#filtro-cliente").inputpicker({
+    data: clientesParaSelect,
+    fields: [
+      { name: "id", text: "Codigo" },
+      { name: "nombre_completo", text: "Nombre" },
+      { name: "whatsapp", text: "Whatsapp" },
+      { name: "id_provincia", text: "Provincia" },
+      { name: "id_localidad", text: "Localidad" },
+    ],
+    headShow: true,
+    fieldValue: "id",
+    fieldText: "nombre_completo",
+    filterOpen: true,
+    autoOpen: true,
+    highlightResult: true,
+    pagination: true,
+
+    /*listBackgroundColor: "orange",
+    listBorderColor: "red",
+    rowSelectedBackgroundColor: "green",
+    rowSelectedFontColor: "white",*/
+  });
+
   idVenta = params.get("id");
   idCliente = params.get("idCliente");
+
+  async function getNombreCliente(idCliente) {
+    const response = await fetch(
+      `${URL_BASE}/index.php?m=clientes&a=dameNombreAjax&id=${idCliente}`
+    );
+
+    const data = await response.json();
+
+    return data.nombre_completo;
+  }
 
   if (idVenta) {
     await cargarDetalleVenta(idVenta);
@@ -193,15 +249,20 @@ $(document).ready(async function () {
     if (idCliente) {
       venta.cliente = idCliente;
 
-      const response = await fetch(
-        `${URL_BASE}/index.php?m=clientes&a=dameNombreAjax&id=${idCliente}`
-      );
+      const nombreCompleto = await getNombreCliente(idCliente);
 
-      const data = await response.json();
-
-      $("#inputpicker-1").val(data.nombre_completo);
+      $("#inputpicker-1").val(nombreCompleto);
     } else {
-      $("#inputpicker-1").val("");
+      if (params.get("a") === "listado" && params.get("cli")) {
+        const idCliente = params.get("cli");
+
+        const nombreCompleto = await getNombreCliente(idCliente);
+
+        $("#filtro-cliente").val(idCliente);
+        $("#inputpicker-1").val(nombreCompleto);
+      } else {
+        $("#inputpicker-1").val("");
+      }
     }
 
     actualizarVista();

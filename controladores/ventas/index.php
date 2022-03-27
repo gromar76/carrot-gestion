@@ -46,8 +46,17 @@
             break;
 
         case "listado":
+
+            $filtroCliente        = isset($_GET["cli"])   ? $_GET["cli"]   : null;
+            $filtroDesde          = isset($_GET["desde"]) ? $_GET["desde"] : null;
+            $filtroHasta          = isset($_GET["hasta"]) ? $_GET["hasta"] : null;
+            $filtroSoloPendientes = isset($_GET["sp"])    ? $_GET["sp"]    : 'false';
+
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
-            $data["registros"] = obtenerTodosVentas();
+            $data["registros"] = obtenerTodosVentas($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes );
+            $data["filtroDesde"] = $filtroDesde;
+            $data["filtroHasta"] = $filtroHasta;
+            $data["filtroSoloPendientes"] = $filtroSoloPendientes;
 
             //2- Va a llamar a la vista pasandole los datos de los productos
             include( 'vistas/ventas/index.php');
