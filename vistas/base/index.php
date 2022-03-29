@@ -104,6 +104,8 @@
 
     <script src="public/vendor/multi-column-dropdown-inputpicker/jquery.inputpicker.js"></script>
 
+    <script src="public/vendor/luxon/luxon.min.js"></script>
+
     <script>
       
       setTimeout( cerrarMensaje , 2000);

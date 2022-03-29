@@ -48,15 +48,17 @@
         case "listado":
 
             $filtroCliente        = isset($_GET["cli"])   ? $_GET["cli"]   : null;
-            $filtroDesde          = isset($_GET["desde"]) ? $_GET["desde"] : null;
+            $filtroDesde          = isset($_GET["desde"]) ? $_GET["desde"] : date("Y-m-d", strtotime(date("Y-m-d")."- 30 day"));
             $filtroHasta          = isset($_GET["hasta"]) ? $_GET["hasta"] : null;
             $filtroSoloPendientes = isset($_GET["sp"])    ? $_GET["sp"]    : 'false';
+            $filtroUsuario        = isset($_GET["usr"])    ? $_GET["usr"]    : '-1';
 
             //1- Obtener los datos de los productos (Pide al modelo de productos)       
-            $data["registros"] = obtenerTodosVentas($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes );
+            $data["registros"] = obtenerTodosVentas($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario  );
             $data["filtroDesde"] = $filtroDesde;
             $data["filtroHasta"] = $filtroHasta;
             $data["filtroSoloPendientes"] = $filtroSoloPendientes;
+            $data['filtroUsuario'] = $filtroUsuario;
 
             //2- Va a llamar a la vista pasandole los datos de los productos
             include( 'vistas/ventas/index.php');

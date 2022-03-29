@@ -1,3 +1,5 @@
+const DateTime = luxon.DateTime;
+
 let idVenta = null;
 
 const COLUMNAS = {
@@ -110,7 +112,18 @@ $(document).ready(async function () {
 
           return `<span style="${style}">$ ${row[COLUMNAS.PENDIENTE]}</span>`;
         },
+
         targets: COLUMNAS.PENDIENTE,
+      },
+      {
+        render: (data, type, row) => {
+          const fecha = row[COLUMNAS.FECHA];
+
+          return DateTime.fromISO(fecha)
+            .setLocale("ES-AR")
+            .toFormat("ccc dd MMM yyyy");
+        },
+        targets: COLUMNAS.FECHA,
       },
     ],
     order: [[COLUMNAS.FECHA, "desc"]],
@@ -145,25 +158,32 @@ $(document).ready(async function () {
     venta.fecha = $(this).val();
   });
 
-  $("#btn-aplicar-filtros").click(aplicarFiltros);
+  $("#btn-aplicar-filtros").click(() => {
+    aplicarFiltros();
+  });
 
   $("#btn-limpiar-filtros").click(function () {
     $("#filtro-desde").val("");
     $("#filtro-hasta").val("");
     $("#inputpicker-1").val("");
     $("#filtro-solo-pendientes").prop("checked", false);
+    $("#usuario-listado-venta").val(-1);
 
-    aplicarFiltros();
+    aplicarFiltros(true);
   });
 
-  function aplicarFiltros() {
+  function aplicarFiltros(limpiar = false) {
+    console.log(limpiar);
     const filtroCliente =
       $("#inputpicker-1").val() == "" ? "" : $("#filtro-cliente").val(); //FIX PARA CUANDO NO HAY CLIENTE SELECCIONADO!!
     const filtroDesde = $("#filtro-desde").val();
     const filtroHasta = $("#filtro-hasta").val();
     const filtroSoloPendientes = $("#filtro-solo-pendientes").prop("checked");
+    const filtroUsuario = $("#usuario-listado-venta").val();
 
-    const url = `${URL_BASE}/index.php?m=ventas&a=listado&cli=${filtroCliente}&desde=${filtroDesde}&hasta=${filtroHasta}&sp=${filtroSoloPendientes}`;
+    const url = `${URL_BASE}/index.php?m=ventas&a=listado&cli=${filtroCliente}${
+      limpiar ? "" : `&desde=${filtroDesde}`
+    }&hasta=${filtroHasta}&sp=${filtroSoloPendientes}&usr=${filtroUsuario}`;
 
     window.location = url;
   }
@@ -244,6 +264,7 @@ $(document).ready(async function () {
   }
 
   if (idVenta) {
+    // vengo por ver o editar la venta
     await cargarDetalleVenta(idVenta);
   } else {
     if (idCliente) {

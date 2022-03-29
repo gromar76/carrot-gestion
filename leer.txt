@@ -28,12 +28,9 @@ Cuando calculmos el stock tener en cuenta ------> articulos con unidades...todo 
 
 
 
-Modulo de Ventas poner barra con filtros
-DESDE      HASTA 
 TENIS (check)  PADEL (check)     TODOS (check)
 Select Todas / Pendientes / Canceladas
 
-en ventas poner la fecha bien, "Sab 31-10-2021"
 
 desde el listado de clientes, salir con un boton a las VENTAS HISTORICAS DE ESE CLIENTE
  y manejar lo mismo....pagos, borrado...etc

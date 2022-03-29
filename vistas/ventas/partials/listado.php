@@ -9,9 +9,12 @@ include("config/constantes.php");
     <div class="col-1">
         <a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=ventas&a=agregar">Nuevo</a>
     </div>
+    <div class="col-1">
+        <button id="btn-resumen" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#modal-resumen-ventas">Resumen</button>
     </div>
+</div>
 
-<div class="row d-flex align-items-center" style="margin-bottom: 20px !important;">
+<div class="row d-flex align-items-center p-2" style=" margin-bottom: 20px !important; background-color: #e9e5e5">
 
     <!-- FILTRO CLIENTE -->
 
@@ -48,8 +51,20 @@ include("config/constantes.php");
     
     <!-- FIN FILTRO SOLO PENDIENTES -->
 
-    <button id="btn-aplicar-filtros" class="btn btn-secondary ml-2 mt-4">Aplicar</button>
-    <button id="btn-limpiar-filtros" class="btn btn-secondary ml-2 mt-4">Limpiar</button>
+
+    <!-- FILTRO USUARIO REFACTOR HACER DINAMICO --> 
+    <div class="col-1 ml-3">
+        <span>Usuario</span>
+        <select id="usuario-listado-venta">
+            <option value="-1" <?= $data['filtroUsuario'] == -1 ? 'selected' : '' ?>>Todos</option>
+            <option value="1" <?= $data['filtroUsuario'] == 1 ? 'selected' : '' ?>>Nicolas</option>
+            <option value="2" <?= $data['filtroUsuario'] == 2 ? 'selected' : '' ?>>Marcelo</option>
+        </select>
+    </div>
+    <!-- FIN FILTRO TIPO CLIENTE -->
+
+    <button id="btn-aplicar-filtros" class="btn btn-secondary ml-2">Aplicar</button>
+    <button id="btn-limpiar-filtros" class="btn btn-secondary ml-2">Limpiar</button>
 
 </div>
 
@@ -112,15 +127,66 @@ include("config/constantes.php");
 
 
 <div class="row bg-light p-2" style="margin-bottom: 20px !important; margin-top: 20px !important;">
-        <div class="col">
-            Total: <b>$ <?=$total?></b>
-        </div>
-
-        <div class="col">
-            Pagado: <b>$ <?=$totalPagado?></b>
-        </div>
-        
-        <div class="col">
-            Pendiente: <b style="<?=$estiloTotalPendiente?>">$ <?=$totalPendiente?></b>
-        </div>
+    <div class="col">
+        Total: <b>$ <?=$total?></b>
     </div>
+
+    <div class="col">
+        Pagado: <b>$ <?=$totalPagado?></b>
+    </div>
+    
+    <div class="col">
+        Pendiente: <b style="<?=$estiloTotalPendiente?>">$ <?=$totalPendiente?></b>
+    </div>
+</div>
+
+<!-- MODAL DE RESUMEN -->
+<div class="modal fade" id="modal-resumen-ventas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Resumen de ventas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Producto</td>
+                    <td>Precio</td>
+                    <td>Cantidad</td>
+                    <td>Total</td>
+                </tr>
+                <tr>
+                    <td>Producto</td>
+                    <td>Precio</td>
+                    <td>Cantidad</td>
+                    <td>Total</td>
+                </tr>
+            </tbody>
+           
+        </table>
+
+        <ul>
+            <li>Egreso: </li>
+            <li>Total: </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FIN MODAL DE RESUMEN -->
