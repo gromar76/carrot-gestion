@@ -86,6 +86,9 @@
             $modulo = "egresos";
             break;
 
+        case "movimientos_depositos":
+            $modulo = "movimientos_depositos";
+            break;
     
         
         // si modulo no es ninguno de los anteriores entonces es 404

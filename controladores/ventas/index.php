@@ -36,6 +36,19 @@
 
     switch( $accion ){
 
+        case "resumenVentasAjax":
+            $filtroCliente        = isset($_GET["cli"])   ? $_GET["cli"]   : null;
+            $filtroDesde          = isset($_GET["desde"]) ? $_GET["desde"] : date("Y-m-d", strtotime(date("Y-m-d")."- 30 day"));
+            $filtroHasta          = isset($_GET["hasta"]) ? $_GET["hasta"] : null;
+            $filtroSoloPendientes = isset($_GET["sp"])    ? $_GET["sp"]    : 'false';
+            $filtroUsuario        = isset($_GET["usr"])    ? $_GET["usr"]    : '-1';
+
+            $data["registros"] = obtenerResumenVentas($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario);
+            
+            include( 'vistas/ajax/index.php');
+
+            break;
+
         case "detalleVentaAjax":
             //1- Obtener el detalle de la venta   
             

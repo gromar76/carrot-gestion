@@ -18,8 +18,6 @@ Ver con pablo
 Cambiar Select de actividad por checkboxes
 Cambiar campo actividad en la base de datos por campos independientes (padel, tennis)
 
-en ventas la columna fecha mostrar formato "Sab 31-10-2021"
-
 agregar en campo de selecciones si es distribuidor o no (para ver en la tabla)
 
 tema depositos y movimiento de mercaderia
@@ -30,10 +28,6 @@ Cuando calculmos el stock tener en cuenta ------> articulos con unidades...todo 
 
 TENIS (check)  PADEL (check)     TODOS (check)
 Select Todas / Pendientes / Canceladas
-
-
-desde el listado de clientes, salir con un boton a las VENTAS HISTORICAS DE ESE CLIENTE
- y manejar lo mismo....pagos, borrado...etc
 
 que pasa con tubos o mercaderia que no se vende ???
 

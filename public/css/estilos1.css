@@ -93,3 +93,11 @@
 .campo-requerido {
   color: red;
 }
+
+.modal-xl {
+  width: 80%;
+}
+
+.modal-dialog {
+  max-width: auto;
+}

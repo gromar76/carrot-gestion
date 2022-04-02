@@ -10,7 +10,7 @@ include("config/constantes.php");
         <a class="btn btn-primary mb-3" href="<?=$URL_BASE?>/index.php?m=ventas&a=agregar">Nuevo</a>
     </div>
     <div class="col-1">
-        <button id="btn-resumen" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#modal-resumen-ventas">Resumen</button>
+        <button id="btn-resumen-ventas" class="btn btn-secondary mb-3">Resumen</button>
     </div>
 </div>
 
@@ -142,7 +142,7 @@ include("config/constantes.php");
 
 <!-- MODAL DE RESUMEN -->
 <div class="modal fade" id="modal-resumen-ventas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Resumen de ventas</h5>
@@ -151,7 +151,7 @@ include("config/constantes.php");
         </button>
       </div>
       <div class="modal-body">
-        <table class="table">
+        <table id="table-resumen-ventas" class="table">
             <thead>
                 <tr>
                     <th>Producto</th>
@@ -179,7 +179,7 @@ include("config/constantes.php");
 
         <ul>
             <li>Egreso: </li>
-            <li>Total: </li>
+            <li>Total: <b><span id="total-resumen-ventas"></span></b></li>
         </ul>
       </div>
       <div class="modal-footer">

@@ -3,11 +3,46 @@
     include_once 'funciones/conexion.php';
     include_once 'modelos/pagos/index.php';
 
+    function obtenerSQLFiltros($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario){
+      $filtros = '';
+
+      $inicioWhere = false;
+
+      if( $filtroCliente ){
+        $filtros .= " WHERE ventas.cliente = $filtroCliente";
+        $inicioWhere = true;
+      }
+
+      if( $filtroDesde ){
+        $filtros .= $inicioWhere ? " AND " : " WHERE ";
+        $filtros .= " ventas.fecha >= '$filtroDesde'";
+        $inicioWhere = true;
+      }
+
+      if( $filtroHasta ){
+        $filtros .= $inicioWhere ? " AND " : " WHERE ";
+        $filtros .= " ventas.fecha <= '$filtroHasta'";
+        $inicioWhere = true;
+      }
+
+      if( $filtroSoloPendientes == 'true' ){
+        $filtros .= $inicioWhere ? " AND " : " WHERE ";
+        $filtros .= " ventas.importe - ventas.pagado > 0";
+        $inicioWhere = true;
+      }
+
+      if(  $filtroUsuario != '-1' ){
+        $filtros .= $inicioWhere ? " AND " : " WHERE ";
+        $filtros .= "ventas.id_usuario = $filtroUsuario ";
+        $inicioWhere = true;
+      }
+
+      return $filtros;
+    }
+
     function obtenerTodosVentas($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario){
 
         $conexion = obtenerConexion();
-
-        $inicioWhere = false;
 
    
         $consulta = 'SELECT ventas.id, ventas.fecha, ventas.importe, CONCAT(cli.nombre, " ", cli.apellido) cliente, usr.nombre usuario, usr.id id_usuario,
@@ -19,35 +54,7 @@
                      ON usr.id = ventas.id_usuario';
 
 
-        if( $filtroCliente ){
-          $consulta .= " WHERE cli.id = $filtroCliente";
-          $inicioWhere = true;
-        }
-
-        if( $filtroDesde ){
-          $consulta .= $inicioWhere ? " AND " : " WHERE ";
-          $consulta .= " ventas.fecha >= '$filtroDesde'";
-          $inicioWhere = true;
-        }
-
-        if( $filtroHasta ){
-          $consulta .= $inicioWhere ? " AND " : " WHERE ";
-          $consulta .= " ventas.fecha <= '$filtroHasta'";
-          $inicioWhere = true;
-        }
-
-        if( $filtroSoloPendientes == 'true' ){
-          $consulta .= $inicioWhere ? " AND " : " WHERE ";
-          $consulta .= " ventas.importe - ventas.pagado > 0";
-          $inicioWhere = true;
-        }
-
-        if(  $filtroUsuario != '-1' ){
-          $consulta .= $inicioWhere ? " AND " : " WHERE ";
-          $consulta .= "ventas.id_usuario = $filtroUsuario ";
-          $inicioWhere = true;
-        }
-
+        $consulta .= obtenerSQLFiltros($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario);
 
         $consulta .= ' ORDER BY ventas.fecha desc';
         
@@ -195,4 +202,27 @@
       $resultado = $conexion->query($consulta);
 
       cerrarConexion($conexion);
+    }
+
+    function obtenerResumenVentas ($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario){
+     
+        $conexion = obtenerConexion();
+   
+        $consulta =  'SELECT pro.id, pro.nombre, de.precio, sum(de.cant*de.precio) total, sum(de.cant) cantidad
+                      FROM ventas
+                      LEFT JOIN detalle_ventas de
+                      ON de.id_venta = ventas.id
+                      LEFT JOIN productos pro
+                      ON pro.id = de.id_articulo';                  
+
+        $consulta .= obtenerSQLFiltros($filtroCliente, $filtroDesde, $filtroHasta, $filtroSoloPendientes, $filtroUsuario);
+
+        $consulta .= ' GROUP BY pro.id, de.precio
+                       ORDER BY pro.nombre';
+
+        $resultado = $conexion->query($consulta);
+        $registros = fetchAll( $resultado );
+    
+        cerrarConexion($conexion);    
+        return $registros;
     }

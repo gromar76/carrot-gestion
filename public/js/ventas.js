@@ -119,9 +119,12 @@ $(document).ready(async function () {
         render: (data, type, row) => {
           const fecha = row[COLUMNAS.FECHA];
 
-          return DateTime.fromISO(fecha)
-            .setLocale("ES-AR")
-            .toFormat("ccc dd MMM yyyy");
+          return (
+            DateTime.fromISO(fecha)
+              .setLocale("ES-AR")
+              //.toFormat("ccc dd MMM yyyy");
+              .toFormat("dd MMM yyyy")
+          );
         },
         targets: COLUMNAS.FECHA,
       },
@@ -173,17 +176,9 @@ $(document).ready(async function () {
   });
 
   function aplicarFiltros(limpiar = false) {
-    console.log(limpiar);
-    const filtroCliente =
-      $("#inputpicker-1").val() == "" ? "" : $("#filtro-cliente").val(); //FIX PARA CUANDO NO HAY CLIENTE SELECCIONADO!!
-    const filtroDesde = $("#filtro-desde").val();
-    const filtroHasta = $("#filtro-hasta").val();
-    const filtroSoloPendientes = $("#filtro-solo-pendientes").prop("checked");
-    const filtroUsuario = $("#usuario-listado-venta").val();
-
-    const url = `${URL_BASE}/index.php?m=ventas&a=listado&cli=${filtroCliente}${
-      limpiar ? "" : `&desde=${filtroDesde}`
-    }&hasta=${filtroHasta}&sp=${filtroSoloPendientes}&usr=${filtroUsuario}`;
+    const url = `${URL_BASE}/index.php?m=ventas&a=listado${obtenerQueryParamsFiltros(
+      limpiar
+    )}`;
 
     window.location = url;
   }
@@ -201,6 +196,8 @@ $(document).ready(async function () {
   });
 
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
+
+  $("#btn-resumen-ventas").click(mostrarModalResumenVentas);
 
   const clientesParaSelect = await obteneClientesParaSelect();
 
@@ -293,6 +290,21 @@ $(document).ready(async function () {
     $("#inputpicker-1").attr("disabled", "disabled");
   }
 });
+
+function obtenerQueryParamsFiltros(limpiar) {
+  const filtroCliente =
+    $("#inputpicker-1").val() == "" ? "" : $("#filtro-cliente").val(); //FIX PARA CUANDO NO HAY CLIENTE SELECCIONADO!!
+  const filtroDesde = $("#filtro-desde").val();
+  const filtroHasta = $("#filtro-hasta").val();
+  const filtroSoloPendientes = $("#filtro-solo-pendientes").prop("checked");
+  const filtroUsuario = $("#usuario-listado-venta").val();
+
+  const queryParamsFiltros = `&cli=${filtroCliente}${
+    limpiar ? "" : `&desde=${filtroDesde}`
+  }&hasta=${filtroHasta}&sp=${filtroSoloPendientes}&usr=${filtroUsuario}`;
+
+  return queryParamsFiltros;
+}
 
 async function cargarDetalleVenta(id) {
   const { venta: ventaBd, productos } = await obtenerDetalleVenta(id);
@@ -425,6 +437,38 @@ function guardarProductoDetalle() {
   } else {
     alert("Complete campos!!");
   }
+}
+
+async function mostrarModalResumenVentas() {
+  const response = await fetch(
+    `${URL_BASE}/index.php?m=ventas&a=resumenVentasAjax&${obtenerQueryParamsFiltros()}`
+  );
+
+  const data = await response.json();
+
+  cargarTablaResumenVentas(data);
+
+  $("#modal-resumen-ventas").modal("show");
+}
+
+function cargarTablaResumenVentas(resumenVentas) {
+  const detalleResumenVentas = $("#table-resumen-ventas tbody");
+
+  detalleResumenVentas.empty();
+
+  totalResumenVentas = 0;
+
+  resumenVentas.forEach(({ nombre, cantidad, total, precio }) => {
+    detalleResumenVentas.append(`<tr>
+                                    <td>${nombre}</td>
+                                    <td>$ ${precio}</td>
+                                    <td>${cantidad}</td>
+                                    <td>$ ${total}</td>
+                                 </tr>`);
+    totalResumenVentas += parseInt(total);
+  });
+
+  $("#total-resumen-ventas").html(`$ ${totalResumenVentas}`);
 }
 
 async function mostrarModalPrimerPago() {
