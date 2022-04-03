@@ -11,13 +11,13 @@
             $data["contenido"] =  'vistas/compras/partials/editor.php';
             $data["titulo"] = "Editando la Compra";                       
             break;
-       
+       */
             
         case "agregar":
-            $data["contenido"] =  'vistas/compras/partials/editor.php';
-            $data["titulo"] = "Agregando una Compra";            
+            $data["contenido"] =  'vistas/movimientos_depositos/partials/editor.php';
+            $data["titulo"] = "Agregando un movimiento entre depositos";            
             break;
-           
+       /*    
         case "eliminar":
             $data["contenido"] =  'vistas/compras/partials/listado.php';
             $data["titulo"] = "Listado de Compras";

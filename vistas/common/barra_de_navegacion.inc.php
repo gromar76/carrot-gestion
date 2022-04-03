@@ -29,7 +29,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="index.php?m=ventas">Modulo Ventas</a>
-          <a class="dropdown-item" href="#">Modulo Movimientos (entre depositos)</a>
+          <a class="dropdown-item" href="index.php?m=movimientos_depositos">Modulo Movimientos (entre depositos)</a>
           <a class="dropdown-item" href="index.php?m=compras">Modulo Compras</a>
           <a class="dropdown-item" href="#">Modulo Egresos</a>
           <a class="dropdown-item" href="#">Modulo Cortes entre fechas</a>                    

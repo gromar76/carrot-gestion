@@ -106,6 +106,8 @@
 
     <script src="public/vendor/luxon/luxon.min.js"></script>
 
+    <script src="public/js/common.js"></script>
+
     <script>
       
       setTimeout( cerrarMensaje , 2000);

@@ -6,17 +6,17 @@
 
         $conexion = obtenerConexion();
 
-        $consulta = 'SELECT md.id, md.fecha, usr.nombre usuario, (SELECT GROUP_CONCAT( CONCAT(" ", prod.nombre) )  ) detalle ,
-                           (SELECT dep.nombre FROM depositos dep WHERE dep.id = md.id_origen) origen, 
-                           (SELECT dep.nombre FROM depositos dep WHERE dep.id = md.id_destino) destino
-                            FROM detalle_movimientos_depositos dmd
-                            INNER JOIN productos prod
-                            ON prod.id = dmd.id_producto
-                                INNER JOIN movimientos_depositos md
-                                ON md.id = dmd.id_movimiento
-                                INNER JOIN usuarios usr
-                                ON usr.id = md.id_usuario
-                            GROUP BY md.id';
+        $consulta = 'SELECT md.id, md.fecha, usr.nombre usuario, (SELECT GROUP_CONCAT( CONCAT( " ", dmd.cantidad, " ", prod.nombre) )  ) detalle ,(SELECT dep.nombre FROM depositos dep WHERE dep.id = md.id_origen) origen, 
+                        (SELECT dep.nombre FROM depositos dep WHERE dep.id = md.id_destino) destino,
+                        (SELECT COUNT(confirmado) FROM detalle_movimientos_depositos WHERE id_movimiento = md.id AND confirmado = 0) por_confirmar
+                      FROM detalle_movimientos_depositos dmd
+                      INNER JOIN productos prod
+                      ON prod.id = dmd.id_producto
+                          INNER JOIN movimientos_depositos md
+                          ON md.id = dmd.id_movimiento
+                          INNER JOIN usuarios usr
+                          ON usr.id = md.id_usuario
+                      GROUP BY md.id';
         
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );
@@ -26,31 +26,35 @@
 
     }
 
-/*     function calcularTotal($productos){
-        $total = 0;
-        
-        foreach ( $productos as $producto  ){
-          $total += $producto->precioUnit * $producto->cantidad;
-        }
+      
   
-        return $total;
+      function guardarDetalleMovimientoDeposito($idMovimientoDeposito, $detalle,  $origen, $destino, $conexion){
+        foreach ( $detalle as $producto  ){
+          $consulta="INSERT INTO detalle_movimientos_depositos (id_movimiento, id_producto, cantidad)
+                     VALUES ( $idMovimientoDeposito, $producto->id, $producto->cantidad )";
+  
+          $conexion->query($consulta);
+        }
       }
-  
-  
-      function guardarDetalleCompra($idCompra, $productos, $conexion, $idDeposito){
-        foreach ( $productos as $producto  ){
-          $consulta="INSERT INTO detalle_compras (id_compra, id_producto, cantidad, precio)
-                     VALUES ( $idCompra, $producto->id, $producto->cantidad, $producto->precioUnit )";
-  
-          $conexion->query($consulta);
 
-          $consulta = "INSERT INTO stock(id_producto, id_deposito, cantidad)
-                       VALUES($producto->id, $idDeposito, $producto->cantidad)
-                       ON DUPLICATE KEY UPDATE
-                       cantidad = cantidad + $producto->cantidad";
-          
-          $conexion->query($consulta);
-        }
+      function confirmarProductoMovimientoDeposito($idProducto, $idMovimientoDeposito){
+        //CONFIRMACION...
+
+        //Resto de origen
+        $consulta = "INSERT INTO stock(id_producto, id_deposito, cantidad)
+        VALUES($producto->id, $origen, $producto->cantidad)
+        ON DUPLICATE KEY UPDATE
+        cantidad = cantidad - $producto->cantidad";
+        
+        $conexion->query($consulta);
+
+        //Sumo en destino
+        $consulta = "INSERT INTO stock(id_producto, id_deposito, cantidad)
+                      VALUES($producto->id, $destino, $producto->cantidad)
+                      ON DUPLICATE KEY UPDATE
+                      cantidad = cantidad + $producto->cantidad";
+
+        $conexion->query($consulta);
       }
   
       function eliminarDetalleCompra($idCompra, $conexion){
@@ -92,45 +96,29 @@
       } 
 
 
-    function agregarCompra($data, $idUsuario){      
+    function agregarMovimientoDeposito($data, $idUsuario){      
         $conexion = obtenerConexion();
 
-        $proveedor     = $data->proveedor;
         $fecha         = $data->fecha;      
+        $origen        = $data->origen;
+        $destino       = $data->destino;
         $observaciones = $data->observaciones;        
-        $productos     = $data->productos;
-        $importe       = calcularTotal($productos);   
-        $deposito      = $data->deposito;
-
-        $primerPago              = $data->primerPago;
-        $observacionesPrimerPago = $data->observacionesPrimerPago;
+        $detalle       = $data->detalle;
                 
-        $consulta="INSERT INTO compras (id_proveedor, importe_total, fecha, id_usuario, observaciones, id_deposito)
-                    VALUES ( $proveedor, $importe, '$fecha', $idUsuario, '$observaciones', $deposito )";
+        $consulta="INSERT INTO movimientos_depositos(fecha, id_origen, id_destino, observaciones, id_usuario)
+                   VALUES ( '$fecha', $origen, $destino, '$observaciones', $idUsuario )";
+
 
         $resultado = $conexion->query($consulta);
 
-        $idCompra = $conexion->insert_id;
+        $idMovimientoDeposito = $conexion->insert_id;
 
-        guardarDetalleCompra($idCompra, $productos, $conexion, $deposito); 
-
-        
-        //VERIFICO SI HAY PRIMER PAGO Y SI ES ASI, LO GUARDO 
-        $data = [];
-
-        if ( $primerPago > 0 ) {
-
-            $data["importe"]       = $primerPago;
-            $data["fecha"]         = $fecha;
-            $data["observaciones"] = $observacionesPrimerPago;
-
-            agregarPagoCompra($data, $idCompra);
-        }
+        guardarDetalleMovimientoDeposito($idMovimientoDeposito, $detalle,  $origen, $destino, $conexion); 
 
         cerrarConexion($conexion);
     }
 
-    function obtenerPorIdCompra($id){
+/*    function obtenerPorIdCompra($id){
         $conexion = obtenerConexion();
      
         $consulta = "SELECT compras.*, prov.nombre_empresa, prov.id id_proveedor

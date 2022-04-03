@@ -1,6 +1,8 @@
 <?php
 
     include("modelos/movimientos_depositos/index.php");
+    include("modelos/productos/index.php");
+    include("modelos/depositos/index.php");
 
     // seteo listado por default
     $accion = "listado";
@@ -91,7 +93,7 @@
        
 
             break;
-        
+        */
         case "agregar":
        
             // lo que viene por _POST lo tomo con file_get_contents
@@ -100,33 +102,29 @@
 
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
-            if( isset( $postParams->proveedor ) ){
+            if( isset( $postParams->origen ) ){
 
                 if ( validarDatos() ){                    
-                    agregarCompra($postParams, $idUsuarioActivo );
+                    agregarMovimientoDeposito($postParams, $idUsuarioActivo );
 
-                    $data["registros"] = ["status" => "OK", "message" => "La compra se registro satisfactoriamente"];                                        
+                    $data["registros"] = ["status" => "OK", "message" => "El movimiento entre depositos se registro satisfactoriamente"];                                        
                 }else{
-                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar la compra"];
+                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar el movimiento entre depositos"];
                 }
 
                 include( 'vistas/ajax/index.php');
 
             }else{        
                 
-                $data["proveedores"]  = obtenerTodosProveedores();       
-                $data["depositos"]    = obtenerTodosDepositos();     
-                $data["deposito"]     = obtenerDepositoDefault( $idUsuarioActivo ); 
-                
-                //$data["productos"] = obtenerTodosProductos();
+                $data["depositos"] = obtenerTodosDepositos();     
                 $data["productos"] = obtenerTodosProductosxOrdenManual(); 
                
                 //2. llamar a la vista del editor de compra vacio    
-                include( 'vistas/compras/index.php');
+                include( 'vistas/movimientos_depositos/index.php');
             }
 
             break;
-
+/*
         case "eliminar":
             eliminarCompra( $_GET["id"] );
 

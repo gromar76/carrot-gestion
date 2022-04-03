@@ -8,12 +8,14 @@ include("config/constantes.php");
 
 <table id="tabla" class="display table" >
     <thead>
-        <tr>       
+        <tr>
+            <th>Id</th>       
             <th>Fecha</th>
             <th>Origen</th>  
             <th>Destino</th> 
             <th>Detalle</th>  
             <th>Usuario</th> 
+            <th>Por confirmar</th> 
             <th>Acciones</th>
         </tr>
     </thead>
@@ -24,11 +26,13 @@ include("config/constantes.php");
         {               
       ?>
         <tr>
+            <td><?= $data["registros"][$i]["id"];?></td>
             <td><?= $data["registros"][$i]["fecha"];?></td>
             <td><?= $data["registros"][$i]["origen"];?></td> 
             <td><?= $data["registros"][$i]["destino"];?></td>
             <td><?= $data["registros"][$i]["detalle"];?></td> 
-            <td><?= $data["registros"][$i]["usuario"];?></td>           
+            <td><?= $data["registros"][$i]["usuario"];?></td>       
+            <td><?= $data["registros"][$i]["por_confirmar"];?></td>        
             <td></td> 
         <?php
         }?>

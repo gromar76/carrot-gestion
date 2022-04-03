@@ -374,10 +374,6 @@ function mostrarModalEditarProducto() {
   $("#modal-agregar-producto").modal("show");
 }
 
-function atras() {
-  history.back();
-}
-
 // hice click en editar
 function editar() {
   //console.log("editar", $(this).attr("data-id"));
