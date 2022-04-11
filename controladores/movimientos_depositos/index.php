@@ -38,14 +38,14 @@
 
     switch( $accion ){
 
-/*        case "detalleCompraAjax":
-            //1- Obtener el detalle de la compra   
+        case "detalleMovimientoDepositoAjax":
+            //1- Obtener el detalle del movimiento   
             
-            $data["registros"] = obtenerPorIdCompra($_GET["id"]);
+            $data["registros"] = obtenerConfirmacionesPorIdMovimientoDeposito($_GET["id"]);
             
             include( 'vistas/ajax/index.php');
 
-            break; */
+            break; 
 
         case "listado":
 
@@ -54,6 +54,27 @@
 
             //2- Va a llamar a la vista pasandole los datos de los movimientos entre depositos
             include( 'vistas/movimientos_depositos/index.php');
+
+            break;
+
+
+        case "confirmarAjax":
+
+            //1. Verificar si viene con datos del formulario (payload)
+            // aca hizo click en el boton GUARDAR ....ya venia editando
+            $putParams = json_decode( file_get_contents('php://input') );                     
+            
+            if( isset( $_GET["id"] ) ){            
+        
+                confirmarProductosMovimientoDeposito( $_GET["id"] , $putParams );
+
+                $data["registros"] = ["status" => "OK", "message" => "Confirmaciones realizadas correctamente"];
+
+                include( 'vistas/ajax/index.php');
+            
+            }else{
+                //REFACTOR  -> VALIDAR
+            }
 
             break;
 
@@ -97,7 +118,7 @@
         case "agregar":
        
             // lo que viene por _POST lo tomo con file_get_contents
-            // eso como es un json, con la funcion json_decode lo decodifico para leerlo en $postParams
+            // al venir un json, con la funcion json_decode lo decodifico para leerlo en $postParams
             $postParams = json_decode( file_get_contents('php://input') );
 
             //1. Verificar si viene con datos del formulario (payload)

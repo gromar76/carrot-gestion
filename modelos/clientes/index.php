@@ -187,3 +187,20 @@
 
     return $existe;
   }
+
+
+
+  function obtenerCliPrueba()
+  {
+    $conexion = obtenerConexion();
+    $consulta = "SELECT *
+                 FROM clientes";
+
+    $resultado = $conexion->query($consulta);
+    $registros = fetchAll( $resultado );
+
+    //var_dump($registros); exit;
+    cerrarConexion($conexion);
+    //return $registros[0];
+    return $registros;
+  }

@@ -15,6 +15,8 @@ git checkout nombre_arch  //Restaura un archivo al estado anterior
 Ver con pablo
 -------------
 
+Log ( de varias acciones que van pasando cuando uso el sistema )
+
 Cambiar Select de actividad por checkboxes
 Cambiar campo actividad en la base de datos por campos independientes (padel, tennis)
 
@@ -25,13 +27,7 @@ tema depositos y movimiento de mercaderia
 Cuando calculmos el stock tener en cuenta ------> articulos con unidades...todo a tubos...a unidades
 
 
-
 TENIS (check)  PADEL (check)     TODOS (check)
 Select Todas / Pendientes / Canceladas
 
 que pasa con tubos o mercaderia que no se vende ???
-
-
-
-
-

@@ -39,3 +39,35 @@ include("config/constantes.php");
         </tr>
     </tbody>
 </table>
+
+<!-- Modal Confirmaciones -->
+<div class="modal fade" id="modal-confirmaciones" data-backdrop="static" data-keyboard="false" tabindex="-1" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 id="titulo-modal-agregar-producto" class="modal-title">Confirmaciones</h5>
+            <button type="button" class="close" data-dismiss="modal" >
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Confirma</th>
+                    </tr>
+                </thead>
+
+                <tbody id="body-confirmaciones"></tbody>
+            </table>
+        </div>
+        <div class="modal-footer">                
+            <button id="btn-guardar-confirmaciones" type="button" class="btn btn-primary">Aceptar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Fin Modal Confirmaciones-->   

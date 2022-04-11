@@ -97,14 +97,12 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                 // si la accion es distinto de VER es porque estoy haciendo un alta o modificacion
                 // entonces tiene que tener el boton de GUARDAR
                 if ( $accion != 'ver' ){ ?>
-                <button id="btn-guardar" class="btn btn-primary">Guardar Movimiento</button>                
+                <button id="btn-guardar" class="btn btn-primary">Guardar Movimiento</button>              
             <?php }?>
 
             <input id="btn-atras" class="btn btn-primary" type="reset" value= "<?= $accion == 'ver' ? 'Volver' : 'Cancelar' ?>" >
         </div>            
     </div>
-
-
 
     <!-- Modal Agregar Producto a Detalle -->
     <div class="modal fade" id="modal-agregar-producto" data-backdrop="static" data-keyboard="false" tabindex="-1" >

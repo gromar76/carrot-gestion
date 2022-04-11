@@ -37,22 +37,43 @@
         }
       }
 
-      function confirmarProductoMovimientoDeposito($idProducto, $idMovimientoDeposito){
+      function confirmarProductoMovimientoDeposito($idProducto, $idMovimientoDeposito, $conexion){
         //CONFIRMACION...
 
-        //Resto de origen
+        //Obtengo la informacion del movimiento
+        $consulta = "SELECT id_origen, id_destino 
+                     FROM movimientos_depositos
+                     WHERE id = $idMovimientoDeposito";
+
+        $resultado = $conexion->query($consulta);
+        $movimiento = fetchAll( $resultado );
+
+        //Obtengo la cantidad movida
+        $consulta = "SELECT cantidad
+                     FROM detalle_movimientos_depositos
+                     WHERE id_movimiento = $idMovimientoDeposito
+                       AND id_producto = $idProducto";
+
+        $resultado = $conexion->query($consulta);
+        $detalle = fetchAll( $resultado );
+
+        $idOrigen  = $movimiento[0]["id_origen"];
+        $idDestino = $movimiento[0]["id_destino"];
+        $cantidad  = $detalle[0]["cantidad"];
+
+        //Resto de origen REFACTOR
         $consulta = "INSERT INTO stock(id_producto, id_deposito, cantidad)
-        VALUES($producto->id, $origen, $producto->cantidad)
+        VALUES($idProducto, $idOrigen, $cantidad * -1)
         ON DUPLICATE KEY UPDATE
-        cantidad = cantidad - $producto->cantidad";
+        cantidad = cantidad - $cantidad";
         
         $conexion->query($consulta);
 
         //Sumo en destino
         $consulta = "INSERT INTO stock(id_producto, id_deposito, cantidad)
-                      VALUES($producto->id, $destino, $producto->cantidad)
+                      VALUES($idProducto, $idDestino, $cantidad)
                       ON DUPLICATE KEY UPDATE
-                      cantidad = cantidad + $producto->cantidad";
+                      cantidad = cantidad + $cantidad";
 
         $conexion->query($consulta);
       }
@@ -118,34 +139,25 @@
         cerrarConexion($conexion);
     }
 
-/*    function obtenerPorIdCompra($id){
+    function obtenerConfirmacionesPorIdMovimientoDeposito($id){
         $conexion = obtenerConexion();
      
-        $consulta = "SELECT compras.*, prov.nombre_empresa, prov.id id_proveedor
-                     FROM compras 
-                     INNER JOIN proveedores prov 
-                     ON prov.id = compras.id_proveedor 
-                     WHERE compras.id = $id";
+        $consulta = "SELECT dmd.id_producto, cantidad, confirmado, prod.nombre producto
+                     FROM detalle_movimientos_depositos dmd 
+                     INNER JOIN productos prod 
+                       ON prod.id = dmd.id_producto
+                     WHERE id_movimiento = $id";
   
         $resultado = $conexion->query($consulta);
-        $compra = fetchAll( $resultado );
-  
-        $consulta = "SELECT prod.nombre, dc.id_producto id, dc.cantidad, dc.precio precioUnit
-                     FROM detalle_compras dc
-                     INNER JOIN productos prod
-                     ON prod.id = dc.id_producto
-                     WHERE id_compra = $id";
-  
-        $resultado = $conexion->query($consulta);
-        $detalleCompra = fetchAll( $resultado );
+        $detalleMovimientoDeposito = fetchAll( $resultado );
   
         cerrarConexion($conexion);   
   
-        return [ "compra" => $compra[0], "productos" => $detalleCompra ];
+        return $detalleMovimientoDeposito;
       }
   
 
-    function modificarCompra($idCompra, $data, $usuario){
+/*    function modificarCompra($idCompra, $data, $usuario){
         $conexion = obtenerConexion();
    
         $proveedor     = $data->proveedor;
@@ -195,3 +207,23 @@
   
         cerrarConexion($conexion);
     } */
+
+    function confirmarProductosMovimientoDeposito($idMovimientoDeposito , $productosConfirmados){
+
+      $conexion = obtenerConexion();
+  
+      foreach( $productosConfirmados as $idProducto){
+        //Confirmo el producto en el moviemiento
+        $consulta="UPDATE detalle_movimientos_depositos 
+                      SET confirmado = 1
+                      WHERE id_movimiento = $idMovimientoDeposito 
+                        AND id_producto = $idProducto
+                  ";
+
+        $resultado = $conexion->query($consulta);
+
+        confirmarProductoMovimientoDeposito($idProducto, $idMovimientoDeposito, $conexion );
+
+      }
+
+    }

@@ -114,8 +114,10 @@ $(document).ready(async function () {
         },
 
         targets: COLUMNAS.PENDIENTE,
-      },
+      } /* ,
       {
+        //type: "date",
+        //REFACTOR
         render: (data, type, row) => {
           const fecha = row[COLUMNAS.FECHA];
 
@@ -127,7 +129,7 @@ $(document).ready(async function () {
           );
         },
         targets: COLUMNAS.FECHA,
-      },
+      }, */,
     ],
     order: [[COLUMNAS.FECHA, "desc"]],
     language: {

@@ -62,7 +62,8 @@
           <a class="dropdown-item" href="#">Clientes que mas compran</a> 
           <a class="dropdown-item" href="#">Productos mas vendidos</a>    
           <div class="dropdown-divider"></div>      
-          <a class="dropdown-item" href="#">Armado cuadro por articulo vendido</a>   
+          <a class="dropdown-item" href="#">Armado cuadro por articulo vendido</a>
+          <a class="dropdown-item" href="/pruebas/prueba1.php">PRUEBAS</a>
       </li>       
       
       <li class="nav-item dropdown">

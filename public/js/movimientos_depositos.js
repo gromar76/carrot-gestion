@@ -69,10 +69,10 @@ $(document).ready(async function () {
 
           const btnConfirmaciones =
             row[COLUMNAS.POR_CONFIRMAR] > 0
-              ? `<button class="btn btn-danger btn-sm btn-confirmar-producto-movimiento-deposito" data-id=${
+              ? `<button class="btn btn-warning btn-sm btn-confirmar-producto-movimiento-deposito" data-id=${
                   row[COLUMNAS.ID_MOVIMIENTO_DEPOSITO]
-                } data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                <i class="fas fa-trash"></i>
+                } data-toggle="tooltip" data-placement="top" title="Confirmaciones">
+                                <i class="fas fa-check"></i>
                               </button> `
               : "";
 
@@ -99,6 +99,15 @@ $(document).ready(async function () {
   // si hago click en btn-editar ir a funcion editar
   $("body").on("click", ".btn-ver", ver);
 */
+
+  $("body").on(
+    "click",
+    ".btn-confirmar-producto-movimiento-deposito",
+    mostrarModalConfirmaciones
+  );
+
+  $("body").on("click", "#btn-guardar-confirmaciones", guardarConfirmaciones);
+
   //cuando hago click en boton de cancelar
   $("#btn-atras").click(atras);
 
@@ -123,6 +132,7 @@ $(document).ready(async function () {
   });
 
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
+
   /* 
   idCompra = params.get("id");
 
@@ -152,6 +162,36 @@ $(document).ready(async function () {
 });
 */
 });
+
+async function mostrarModalConfirmaciones() {
+  idMovimientoDeposito = parseInt($(this).attr("data-id"));
+
+  const response = await fetch(
+    `${URL_BASE}/index.php?m=movimientos_depositos&a=detalleMovimientoDepositoAjax&id=${idMovimientoDeposito}`
+  );
+
+  const data = await response.json();
+
+  generarTableDeConfirmaciones(data);
+
+  $("#modal-confirmaciones").modal("show");
+}
+
+function generarTableDeConfirmaciones(productos) {
+  $("#body-confirmaciones").empty();
+
+  productos.forEach(({ id_producto: id, producto, cantidad, confirmado }) => {
+    $("#body-confirmaciones").append(`<tr>
+                                        <td>${producto}</td>
+                                        <td>${cantidad}</td>
+                                        <td>${
+                                          confirmado == 0
+                                            ? `<input data-id="${id}" class="chk-confirmacion" type="checkbox"/>`
+                                            : ""
+                                        }</td>
+                                      </tr>`);
+  });
+}
 
 function actualizarVista() {
   $("#fecha").val(movimientoDeposito.fecha);
@@ -312,4 +352,44 @@ async function guardarMovimientoDeposito() {
       icon: "error",
     });
   }
+}
+
+async function guardarConfirmaciones() {
+  console.log("Guardar...");
+
+  // me traigo solo los confirmados con el checked
+  const productosConfirmados = $(".chk-confirmacion:checked");
+
+  const idsProductosConfirmados = [];
+
+  productosConfirmados.each(function () {
+    idsProductosConfirmados.push($(this).attr("data-id"));
+  });
+
+  console.log(idMovimientoDeposito, idsProductosConfirmados);
+
+  const url = `${URL_BASE}/index.php?m=movimientos_depositos&a=confirmarAjax&id=${idMovimientoDeposito}`;
+
+  const response = await fetch(url, {
+    method: "PUT",
+    body: JSON.stringify(idsProductosConfirmados),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  /*  if (data.status === "OK") {
+    Swal.fire({
+      text: data.message,
+      icon: "success",
+    }).then(() => {
+      window.location = "index.php?m=movimientos_depositos&a=listado";
+    });
+  } else {
+    Swal.fire({
+      text: data.message,
+      icon: "error",
+    });
+  } */
 }
