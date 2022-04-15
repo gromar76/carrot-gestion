@@ -41,6 +41,22 @@
             break;
 
 
+        case "depositosDestinoAjax":
+        
+                $data["registros"] = obtenerDepositosDestino( $_GET["id_origen"] );
+
+                include( 'vistas/ajax/index.php');
+
+            break;
+
+        case "usuariosDelDepositoAjax":
+    
+            $data["registros"] = obtenerUsuariosDelDepositoAjax( $_GET["id_deposito"] );
+
+            include( 'vistas/ajax/index.php');
+
+        break;
+
         case "editar":
             break;
 

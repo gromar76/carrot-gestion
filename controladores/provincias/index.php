@@ -2,7 +2,6 @@
 
     include("modelos/provincias/index.php");
     include("modelos/paises/index.php");
-
     
     // seteo listado por default
     $accion = "listado";

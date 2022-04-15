@@ -14,3 +14,25 @@ function dateFechaDeHoyParaInputDate() {
 function atras() {
   history.back();
 }
+
+function dameOpcionesDelSelect(
+  registros,
+  idSeleccionado = null,
+  campoId = "id",
+  campoLeyenda = "nombre"
+) {
+  // variables $campoId y $campoLeyenda son opcionales y por default les pongo yo id y nombre
+
+  let opcionesSelect = '<option value="-1">Seleccione...</option>';
+
+  for (let registro of registros) {
+    selected =
+      idSeleccionado == registro[campoId] || registros.length === 1
+        ? "selected"
+        : "";
+
+    opcionesSelect += `<option value="${registro[campoId]}" ${selected}>${registro[campoLeyenda]}</option>`;
+  }
+
+  return opcionesSelect;
+}

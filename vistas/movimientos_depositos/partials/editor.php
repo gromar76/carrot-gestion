@@ -3,7 +3,7 @@
 include 'funciones/html.php';
 
 $productos        = $data["productos"];
-$depositos        = $data["depositos"];
+$depositosOrigen  = $data["depositosOrigen"];
 /* $deposito         = isset( $data["deposito"] ) ?  $data["deposito"]  : NULL; */
 
 //var_dump ($proveedores);exit();
@@ -34,7 +34,7 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                     <div class="col-9">
 
                         <select class="form-control" id="origen" value="Cargando..." <?=$disabled?>>
-                            <?= dameOpcionesDelSelect( $depositos );  ?>
+                            <?= dameOpcionesDelSelect( $depositosOrigen );  ?>
                         </select>
 
                     </div>
@@ -46,7 +46,20 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                     <div class="col-9">
 
                         <select class="form-control" id="destino" value="Cargando..." <?=$disabled?>>
-                            <?= dameOpcionesDelSelect( $depositos);  ?>
+                           
+                        </select>
+
+                    </div>
+                </div>
+
+                <!--REFACTOR-->
+                <div class="form-group row">
+                    <label for="usuario" class="col-3 col-form-label">Usuario</label> 
+
+                    <div class="col-9">
+
+                        <select class="form-control" id="usuario_confirmacion"  <?=$disabled?>>
+
                         </select>
 
                     </div>
@@ -122,8 +135,8 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                             <label for="producto" class="col-3 col-form-label">Producto</label> 
                             <div class="col-9">
                                 <select id="producto" name="producto" class="custom-select" <?=$disabled?> value="<?=$producto?>">
-                                    <option value="-1">Seleccione el producto...</option>
-                                    <?= dameOpcionesDelSelect($productos); ?>
+                                    <!--     <option value="-1">Seleccione el producto...</option>
+                                    < ?= dameOpcionesDelSelect($productos); ?> -->
                                 </select>
                             </div>
                         </div>

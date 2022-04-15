@@ -116,18 +116,43 @@
         $resultado = $conexion->query($consulta);
       } 
 
+      function autoConfirmar($idMovimientoDeposito, $detalle, $destino, $idUsuario, $conexion){
+        
+        //1- Averiguo el id del dueño del deposito Origen
+        $consulta="SELECT *
+                   FROM (SELECT id_usuario
+                      FROM usuarios_depositos
+                      WHERE id_deposito = $destino) usr_dp
+                   WHERE usr_dp.id_usuario = $idUsuario";
+
+        $resultado = $conexion->query($consulta);
+
+        //2- Si el dueño del deposito destino es el mismo que el del deposito de origen, confirma automaticamente
+        if( count( fetchAll( $resultado ) ) == 1 ){      
+          $productos = [];
+
+          foreach ( $detalle as $producto){
+            $productos[] = $producto->id;
+          }
+
+          confirmarProductosMovimientoDeposito($idMovimientoDeposito, $productos);
+        }
+
+      }
+
 
     function agregarMovimientoDeposito($data, $idUsuario){      
         $conexion = obtenerConexion();
 
-        $fecha         = $data->fecha;      
-        $origen        = $data->origen;
-        $destino       = $data->destino;
-        $observaciones = $data->observaciones;        
-        $detalle       = $data->detalle;
+        $fecha               = $data->fecha;      
+        $origen              = $data->origen;
+        $destino             = $data->destino;
+        $observaciones       = $data->observaciones;        
+        $detalle             = $data->detalle;
+        $usuarioConfirmacion = $data->usuarioConfirmacion;
                 
-        $consulta="INSERT INTO movimientos_depositos(fecha, id_origen, id_destino, observaciones, id_usuario)
-                   VALUES ( '$fecha', $origen, $destino, '$observaciones', $idUsuario )";
+        $consulta="INSERT INTO movimientos_depositos(fecha, id_origen, id_destino, observaciones, id_usuario, id_usuario_confirmacion)
+                   VALUES ( '$fecha', $origen, $destino, '$observaciones', $idUsuario, $usuarioConfirmacion )";
 
 
         $resultado = $conexion->query($consulta);
@@ -135,6 +160,8 @@
         $idMovimientoDeposito = $conexion->insert_id;
 
         guardarDetalleMovimientoDeposito($idMovimientoDeposito, $detalle,  $origen, $destino, $conexion); 
+        
+        autoConfirmar($idMovimientoDeposito, $detalle, $destino, $idUsuario, $conexion);
 
         cerrarConexion($conexion);
     }
@@ -142,6 +169,13 @@
     function obtenerConfirmacionesPorIdMovimientoDeposito($id){
         $conexion = obtenerConexion();
      
+        $consulta = "SELECT id_usuario_confirmacion
+                     FROM movimientos_depositos                  
+                     WHERE id = $id";
+
+        $resultado = $conexion->query($consulta);
+        $idUsuarioConfirmacion = (fetchAll( $resultado ))[0]["id_usuario_confirmacion"];
+
         $consulta = "SELECT dmd.id_producto, cantidad, confirmado, prod.nombre producto
                      FROM detalle_movimientos_depositos dmd 
                      INNER JOIN productos prod 
@@ -153,7 +187,7 @@
   
         cerrarConexion($conexion);   
   
-        return $detalleMovimientoDeposito;
+        return [ "productos" => $detalleMovimientoDeposito, "idUsuarioConfirmacion" => $idUsuarioConfirmacion ] ;
       }
   
 

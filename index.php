@@ -1,6 +1,8 @@
 <?php
     session_start(); //Inicio de sesion
 
+    require('funciones/log.php');
+
     // por default pongo la variable modulo con login
     $modulo = "login"; //default
 
@@ -21,7 +23,6 @@
         $modulo = "login";
     }
 
-    
     // vengo del index.php principal y el controlador sabe para donde debe dirigirse
 
     switch( $modulo ){
@@ -89,6 +90,10 @@
         case "movimientos_depositos":
             $modulo = "movimientos_depositos";
             break;
+        
+        case "stock":
+            $modulo = "stock";
+            break;
 
         case "prueba":
             $modulo = "prueba";
@@ -100,6 +105,11 @@
             $modulo = "404";
             break;
 
+    }
+
+    function guardarLog($mensaje){
+        global $modulo;
+        grabarLog( $mensaje, $modulo );
     }
 
     include("controladores/" . $modulo . "/index.php");

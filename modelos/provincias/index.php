@@ -11,6 +11,7 @@
 
         cerrarConexion($conexion);
 
+
         return $registros;
     }
 
@@ -62,6 +63,8 @@
                 
         $resultado = $conexion->query($consulta);
         cerrarConexion($conexion);
+
+        guardarLog('AGREGO PROVINCIA ' . $nombre . "(idPais=$idPais)");
     }
 
 
@@ -77,13 +80,9 @@
     }
     
     
-    
     function eliminarCatProv($id){
 
     }
-
-
-
 
     function obtenerTodosProvinciasTabla(){
         $conexion = obtenerConexion();
@@ -94,10 +93,10 @@
         $resultado = $conexion->query($consulta);
         $registros = fetchAll( $resultado );
 
-        //var_dump($registros);
-        //exit();
-
-        cerrarConexion($conexion);        
+        cerrarConexion($conexion);       
+        
+        guardarLog('Se pidio listado de provincias');
 
         return $registros;
     }
+

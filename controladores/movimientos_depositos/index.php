@@ -137,7 +137,7 @@
 
             }else{        
                 
-                $data["depositos"] = obtenerTodosDepositos();     
+                $data["depositosOrigen"] = obtenerDepositosUsuario( $idUsuarioActivo );  
                 $data["productos"] = obtenerTodosProductosxOrdenManual(); 
                
                 //2. llamar a la vista del editor de compra vacio    

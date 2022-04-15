@@ -19,7 +19,8 @@ let movimientoDeposito = {
   origen: null,
   destino: null,
   detalle: [],
-  usuario: null,
+  /*   usuario: null, */
+  usuarioConfirmacion: null,
 };
 
 // con esto manejo la fila al hacer click en editar o eliminar
@@ -117,10 +118,14 @@ $(document).ready(async function () {
 
   $("#origen").change(function () {
     movimientoDeposito.origen = $(this).val();
+
+    cargarSelectDestinos($(this).val());
   });
 
   $("#destino").change(function () {
     movimientoDeposito.destino = $(this).val();
+
+    cargarSelectUsuarioConfirmacion($(this).val());
   });
 
   $("#fecha").change(function () {
@@ -129,6 +134,10 @@ $(document).ready(async function () {
 
   $("#observaciones").change(function () {
     movimientoDeposito.observaciones = $(this).val();
+  });
+
+  $("#usuario_confirmacion").change(function () {
+    movimientoDeposito.usuarioConfirmacion = $(this).val();
   });
 
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
@@ -177,20 +186,32 @@ async function mostrarModalConfirmaciones() {
   $("#modal-confirmaciones").modal("show");
 }
 
-function generarTableDeConfirmaciones(productos) {
+function generarTableDeConfirmaciones(detalleConfirmacion) {
   $("#body-confirmaciones").empty();
 
-  productos.forEach(({ id_producto: id, producto, cantidad, confirmado }) => {
-    $("#body-confirmaciones").append(`<tr>
+  detalleConfirmacion.productos.forEach(
+    ({ id_producto: id, producto, cantidad, confirmado }) => {
+      console.log(
+        detalleConfirmacion.idUsuarioConfirmacion == userId,
+        detalleConfirmacion.idUsuarioConfirmacion,
+        userId
+      );
+      $("#body-confirmaciones").append(`<tr>
                                         <td>${producto}</td>
                                         <td>${cantidad}</td>
                                         <td>${
                                           confirmado == 0
-                                            ? `<input data-id="${id}" class="chk-confirmacion" type="checkbox"/>`
-                                            : ""
+                                            ? `<input data-id="${id}" class="chk-confirmacion" type="checkbox" ${
+                                                detalleConfirmacion.idUsuarioConfirmacion !=
+                                                userId
+                                                  ? "disabled"
+                                                  : ""
+                                              }  />`
+                                            : "Confirmado"
                                         }</td>
                                       </tr>`);
-  });
+    }
+  );
 }
 
 function actualizarVista() {
@@ -237,7 +258,9 @@ function actualizarVista() {
   /*$(".btn-eliminar-compra").click(eliminarCompra);*/
 }
 
-function mostrarModalAgregarProducto() {
+async function mostrarModalAgregarProducto() {
+  await cargarProductosEnDepositoOrigen();
+
   numFilaEditar = null;
   $("#producto").val(-1);
   $("#cantidad").val(1);
@@ -245,6 +268,18 @@ function mostrarModalAgregarProducto() {
   $("#titulo-modal-agregar-producto").html("Agregar producto");
 
   $("#modal-agregar-producto").modal("show");
+}
+
+async function cargarProductosEnDepositoOrigen() {
+  const url = `http://localhost/index.php?m=stock&a=dameStockDeposito&id=${movimientoDeposito.origen}`;
+
+  const response = await fetch(url, {
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  $("#producto").html(dameOpcionesDelSelect(data));
 }
 
 function guardarProductoDetalle() {
@@ -355,8 +390,6 @@ async function guardarMovimientoDeposito() {
 }
 
 async function guardarConfirmaciones() {
-  console.log("Guardar...");
-
   // me traigo solo los confirmados con el checked
   const productosConfirmados = $(".chk-confirmacion:checked");
 
@@ -379,7 +412,7 @@ async function guardarConfirmaciones() {
 
   const data = await response.json();
 
-  /*  if (data.status === "OK") {
+  if (data.status === "OK") {
     Swal.fire({
       text: data.message,
       icon: "success",
@@ -391,5 +424,47 @@ async function guardarConfirmaciones() {
       text: data.message,
       icon: "error",
     });
-  } */
+  }
+}
+
+async function cargarSelectDestinos(idDepositoOrigen) {
+  const response = await fetch(
+    `${URL_BASE}/index.php?m=depositos&a=depositosDestinoAjax&id_origen=${idDepositoOrigen}`
+  );
+
+  const data = await response.json();
+
+  $("#destino").html(dameOpcionesDelSelect(data));
+
+  $("#usuario_confirmacion").empty();
+}
+
+async function cargarSelectUsuarioConfirmacion(idDepositoDestino) {
+  const response = await fetch(
+    `${URL_BASE}/index.php?m=depositos&a=usuariosDelDepositoAjax&id_deposito=${idDepositoDestino}`
+  );
+
+  const data = await response.json();
+
+  const idSeleccionado = data.find(({ id }) => id == userId) ? userId : null;
+
+  $("#usuario_confirmacion").html(dameOpcionesDelSelect(data, idSeleccionado));
+
+  console.log($("#usuario_confirmacion").val());
+
+  if ($("#usuario_confirmacion").val() > 0) {
+    movimientoDeposito.usuarioConfirmacion = $("#usuario_confirmacion").val();
+    console.log("Entre ");
+    console.log(movimientoDeposito);
+  }
+
+  if (idSeleccionado) {
+    console.log("Entre 2");
+    movimientoDeposito.usuarioConfirmacion = idSeleccionado;
+    $("#usuario_confirmacion").prop("disabled", "disabled");
+  } else {
+    $("#usuario_confirmacion").removeAttr("disabled");
+  }
+
+  console.log(movimientoDeposito);
 }

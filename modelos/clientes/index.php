@@ -118,6 +118,8 @@
 
         cerrarConexion($conexion);
 
+        guardarLog('AGREGO CLIENTE ' . $nombre . ' ' .  $apellido);
+
     }
 
     function modificarClientes($data, $id){
@@ -159,6 +161,8 @@
 
         $resultado = $conexion->query($consulta);
         cerrarConexion($conexion);
+
+        guardarLog('MODIFICO CLIENTE ' .  $id . ' - ' .  $nombre . ' ' . $apellido);
     }
 
     function eliminarClientes($id){
@@ -168,6 +172,8 @@
 
         $resultado = $conexion->query($consulta);
         cerrarConexion($conexion);
+
+
     }
 
   function esClienteExistente($whatsapp){
