@@ -1,0 +1,86 @@
+
+17/04/22 09:57:52	Nicolas	MODIFICO CLIENTE 
+ORIGINAL
+
+id=270
+fecha_alta=2022-04-15 09:59:54
+nombre=CliLog Editado 2
+apellido=Log 2
+dni=12312322
+whatsapp=12312322222
+telefono2=244342222
+email=log@log.com2
+paginaweb=w2
+instagram=i2
+facebook=f2
+id_localidad=57
+domicilio=222222222222
+cpostal=2222
+foto=
+observaciones=ob2222
+baja=0
+es_distribuidor=2
+es_cliente_de=tenis
+usuario_alta=1
+
+MODIFICADO
+
+nombre=CliLog Editado 3
+apellido=Log 3
+dni=123123333
+whatsapp=12312322222
+telefono2=244342222
+email=log@log.com2
+es_cliente_de=tenis
+es_distribuidor=2
+domicilio=222222222222
+cpostal=2222
+pais=1
+provincia=24
+id_localidad=57
+paginaweb=w2
+instagram=i3
+facebook=f3
+observaciones=ob2222
+
+17/04/22 10:00:28	Nicolas	MODIFICO CLIENTE 
+ORIGINAL
+
+id=270
+fecha_alta=2022-04-15 09:59:54
+nombre=CliLog Editado 3
+apellido=Log 3
+dni=12312333
+whatsapp=12312322222
+telefono2=244342222
+email=log@log.com2
+paginaweb=w2
+instagram=i3
+facebook=f3
+id_localidad=57
+domicilio=222222222222
+cpostal=2222
+foto=
+observaciones=ob2222
+baja=0
+es_distribuidor=2
+es_cliente_de=tenis
+usuario_alta=1
+
+MODIFICADO
+
+nombre=CliLog Editado 4
+apellido=Log 3
+dni=12312333
+whatsapp=12312322222
+telefono2=244342222
+email=log@log.com2
+es_cliente_de=tenis
+es_distribuidor=2
+domicilio=222222222222
+cpostal=2222
+id_localidad=65
+paginaweb=w2
+instagram=i3
+facebook=f3
+observaciones=ob2222

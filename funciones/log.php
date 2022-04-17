@@ -21,3 +21,50 @@
 
         fclose($archivoLog);
     }
+
+    function armarDataParaLog($data){
+        $keys = array_keys( $data);
+
+        $dataLog = "\n";
+ 
+        foreach( $keys as $key){
+            $dataLog .=  $key != 'submit' ? $key . '=' . $data[$key] . "\n" : '';
+        }
+
+        return $dataLog;
+    }
+
+    function armarOriginalyModificado( $registroOriginal, $data){
+        return "\nORIGINAL\n" . armarDataParaLog( $registroOriginal ) .
+               "\nMODIFICADO\n" . armarDataParaLog( $data ); 
+    }
+
+    function armarMaestroDetalleJson( $data){
+        return armarDataParaLogDesdeObjeto($data) . "\nDETALLE" . armarDataParaLogDesdeArrayDeObjetos($data->productos);
+    }
+
+    function armarDataParaLogDesdeObjeto($data){
+        $keys =  array_keys((array)$data);
+
+        $dataLog = "\n";
+ 
+        foreach( $keys as $key){
+            if ( !is_array($data->$key)){
+                $dataLog .=  $key != 'submit' ? $key . '=' . $data->$key . "\n" : '';
+            }
+        }
+
+        return $dataLog;
+    }
+
+    function armarDataParaLogDesdeArrayDeObjetos($data){
+        
+        $dataLog = "\n";
+ 
+        foreach( $data as $registro){
+
+            $dataLog .=  armarDataParaLogDesdeObjeto( $registro );
+        }
+
+        return $dataLog;
+    }

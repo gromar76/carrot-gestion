@@ -118,12 +118,21 @@
 
         cerrarConexion($conexion);
 
-        guardarLog('AGREGO CLIENTE ' . $nombre . ' ' .  $apellido);
+        guardarLog('AGREGO CLIENTE ' . armarDataParaLog($data));
 
     }
 
     function modificarClientes($data, $id){
         $conexion = obtenerConexion();
+
+        $consulta = "SELECT *
+                     FROM clientes
+                     WHERE id = $id"; 
+        
+        $resultado = $conexion->query($consulta);
+        $registroOriginal = fetchAll( $resultado )[0];
+
+        $dataLog = armarOriginalyModificado( $registroOriginal, $data);
 
         $nombre             = $data["nombre"];
         $apellido           = $data["apellido"];
@@ -162,7 +171,7 @@
         $resultado = $conexion->query($consulta);
         cerrarConexion($conexion);
 
-        guardarLog('MODIFICO CLIENTE ' .  $id . ' - ' .  $nombre . ' ' . $apellido);
+        guardarLog('MODIFICO CLIENTE ' .  $dataLog);
     }
 
     function eliminarClientes($id){
@@ -172,8 +181,6 @@
 
         $resultado = $conexion->query($consulta);
         cerrarConexion($conexion);
-
-
     }
 
   function esClienteExistente($whatsapp){

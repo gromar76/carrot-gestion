@@ -1,0 +1,50 @@
+
+17/04/22 10:35:39	Nicolas	AGREGO COMPRA 
+proveedor=3
+fecha=2022-04-17
+observaciones=Ob Logo prueba
+deposito=2
+primerPago=5850
+observacionesPrimerPago=Primer pago 2
+
+DETALLE
+
+id=9
+nombre=Remera XL Violeta
+cantidad=1
+precioUnit=1500
+
+id=3
+nombre=Tubo pelotas x 3
+cantidad=3
+precioUnit=1050
+
+id=15
+nombre=Funda para paleta
+cantidad=1
+precioUnit=1200
+
+17/04/22 10:38:16	Nicolas	AGREGO COMPRA 
+proveedor=3
+fecha=2022-04-18
+observaciones=Ob Logo prueba
+deposito=2
+primerPago=5850
+observacionesPrimerPago=Primer pago 2
+
+DETALLE
+
+id=9
+nombre=Remera XL Violeta
+cantidad=1
+precioUnit=1500
+
+id=3
+nombre=Tubo pelotas x 3
+cantidad=3
+precioUnit=1050
+
+id=15
+nombre=Funda para paleta
+cantidad=1
+precioUnit=1200

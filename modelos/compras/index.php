@@ -90,6 +90,8 @@
 
 
     function agregarCompra($data, $idUsuario){      
+
+
         $conexion = obtenerConexion();
 
         $proveedor     = $data->proveedor;
@@ -111,6 +113,9 @@
 
         guardarDetalleCompra($idCompra, $productos, $conexion, $deposito); 
 
+
+        //Log de la compra
+        guardarLog('AGREGO COMPRA ' . armarMaestroDetalleJson($data));
         
         //VERIFICO SI HAY PRIMER PAGO Y SI ES ASI, LO GUARDO 
         $data = [];
@@ -125,6 +130,7 @@
         }
 
         cerrarConexion($conexion);
+
     }
 
     function obtenerPorIdCompra($id){

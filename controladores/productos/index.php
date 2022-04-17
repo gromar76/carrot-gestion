@@ -92,9 +92,9 @@
                     $data["mensaje"] = 'Completar todos los campos obligatorios';
                     $data["tipoMensaje"] = 'danger';
 
-                    $data["registros"]["nombre"] = $_POST['nombre'] ?  $_POST['nombre'] : '';
-                    $data["registros"]["descripcion"] = $_POST['descripcion'] ?  $_POST['descripcion'] : '';                  
-                    $data["registros"]["precio"] = $_POST['precio'] ?  $_POST['precio'] : '';                    
+                    $data["registros"]["nombre"]       = $_POST['nombre'] ?  $_POST['nombre'] : '';
+                    $data["registros"]["descripcion"]  = $_POST['descripcion'] ?  $_POST['descripcion'] : '';                  
+                    $data["registros"]["precio"]       = $_POST['precio'] ?  $_POST['precio'] : '';                    
                     $data["registros"]["id_categoria"] = $_POST['id_categoria'] ?  $_POST['id_categoria'] : '';                                       
  
                     include( 'vistas/productos/index.php');
