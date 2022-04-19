@@ -1,5 +1,7 @@
 let idMovimientoDeposito = null;
 
+let stock = [];
+
 const COLUMNAS = {
   ID_MOVIMIENTO_DEPOSITO: 0,
   FECHA: 1,
@@ -116,8 +118,12 @@ $(document).ready(async function () {
 
   $("#btn-guardar").click(guardarMovimientoDeposito);
 
-  $("#origen").change(function () {
+  $("#origen").change(async function () {
     movimientoDeposito.origen = $(this).val();
+
+    await cargarProductosEnDepositoOrigen();
+
+    validarStocksOrigen();
 
     cargarSelectDestinos($(this).val());
   });
@@ -138,6 +144,12 @@ $(document).ready(async function () {
 
   $("#usuario_confirmacion").change(function () {
     movimientoDeposito.usuarioConfirmacion = $(this).val();
+  });
+
+  $("#producto").change(function () {
+    const idProducto = $(this).val();
+
+    $("#stock").html(dameStock(idProducto));
   });
 
   $("#btn-modal-agregar-producto").click(mostrarModalAgregarProducto);
@@ -259,11 +271,10 @@ function actualizarVista() {
 }
 
 async function mostrarModalAgregarProducto() {
-  await cargarProductosEnDepositoOrigen();
-
   numFilaEditar = null;
   $("#producto").val(-1);
   $("#cantidad").val(1);
+  $("#stock").empty();
 
   $("#titulo-modal-agregar-producto").html("Agregar producto");
 
@@ -277,9 +288,9 @@ async function cargarProductosEnDepositoOrigen() {
     credentials: "include",
   });
 
-  const data = await response.json();
+  stock = await response.json();
 
-  $("#producto").html(dameOpcionesDelSelect(data));
+  $("#producto").html(dameOpcionesDelSelect(stock));
 }
 
 function guardarProductoDetalle() {
@@ -290,19 +301,24 @@ function guardarProductoDetalle() {
   };
 
   // si seleccione algun producto y si el precio no es negativo
-  if (producto.id != -1 && producto.cantidad >= 1) {
-    if (!numFilaEditar) {
-      //agrego el producto si no hay nro de fila...vengo por agregar
-      movimientoDeposito.detalle.push(producto);
-    } else {
-      // edito el producto y pego el nuevo "producto"
-      movimientoDeposito.detalle[numFilaEditar] = producto;
-      $("#modal-agregar-producto").modal("hide");
-    }
+  if (producto.id != -1) {
+    if (producto.cantidad >= 1 && producto.cantidad <= dameStock(producto.id)) {
+      if (!numFilaEditar) {
+        //agrego el producto si no hay nro de fila...vengo por agregar
+        movimientoDeposito.detalle.push(producto);
+      } else {
+        // edito el producto y pego el nuevo "producto"
+        movimientoDeposito.detalle[numFilaEditar] = producto;
+        $("#modal-agregar-producto").modal("hide");
+      }
 
-    $("#form-producto-detalle")[0].reset();
-    $("#cantidad").val(1);
-    actualizarVista();
+      $("#form-producto-detalle")[0].reset();
+      $("#stock").empty();
+      $("#cantidad").val(1);
+      actualizarVista();
+    } else {
+      alert("Stock invalido!!");
+    }
   } else {
     alert("Complete campos!!");
   }
@@ -467,4 +483,42 @@ async function cargarSelectUsuarioConfirmacion(idDepositoDestino) {
   }
 
   console.log(movimientoDeposito);
+}
+
+function dameStock(idProducto) {
+  const producto = stock.find(({ id }) => id === idProducto);
+
+  return producto
+    ? parseInt(producto.cantidad) - dameCantEnDetalle(idProducto)
+    : "";
+}
+
+function dameCantEnDetalle(idProducto) {
+  const cantProductoEnDetalle = movimientoDeposito.detalle
+    .filter(({ id }) => id === idProducto)
+    .reduce(
+      (cantidadAcumulada, producto) =>
+        cantidadAcumulada + parseInt(producto.cantidad),
+      0
+    );
+
+  return cantProductoEnDetalle;
+}
+
+//REFACTOR - 18-4-2022
+function validarStocksOrigen() {
+  console.log("validar stock origen", stock);
+
+  const stockVAlidos = movimientoDeposito.detalle.filter(({ id }) => {
+    const stockProducto = dameStock(id);
+    console.log(
+      "id",
+      id,
+      stockProducto,
+      stockProducto !== "" && stockProducto >= 0
+    );
+    return stockProducto !== "" && stockProducto >= 0;
+  });
+
+  console.log("stock validados", stockVAlidos);
 }

@@ -65,30 +65,46 @@
 
     function obtenerDepositoPorId($id){   
 
-/*         $conexion = obtenerConexion();
+     $conexion = obtenerConexion();
     
-        $consulta = 'SELECT id, nombre
+        $consulta = "SELECT id, nombre
                      FROM depositos
-                     WHERE id_provincia=' . $id .' order by nombre';
+                     WHERE id=$id";
         
         $resultado = $conexion->query($consulta);
          $registros = fetchAll( $resultado );
     
         cerrarConexion($conexion);
     
-        return $registros; */
+        return $registros[0];
 
 
     }
    
 
     function agregarDeposito($data){
+        $conexion = obtenerConexion();
 
+        $nombre      = $data["nombre"];
+                
+        $consulta = "INSERT INTO depositos (nombre) VALUES ('$nombre')";
+        $resultado = $conexion->query($consulta);
+
+        cerrarConexion($conexion);
     }
 
     function modificarDeposito($data, $id){
-        
+
+        $conexion = obtenerConexion();
+        $nombre      = $data["nombre"];            
+        $consulta="UPDATE depositos
+                     SET nombre = '$nombre'                                      
+                   WHERE id = $id";
+        $resultado = $conexion->query($consulta);        
+        cerrarConexion($conexion);
     }
+
+
 
     function eliminarDeposito($id){
 

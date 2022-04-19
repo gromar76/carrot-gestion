@@ -1,0 +1,58 @@
+
+17/04/22 19:17:58	Nicolas	AGREGO PRODUCTO 
+nombre=pruebaLog
+descripcion=
+precio=50
+id_categoria=4
+
+17/04/22 19:22:30	Nicolas	MODIFICO PRODUCTO 
+ORIGINAL
+
+id=4
+nombre=Bolso deportivo paletero
+descripcion=Muñequeras
+precio=3500.00
+baja=0
+rutafoto=foto2.png
+id_categoria=4
+fecha_alta=2022-01-22 09:34:59
+fecha_modificacion=2022-01-22 09:34:59
+id_usuario_alta=0
+id_usuario_modificacion=0
+orden=30
+
+MODIFICADO
+
+nombre=Bolso deportivo paletero
+descripcion=Muñequeras-log
+precio=3500.00
+id_categoria=4
+
+18/04/22 08:54:06	Nicolas	MODIFICO PRODUCTO 
+ORIGINAL
+
+id=4
+nombre=Bolso deportivo paletero
+descripcion=
+precio=2900.00
+baja=0
+rutafoto=foto2.png
+id_categoria=4
+fecha_alta=2022-01-22 09:34:59
+fecha_modificacion=2022-01-22 09:34:59
+id_usuario_alta=0
+id_usuario_modificacion=0
+orden=
+
+MODIFICADO
+
+nombre=Bolso deportivo paletero
+descripcion=
+precio=2900.00
+id_categoria=4
+
+18/04/22 21:55:04	Nicolas	AGREGO PRODUCTO 
+nombre=jkljkljkljkl
+descripcion=
+precio=0
+id_categoria=4

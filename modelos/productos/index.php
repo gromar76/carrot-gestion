@@ -68,10 +68,21 @@
 
         $resultado = $conexion->query($consulta);        
         cerrarConexion($conexion);
+
+        guardarLog('AGREGO PRODUCTO ' . armarDataParaLog($data));
     }      
     
     function modificarProducto($data, $id){
         $conexion = obtenerConexion();
+
+        $consulta = "SELECT *
+                       FROM PRODUCTOS
+                      WHERE ID = $id";
+        
+        $resultado = $conexion->query($consulta);      
+        $registroOriginal = fetchAll( $resultado )[0];
+
+        $dataLog = armarOriginalyModificado( $registroOriginal, $data);
 
         $nombre      = $data["nombre"];
         $descripcion = $data["descripcion"];
@@ -88,6 +99,10 @@
         $resultado = $conexion->query($consulta);
         
         cerrarConexion($conexion);
+
+        guardarLog('MODIFICO PRODUCTO ' .  $dataLog);
+
+
     }  
     
     

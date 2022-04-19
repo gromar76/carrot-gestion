@@ -9,14 +9,15 @@ include 'funciones/html.php';
 
 $nombre         = isset($data['registros']['nombre']) ? $data['registros']['nombre'] : '';
 $descripcion    = isset($data['registros']['descripcion']) ? $data['registros']['descripcion'] : '';
-$precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
+//$precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : '';
+$precio         = isset($data['registros']['precio']) ? $data['registros']['precio'] : 0;
 $idCategoria    = isset($data['registros']['id_categoria']) ? $data['registros']['id_categoria'] : '';
 
 //Todas las categorias
-$categoriasDeProducto      = obtenerTodosCatProd();
+$categoriasDeProducto = obtenerTodosCatProd();
 
 // si la accion es VER entonces disabled esta vacio
-$disabled =  $accion == 'ver' ? "disabled" : ""; 
+$disabled =  $accion == 'ver' ? "disabled" : "";
 
 // la variable $accion viene con agregar, editar, ver
 //echo $accion;

@@ -144,7 +144,14 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
                         <div class="form-group row">
                             <label for="cantidad" class="col-3 col-form-label">Cant.</label> 
                             <div class="col-9">
-                            <input id="cantidad" name="cantidad" type="number" class="form-control" <?=$disabled?> value="<?=$cantidad?>">
+                                <input id="cantidad" name="cantidad" type="number" class="form-control" <?=$disabled?> value="<?=$cantidad?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group row ">
+                            <label for="cantidad" class="col-3 col-form-label">En stock:</label> 
+                            <div class="col-9 bg-warning">
+                                <span id="stock" class="p-3"></span>
                             </div>
                         </div>
 

@@ -58,11 +58,26 @@
         break;
 
         case "editar":
+            //1. Verificar si viene con datos del formulario (payload)
+            // aca hizo click en el boton GUARDAR ....ya venia editando
+            if( isset( $_POST["nombre"] ) && trim( $_POST["nombre"] )!='' ){                   
+                
+                modificarDeposito($_POST, $id);                    
+                header('Location: index.php?m=depositos&a=listado&mensaje=Deposito modificada correctamente&tipoMensaje=success');                }
+            else{
+
+                //2. obtener datos del producto a editar
+                // aca hizo click en el boton verde de editar
+                $data["registros"]  = obtenerDepositoPorId($id);   
+
+                //3. llamar a la vista pasandole los datos de ese cliente en particular           
+                include( 'vistas/depositos/index.php');
+            }
             break;
 
         case "agregar":      
         
-            /*//1. Verificar si viene con datos del formulario (payload)
+            //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $_POST["nombre"] ) ){
 
@@ -87,8 +102,7 @@
                 include( 'vistas/depositos/index.php');
             }
 
-            break;      */   
-        
+            break;                 
         
         
 
