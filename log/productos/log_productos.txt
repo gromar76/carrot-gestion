@@ -56,3 +56,111 @@ nombre=jkljkljkljkl
 descripcion=
 precio=0
 id_categoria=4
+
+13/05/22 18:47:07	Nicolas	AGREGO PRODUCTO 
+nombre=PROD BORRAR
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:47:42	Nicolas	AGREGO PRODUCTO 
+nombre=PROD BORRAR
+descripcion=
+precio=123
+id_categoria=4
+
+13/05/22 18:48:19	Nicolas	AGREGO PRODUCTO 
+nombre=RRRRR
+descripcion=
+precio=0
+id_categoria=4
+
+13/05/22 18:48:49	Nicolas	AGREGO PRODUCTO 
+nombre=EEEE
+descripcion=
+precio=0
+id_categoria=4
+
+13/05/22 18:49:00	Nicolas	AGREGO PRODUCTO 
+nombre=TTTT
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:50:00	Nicolas	AGREGO PRODUCTO 
+nombre=GGGG
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:50:06	Nicolas	AGREGO PRODUCTO 
+nombre=HHHHH
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:51:02	Nicolas	AGREGO PRODUCTO 
+nombre=KYH
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:51:17	Nicolas	AGREGO PRODUCTO 
+nombre=HHH
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:52:35	Nicolas	AGREGO PRODUCTO 
+nombre=RTT
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:53:54	Nicolas	AGREGO PRODUCTO 
+nombre=RTT
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:54:14	Nicolas	AGREGO PRODUCTO 
+nombre=GHJ
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:54:25	Nicolas	AGREGO PRODUCTO 
+nombre=ERE
+descripcion=
+precio=2323
+id_categoria=4
+
+13/05/22 18:54:52	Nicolas	AGREGO PRODUCTO 
+nombre=PRUEBA 2323
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:56:02	Nicolas	AGREGO PRODUCTO 
+nombre=FFGG
+descripcion=
+precio=-12
+id_categoria=4
+
+13/05/22 18:58:12	Nicolas	AGREGO PRODUCTO 
+nombre=GHGH
+descripcion=
+precio=
+id_categoria=4
+
+13/05/22 18:58:29	Nicolas	AGREGO PRODUCTO 
+nombre=FFGG
+descripcion=
+precio=12
+id_categoria=4
+
+13/05/22 18:58:46	Nicolas	AGREGO PRODUCTO 
+nombre=FFGG2
+descripcion=
+precio=16
+id_categoria=4

@@ -14,22 +14,36 @@
         $id = $_GET["id"];    
      } 
 
-     
-
-
     // si paso la variable a entonces..... la guardo en accion
     if ( isset($_GET["a"]) ){
         $accion = $_GET["a"];
     }
 
-    function validarDatos(){
+    function validarDatos( $postParams ){
+
+        $errores = [];
+
+        $hoy = date("Y-m-d");
+        $fecha = $postParams->fecha;
+
+        $cantProductos = count( $postParams->productos );
 
         // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract
         // y que provincia y localidad tenga algun valor valido, default viene con -1
-        return  true; /* isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
-                isset( $_POST['pais'] ) &&
-                isset( $_POST['provincia'] ) && $_POST['provincia'] != '-1' &&
-                isset( $_POST['id_localidad'] ) && $_POST['id_localidad'] != '-1'; */
+
+        if ( ! ( isset( $postParams->cliente ) && $postParams->cliente != '' ) ){
+            $errores[] = "Debe seleccionar el cliente.";
+        }
+        
+        if ( $fecha > $hoy ){
+            $errores[] = "La fecha debe ser menor o igual a hoy.";
+        }
+
+        if ($cantProductos == 0 ){
+            $errores[] = "Debe agregar al menos un producto.";
+        }       
+
+        return $errores;
                
     }
 
@@ -120,20 +134,25 @@
        
             // lo que viene por _POST lo tomo con file_get_contents
             // eso como es un json, con la funcion json_decode lo decodifico para leerlo en $postParams
-            $postParams = json_decode( file_get_contents('php://input') );                     
-
-           
+            $postParams = json_decode( file_get_contents('php://input') );                                
 
             //1. Verificar si viene con datos del formulario (payload)
             //APRETE BOTON GUARDAN DANDO DE ALTA
             if( isset( $postParams->cliente ) ){
 
-                if ( validarDatos() ){                    
+                $errores = validarDatos( $postParams );
+/* 
+                var_dump("VALIDO", $valido); */
+
+                if ( count($errores) == 0 ){                    
                     agregarVenta($postParams, $_SESSION['usuario']['id']);
 
                     $data["registros"] = ["status" => "OK", "message" => "La venta se registro satisfactoriamente"];                                        
                 }else{
-                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar la venta"];
+
+
+
+                    $data["registros"] = ["status" => "ERROR", "message" => "Error al guardar la venta", "mensajes" => $errores];
                 }
 
                 include( 'vistas/ajax/index.php');

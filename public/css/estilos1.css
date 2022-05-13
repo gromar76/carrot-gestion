@@ -101,3 +101,12 @@
 .modal-dialog {
   max-width: auto;
 }
+
+.listado-errores {
+  list-style: none;
+}
+
+.listado-errores > li {
+  margin-bottom: 3px;
+  color: red;
+}

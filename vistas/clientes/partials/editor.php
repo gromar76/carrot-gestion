@@ -102,13 +102,13 @@ $disabled =  $accion == 'ver' ? "disabled" : "";
         <div class="form-group row">            
             <label for="pais" class="col-3 col-form-label">Pais <span class="campo-requerido">*</span></label> 
             <div class="col-9">
-            <select id="pais"  data-id-original="<?=$pais?>" class="custom-select" <?=$disabled?>></select>
+            <select id="pais" name="pais" data-id-original="<?=$pais?>" class="custom-select" <?=$disabled?>></select>
             </div>
         </div>
         <div class="form-group row">
             <label for="provincia" class="col-3 col-form-label">Provincia <span class="campo-requerido">*</span></label> 
             <div class="col-9">
-            <select id="provincia" data-id-original="<?=$provincia?>" class="custom-select" <?=$disabled?>></select>
+            <select id="provincia" name="provincia" data-id-original="<?=$provincia?>" class="custom-select" <?=$disabled?>></select>
             </div>            
         </div>
         <div class="form-group row">

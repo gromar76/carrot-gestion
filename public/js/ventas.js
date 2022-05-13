@@ -114,22 +114,7 @@ $(document).ready(async function () {
         },
 
         targets: COLUMNAS.PENDIENTE,
-      } /* ,
-      {
-        //type: "date",
-        //REFACTOR
-        render: (data, type, row) => {
-          const fecha = row[COLUMNAS.FECHA];
-
-          return (
-            DateTime.fromISO(fecha)
-              .setLocale("ES-AR")
-              //.toFormat("ccc dd MMM yyyy");
-              .toFormat("dd MMM yyyy")
-          );
-        },
-        targets: COLUMNAS.FECHA,
-      }, */,
+      },
     ],
     order: [[COLUMNAS.FECHA, "desc"]],
     language: {
@@ -552,11 +537,29 @@ async function guardarVenta() {
       window.location = "index.php?m=ventas&a=listado";
     });
   } else {
+    console.log("errores=", data.mensajes);
+
     Swal.fire({
-      text: data.message,
+      title: data.message,
+      html: dameListaErrores(data.mensajes),
       icon: "error",
     });
   }
+}
+
+function dameListaErrores(mensajesErrores) {
+  let errores = '<ul class="listado-errores">';
+
+  mensajesErrores.forEach((mensajeError) => {
+    errores += `<li>
+                  <i class="fa-solid fa-xmark"></i>
+                  ${mensajeError}
+                </li>`;
+  });
+
+  errores += "</ul>";
+
+  return errores;
 }
 
 function eliminarVenta() {

@@ -84,3 +84,39 @@ paginaweb=w2
 instagram=i3
 facebook=f3
 observaciones=ob2222
+
+13/05/22 18:38:58	Nicolas	AGREGO CLIENTE 
+nombre=BORRARRRRRR
+apellido=
+dni=
+whatsapp=
+telefono2=
+email=
+es_cliente_de=padel
+es_distribuidor=1
+domicilio=
+cpostal=
+id_localidad=39
+paginaweb=
+instagram=
+facebook=
+observaciones=
+
+13/05/22 18:45:11	Nicolas	AGREGO CLIENTE 
+nombre=BORRAR 2323
+apellido=
+dni=
+whatsapp=
+telefono2=
+email=
+es_cliente_de=padel
+es_distribuidor=1
+domicilio=
+cpostal=
+pais=2
+provincia=38
+id_localidad=68
+paginaweb=
+instagram=
+facebook=
+observaciones=

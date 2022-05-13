@@ -1,6 +1,12 @@
 <?php
     session_start(); //Inicio de sesion
 
+    //REFACTOR!!!!!
+    setlocale(LC_ALL, 'es_ar.utf8'); //LOCAL
+    setlocale(LC_ALL, "es_ES.UTF-8"); //HOSTING
+
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
+
     require('funciones/log.php');
 
     // por default pongo la variable modulo con login

@@ -51,7 +51,7 @@
         $conexion = obtenerConexion();
         $nombre      = $data["nombre"];
         $descripcion = $data["descripcion"];
-        $precio      = $data["precio"];                    
+        $precio      = $data["precio"] != "" ? $data["precio"] : 0;                    
         $idCategoria = $data["id_categoria"];
 
         /*echo $nombre;
@@ -64,7 +64,7 @@
         $consulta = "INSERT into productos (nombre, descripcion, precio, id_categoria)
                      VALUES ('$nombre', '$descripcion', $precio, $idCategoria)";
 
-        //echo $consulta; exit();
+/*         echo $consulta; exit(); */
 
         $resultado = $conexion->query($consulta);        
         cerrarConexion($conexion);

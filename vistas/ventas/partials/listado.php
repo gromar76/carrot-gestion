@@ -3,6 +3,15 @@
 
 include("config/constantes.php");
 
+
+function dameFechaEnEspaniol($fechaIngles){
+    $timeStamp = strtotime($fechaIngles);
+
+    $fechaEspaniol = strftime("%a %d/%m/%y", $timeStamp);
+
+    return $fechaEspaniol;
+}
+
 ?>
 
 <div class="row">
@@ -105,7 +114,7 @@ include("config/constantes.php");
       <tr>
             <td><?php echo $data["registros"][$i]["id"];?></td>
             <td><?php echo $data["registros"][$i]["cliente"];?></td>
-            <td><?php echo $data["registros"][$i]["fecha"];?></td> 
+            <td data-sort="<?=strtotime($data["registros"][$i]["fecha"])?>"><?=dameFechaEnEspaniol($data["registros"][$i]["fecha"]);?></td> 
             <td>$ <?php echo $data["registros"][$i]["importe"];?></td>
             <td>$ <?php echo $data["registros"][$i]["pagado"];?></td>
             <td><?php echo $pendiente;?></td>

@@ -25,8 +25,8 @@
 
         // estaba dando de alta y valido que ingrese por lo menos algun nombre minimo 3 caract
         // y que categoria tenga algun valor valido, default viene con -1
-        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3  &&
-                isset( $_POST['precio']);            
+        return  isset( $_POST['nombre'] ) && strlen( trim($_POST['nombre']) ) >= 3 &&
+                ( ($_POST['precio'] != '' && $_POST['precio'] >= 0) || $_POST['precio'] == '' )  ;            
                
     }
 

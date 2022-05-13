@@ -137,23 +137,23 @@
 
                     $data["tipoMensaje"] = 'danger';
 
-                    $data["registros"]["nombre"]          = $_POST['nombre'] ?  $_POST['nombre'] : '';
-                    $data["registros"]["apellido"]        = $_POST['apellido'] ?  $_POST['apellido'] : '';
-                    $data["registros"]["dni"]             = $_POST['dni'] ?  $_POST['dni'] : '';
-                    $data["registros"]["whatsapp"]        = $_POST['whatsapp'] ?  $_POST['whatsapp'] : '';
-                    $data["registros"]["telefono2"]       = $_POST['telefono2'] ?  $_POST['telefono2'] : '';
-                    $data["registros"]["email"]           = $_POST['email'] ?  $_POST['email'] : '';
-                    $data["registros"]["es_cliente_de"]   = $_POST['es_cliente_de'] ?  $_POST['es_cliente_de'] : '';
-                    $data["registros"]["es_distribuidor"] = $_POST['es_distribuidor'] ?  $_POST['es_distribuidor'] : '';
-                    $data["registros"]["domicilio"]       = $_POST['domicilio'] ?  $_POST['domicilio'] : '';
-                    $data["registros"]["cpostal"]         = $_POST['cpostal'] ?  $_POST['cpostal'] : '';
-                    $data["registros"]["id_pais"]         = $_POST['pais'] ?  $_POST['pais'] : '';
-                    $data["registros"]["id_provincia"]    = $_POST['provincia'] ?  $_POST['provincia'] : '';
-                    $data["registros"]["id_localidad"]    = $_POST['id_localidad'] ?  $_POST['id_localidad'] : '';
-                    $data["registros"]["paginaweb"]       = $_POST['paginaweb'] ?  $_POST['paginaweb'] : '';
-                    $data["registros"]["instagram"]       = $_POST['instagram'] ?  $_POST['instagram'] : '';                    
-                    $data["registros"]["facebook"]        = $_POST['facebook'] ?  $_POST['facebook'] : '';                    
-                    $data["registros"]["observaciones"]   = $_POST['observaciones'] ?  $_POST['observaciones'] : '';
+                    $data["registros"]["nombre"]          = isset($_POST['nombre']) ?  $_POST['nombre'] : '';
+                    $data["registros"]["apellido"]        = isset($_POST['apellido']) ?  $_POST['apellido'] : '';
+                    $data["registros"]["dni"]             = isset($_POST['dni']) ?  $_POST['dni'] : '';
+                    $data["registros"]["whatsapp"]        = isset($_POST['whatsapp']) ?  $_POST['whatsapp'] : '';
+                    $data["registros"]["telefono2"]       = isset($_POST['telefono2']) ?  $_POST['telefono2'] : '';
+                    $data["registros"]["email"]           = isset($_POST['email']) ?  $_POST['email'] : '';
+                    $data["registros"]["es_cliente_de"]   = isset($_POST['es_cliente_de']) ?  $_POST['es_cliente_de'] : '';
+                    $data["registros"]["es_distribuidor"] = isset($_POST['es_distribuidor']) ?  $_POST['es_distribuidor'] : '';
+                    $data["registros"]["domicilio"]       = isset($_POST['domicilio']) ?  $_POST['domicilio'] : '';
+                    $data["registros"]["cpostal"]         = isset($_POST['cpostal'] )?  $_POST['cpostal'] : '';
+                    $data["registros"]["id_pais"]         = isset($_POST['pais'] )?  $_POST['pais'] : '';
+                    $data["registros"]["id_provincia"]    = isset($_POST['provincia'] )?  $_POST['provincia'] : '';
+                    $data["registros"]["id_localidad"]    = isset($_POST['id_localidad']) ?  $_POST['id_localidad'] : '';
+                    $data["registros"]["paginaweb"]       = isset($_POST['paginaweb'] )?  $_POST['paginaweb'] : '';
+                    $data["registros"]["instagram"]       = isset($_POST['instagram']) ?  $_POST['instagram'] : '';                    
+                    $data["registros"]["facebook"]        = isset($_POST['facebook'] )?  $_POST['facebook'] : '';                    
+                    $data["registros"]["observaciones"]   = isset($_POST['observaciones']) ?  $_POST['observaciones'] : '';
 
                     include( 'vistas/clientes/index.php');
                 }
